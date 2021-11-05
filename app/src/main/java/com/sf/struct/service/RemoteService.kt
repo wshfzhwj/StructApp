@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import com.sf.back.practice.aidl.IPersonManager
+import com.sf.struct.practice.aidl.IPersonManager
 import com.sf.struct.practice.aidl.Person
 
 class RemoteService : Service() {

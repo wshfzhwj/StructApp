@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.sf.back.R;
+import com.sf.struct.R;
 import com.sf.struct.network.HttpManager;
 import com.sf.struct.tool.ImageUtils;
 import com.sf.struct.practice.InterviewFun;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //                requestPermission();
 //                handleVue();
 //                startAidl();
-
+                int a = 9/0;
             }
         });
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.b);

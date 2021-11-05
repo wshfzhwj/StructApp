@@ -7,9 +7,9 @@ import android.content.ServiceConnection
 import android.os.*
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.sf.struct.R
+import com.sf.struct.practice.aidl.IPersonManager
 import com.sf.struct.practice.aidl.Person
-import com.sf.back.R
-import com.sf.back.practice.aidl.IPersonManager
 import kotlinx.android.synthetic.main.layout_aidl.*
 
 class AidlActivity : AppCompatActivity() {
