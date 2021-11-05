@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">StructApp</string>
     <string name="app_token">token</string>
+    <string name="app_ssh">ssh</string>
 </resources>
