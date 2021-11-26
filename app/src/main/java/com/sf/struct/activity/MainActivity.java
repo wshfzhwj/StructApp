@@ -23,7 +23,6 @@ import com.sf.struct.network.HttpManager;
 import com.sf.struct.tool.ImageUtils;
 import com.sf.struct.practice.InterviewFun;
 import com.sf.struct.service.MessengerService;
-import com.sf.struct.widget.TouchButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +37,7 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
-    TouchButton helloBtn,helloBtn2;
+    Button helloBtn;
     ImageView roundImage;
     private Messenger mService;
     private Retrofit mRetrofit;
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_back);
         helloBtn = findViewById(R.id.helloBtn);
-        helloBtn2 = findViewById(R.id.helloBtn2);
         roundImage = findViewById(R.id.roundImage);
         helloBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //                requestPermission();
 //                handleVue();
 //                startAidl();
-                startNavActivitiy();
+                int a = 9/0;
             }
         });
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.b);
@@ -67,13 +65,6 @@ public class MainActivity extends AppCompatActivity {
         init();
 //        executeReq();
     }
-
-    private void startNavActivitiy() {
-        Intent intent  = new Intent();
-        intent.setClass(this,NavActivity.class);
-        startActivity(intent);
-    }
-
 
     private void testFun() {
             new InterviewFun().lightFun();

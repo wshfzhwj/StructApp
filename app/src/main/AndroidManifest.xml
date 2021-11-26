@@ -11,9 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
-
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.sf.struct.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,24 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".activity.WebActivity"
+            android:name="com.sf.struct.activity.WebActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <activity
-            android:name=".activity.AidlActivity"
+            android:name="com.sf.struct.activity.AidlActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.NavActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_nav" />
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@xml/network_security_config" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service
-            android:name=".service.RemoteService"
+            android:name="com.sf.struct.service.RemoteService"
             android:enabled="true"
             android:exported="true"
             android:process=":other">
@@ -47,11 +41,14 @@
                 <action android:name="com.sf.back.aidl.Server.Action" />
             </intent-filter>
         </service>
+
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/network_security_config" />
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
