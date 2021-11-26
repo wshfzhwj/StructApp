@@ -5,22 +5,25 @@
     android:orientation="vertical"
     >
 
-    <Button
-        android:id="@+id/helloBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I'm back" />
-
-    <LinearLayout
+    <com.sf.struct.widget.TouchLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@drawable/bg"
-        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
         >
+        <com.sf.struct.widget.TouchButton
+            android:id="@+id/helloBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I'm back" />
 
+        <com.sf.struct.widget.TouchButton
+            android:id="@+id/helloBtn2"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I'm back2" />
 
-
-    </LinearLayout>
+    </com.sf.struct.widget.TouchLayout>
 
     <ImageView
         android:id="@+id/roundImage"
