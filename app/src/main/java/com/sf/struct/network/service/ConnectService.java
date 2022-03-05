@@ -6,4 +6,7 @@ import retrofit2.http.GET;
 public interface ConnectService {
     @GET()
     Call<String> getTxt();
+
+    @GET()
+    Call<String> getName();
 }

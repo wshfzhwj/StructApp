@@ -13,16 +13,20 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.sf.struct.R;
 import com.sf.struct.network.HttpManager;
 import com.sf.struct.tool.ImageUtils;
 import com.sf.struct.practice.InterviewFun;
 import com.sf.struct.service.MessengerService;
+import com.sf.struct.widget.TouchButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,7 +41,8 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
-    Button helloBtn;
+    TouchButton helloBtn;
+    TouchButton helloBtn2;
     ImageView roundImage;
     private Messenger mService;
     private Retrofit mRetrofit;
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_back);
         helloBtn = findViewById(R.id.helloBtn);
+        helloBtn2 = findViewById(R.id.helloBtn2);
         roundImage = findViewById(R.id.roundImage);
         helloBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,23 +61,27 @@ public class MainActivity extends AppCompatActivity {
 //                requestPermission();
 //                handleVue();
 //                startAidl();
-                int a = 9/0;
+//                  testGlide();
+//                executeReq();
             }
         });
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.b);
-//        roundImage.setImageBitmap(BitmapHelper.getRoundCornerImage(bitmap,24, BitmapHelper.HalfType.TOP));
-        roundImage.setImageBitmap(ImageUtils.toRoundCorner(bitmap,24, ImageUtils.CORNER_TOP_LEFT|ImageUtils.CORNER_TOP_RIGHT));
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.b);
+//        roundImage.setImageBitmap(ImageUtils.toRoundCorner(bitmap, 24, ImageUtils.CORNER_TOP_LEFT | ImageUtils.CORNER_TOP_RIGHT));
+//        init();
+//
+    }
 
-        init();
-//        executeReq();
+    private void testGlide() {
+        String url = "https://alifei04.cfp.cn/creative/vcg/800/version23/VCG41175510742.jpg";
+        Glide.with(this).load(url).into(roundImage);
     }
 
     private void testFun() {
-            new InterviewFun().lightFun();
+        new InterviewFun().lightFun();
     }
 
     private void startAidl() {
-        startActivity(new Intent().setClass(this,AidlActivity.class));
+        startActivity(new Intent().setClass(this, AidlActivity.class));
     }
 
     private void executeReq() {
@@ -154,11 +164,10 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
-    public void transBitmap(){
+    public void transBitmap() {
         Bundle bundle = new Bundle();
-        bundle.putBinder("",null);
+        bundle.putBinder("", null);
     }
-
 
 
     private Handler messengerHandler = new Handler() {

@@ -36,4 +36,22 @@ public class ExampleUnitTest {
         System.out.print(Arrays.toString(array));
 
     }
+
+    @Test
+    public void testInteger() {
+        Integer a = 128;
+        Integer b = 128;
+        assertTrue(a == b);
+    }
+
+    @Test
+    public void testStr() {
+        String str = "123";
+        changeValue(str);
+        System.out.println("str值为: " + str);  // str未被改变，str = "123"
+    }
+
+    public void changeValue(String str) {
+        str = "abc";
+    }
 }
