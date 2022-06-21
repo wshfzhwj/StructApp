@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
         helloBtn2 = findViewById(R.id.helloBtn2);
         roundImage = findViewById(R.id.roundImage);
         helloBtn.setOnClickListener(view -> {
-            testGlide();
+//            testGlide();
 //                requestPermissionrequestPermission();
 //                handleVue();
 //                testEquals();
