@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 public class TouchLinearLayout extends LinearLayout {
-    private static final String TAG = "Touch Test";
+    private static final String TAG = "TouchLinearLayout";
     public TouchLinearLayout(Context context) {
         super(context);
     }

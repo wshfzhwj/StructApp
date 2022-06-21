@@ -6,27 +6,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.sf.struct.R;
+import com.sf.struct.bean.User;
 import com.sf.struct.network.HttpManager;
-import com.sf.struct.tool.ImageUtils;
 import com.sf.struct.practice.InterviewFun;
 import com.sf.struct.service.MessengerService;
+import com.sf.struct.viewmodel.MainActivityViewModel;
 import com.sf.struct.widget.TouchButton;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,14 +37,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getName();
-    TouchButton helloBtn;
+    Button helloBtn;
     TouchButton helloBtn2;
     ImageView roundImage;
     private Messenger mService;
@@ -55,20 +59,52 @@ public class MainActivity extends AppCompatActivity {
         helloBtn = findViewById(R.id.helloBtn);
         helloBtn2 = findViewById(R.id.helloBtn2);
         roundImage = findViewById(R.id.roundImage);
-        helloBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                requestPermission();
+        helloBtn.setOnClickListener(view -> {
+            testGlide();
+//                requestPermissionrequestPermission();
 //                handleVue();
+//                testEquals();
 //                startAidl();
-//                  testGlide();
 //                executeReq();
+//                testLooper();
+//                testViewModel();
+        });
+
+
+        helloBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(MainActivity.this, WebActivity.class));
             }
         });
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.b);
-//        roundImage.setImageBitmap(ImageUtils.toRoundCorner(bitmap, 24, ImageUtils.CORNER_TOP_LEFT | ImageUtils.CORNER_TOP_RIGHT));
-//        init();
-//
+    }
+
+    private void testViewModel() {
+        MainActivityViewModel model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+    }
+
+    private void testLooper() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                Looper.prepare();
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) helloBtn2.getLayoutParams();
+                helloBtn2.setText("哈哈哈");
+                params.weight = 1;
+                helloBtn2.setLayoutParams(params);
+                helloBtn2.requestLayout();
+                Toast.makeText(MainActivity.this, "ceshi", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+    public void testEquals() {
+        User user = new User("a", "a");
+        User user2 = new User("a", "a");
+        Log.e(TAG, "value 1= " + (user == user2));
+        Log.e(TAG, "value 2= " + (user.equals(user2)));
     }
 
     private void testGlide() {
@@ -76,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         Glide.with(this).load(url).into(roundImage);
     }
 
-    private void testFun() {
+    private void testFunc() {
         new InterviewFun().lightFun();
     }
 
@@ -89,14 +125,34 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-
+                Log.e(TAG, "onResponse");
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
+                Log.e(TAG, "onFailure");
             }
         });
+    }
+
+    private void executeReq2() {
+        Call<String> call = HttpManager.getInstance().getmService().getName();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.e(TAG, "onResponse");
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e(TAG, "onFailure");
+            }
+        });
+    }
+
+    public void getTypeClass() {
+        Type type = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        type.toString();
     }
 
     private void init() {
@@ -170,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private Handler messengerHandler = new Handler() {
+    private Handler messengerHandler = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

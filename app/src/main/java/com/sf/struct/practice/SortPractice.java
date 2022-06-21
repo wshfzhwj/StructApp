@@ -1,8 +1,11 @@
 package com.sf.struct.practice;
 
+import java.util.Arrays;
+
 public class SortPractice {
     /**
      * 冒泡排序
+     * int[] array = {9, 8, 6, 7, 3, 5, 4};
      *
      * @param array
      */
@@ -17,11 +20,13 @@ public class SortPractice {
                     array[j + 1] = temp;
                 }
             }
+            print(array);
+            System.out.println();
         }
     }
 
     /**
-     * 插入排序
+     * 选择排序
      *
      * @param array
      */
@@ -63,6 +68,10 @@ public class SortPractice {
         }
     }
 
+    /**
+     * 快速排序
+     * @param array
+     */
     public void quickSort(int[] array) {
         quickSort(array, 0, array.length - 1);
     }
@@ -72,7 +81,7 @@ public class SortPractice {
             return;
         }
         int pivot = partition(array, low, high);
-        quickSort(array, low, pivot-1);
+        quickSort(array, low, pivot - 1);
         quickSort(array, pivot + 1, high);
     }
 
@@ -92,6 +101,12 @@ public class SortPractice {
 
         array[low] = pivot;
         return low;
+    }
+
+
+    public void print(int[] array) {
+        System.out.print(Arrays.toString(array));
+
     }
 
 }

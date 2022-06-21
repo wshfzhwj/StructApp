@@ -8,11 +8,13 @@ import android.os.*
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.sf.struct.R
+import com.sf.struct.databinding.LayoutAidlBinding
 import com.sf.struct.practice.aidl.IPersonManager
 import com.sf.struct.practice.aidl.Person
-import kotlinx.android.synthetic.main.layout_aidl.*
 
 class AidlActivity : AppCompatActivity() {
+
+    private lateinit var binding: LayoutAidlBinding
 
     companion object {
         const val TAG = "sf_aidl"
@@ -32,14 +34,15 @@ class AidlActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_aidl);
-        btnConnect.setOnClickListener {
+        setContentView(R.layout.layout_aidl)
+        binding = LayoutAidlBinding.inflate(layoutInflater)
+        binding.btnConnect.setOnClickListener {
             connectService()
         }
-        btnGetPerson.setOnClickListener {
+        binding.btnGetPerson.setOnClickListener {
             getPerson()
         }
-        btnAddPerson.setOnClickListener {
+        binding.btnAddPerson.setOnClickListener {
             addPerson()
         }
     }

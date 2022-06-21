@@ -25,11 +25,12 @@ import com.sf.struct.R;
 import java.io.IOException;
 import java.io.InputStream;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class WebActivity extends AppCompatActivity {
+public class WebActivity extends BaseActivity {
 
     public static final String TAG = "WebActivity";
 
@@ -38,9 +39,22 @@ public class WebActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG,"onCreate");
         setContentView(R.layout.layout_web);
         initView();
         initData();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e(TAG,"onSaveInstanceState");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.e(TAG,"onRestoreInstanceState");
     }
 
     /**
@@ -177,16 +191,16 @@ public class WebActivity extends AppCompatActivity {
 
         });
 
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            String title = bundle.getString("title");
-            String url = bundle.getString("url");
-            //设置标题
-            //setTitleText(title);
-//            mWebView.loadUrl("https://www.baidu.com");
-            mWebView.loadUrl(url);
-        }
+        mWebView.loadUrl("https://www.baidu.com");
+//        Bundle bundle = getIntent().getExtras();
+//        if (bundle != null) {
+//            String title = bundle.getString("title");
+//            String url = bundle.getString("url");
+//            //设置标题
+//            //setTitleText(title);
+//
+//            mWebView.loadUrl(url);
+//        }
     }
 
     /**

@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
         >
-        <com.sf.struct.widget.TouchButton
+        <Button
             android:id="@+id/helloBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

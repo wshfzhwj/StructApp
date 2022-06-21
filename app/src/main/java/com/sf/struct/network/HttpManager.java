@@ -20,7 +20,7 @@ public class HttpManager {
                 .client(new OkHttpClient.Builder().build())
                 .addConverterFactory(FastJsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl("https://www.baidu.com")
+                .baseUrl("https://tieba.baidu.com/")
                 .build();
         mService = mRetrofit.create(ConnectService.class);
     }

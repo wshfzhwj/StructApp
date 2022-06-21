@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 
 public class TouchButton extends AppCompatButton {
-    private static final String TAG = "Touch Test";
+    private static final String TAG = "TouchButton";
     public TouchButton(@NonNull Context context) {
         super(context);
     }
