@@ -8,16 +8,86 @@ fun main(args: Array<String>) {
 //    testIn()
 //    testLambda()
 //    testRange()
-    testCoroutines()
+//    testCoroutines()
+//    collectionTests()
+//    runBlocking { testCoroutinesByJob(); }
+    runBlocking { val startTime = System.currentTimeMillis()
+        val job = launch(Dispatchers.Default) {
+            var nextPrintTime = startTime
+            var i = 0
+//            while (i < 5) { // 一个执行计算的循环，只是为了占用 CPU
+            while (isActive) { // 可以被取消的计算循环
+                // 每秒打印消息两次
+                if (System.currentTimeMillis() >= nextPrintTime) {
+                    println("job: I'm sleeping ${i++} ...")
+                    nextPrintTime += 500L
+                }
+            }
+        }
+        delay(1300L) // 等待一段时间
+        println("main: I'm tired of waiting!")
+        job.cancelAndJoin() // 取消一个作业并且等待它结束
+        println("main: Now I can quit.")}
+
 }
 
-fun testCoroutines() {
+fun collectionTests() {
+    val list =
+        listOf("Apple", "Google", "Microsoft", "Facebook", "Twitter", "Intel", "QualComm", "Tesla")
+    // 遍历，以进行某种操作
+    list.forEach { println(it) }
+    //按条件进行过滤，返回条件为true的
+    val short = list.filter { it.length < 6 }
+    println(short) // [Apple, Intel, Tesla]
+    // 把列表元素映射成为另外一种元素
+    val lenList = list.map { it.length }
+    println("Length of each item $lenList") //Length of each item [5, 6, 9, 8, 7, 5, 8, 5]
+    // 按某种条件进行排序
+    val ordered = list.sortedBy { it.length }
+    println("Sorted by length $ordered") // Sorted by length [Apple, Intel, Tesla, Google, Twitter, Facebook, QualComm, Microsoft]
+    // 折叠，用累积的结果继续遍历
+    val joint = list.fold("") { partial, item -> if (partial != "") "$partial, $item" else item }
+    println("Joint list with comma $joint") // Joint list with comma Apple, Google, Microsoft, Facebook, Twitter, Intel, QualComm, Tesla
+    //分组，用某种条件 把列表分成两组
+    val (first, second) = list.partition { it.length < 6 }
+    println("Length shorter than 6 $first") // Length shorter than 6 [Apple, Intel, Tesla]
+    println("Longer than 6 $second") // Longer than 6 [Google, Microsoft, Facebook, Twitter, QualComm]
+    // 归类，按某种方法把元素归类，之后变成了一个Map
+    val bucket = list.groupBy { it.length }
+    println("$bucket is a map now") //{5=[Apple, Intel, Tesla], 6=[Google], 9=[Microsoft], 8=[Facebook, QualComm], 7=[Twitter]} is a map now
+}
+
+fun testCoroutinesBySleep() {
     GlobalScope.launch { // 在后台启动一个新的协程并继续
         delay(1000L) // 非阻塞的等待 1 秒钟（默认时间单位是毫秒）
         println("World!") // 在延迟后打印输出
     }
     println("Hello,") // 协程已在等待时主线程还在继续
     Thread.sleep(2000L) // 阻塞主线程 2 秒钟来保证 JVM 存活
+}
+
+fun testCoroutinesByBlocking(){
+    GlobalScope.launch { // 在后台启动一个新的协程并继续
+        delay(1000L)
+        println("World!")
+    }
+    println("Hello,") // 主线程中的代码会立即执行
+    runBlocking {     // 但是这个表达式阻塞了主线程
+        delay(2000L)  // ……我们延迟 2 秒来保证 JVM 的存活
+    }
+}
+
+suspend fun testCoroutinesByJob(){
+    val job = GlobalScope.launch { // 启动一个新协程并保持对这个作业的引用
+        delay(1000L)
+        println("World!")
+    }
+    println("Hello,")
+    job.join() // 等待直到子协程执行结束
+}
+
+fun  testCoroutinesCancel(){
+
 }
 
 
@@ -72,6 +142,11 @@ fun testLambda() {
 //        lambda()
 //        return this
 //    }
+
+    val a = "ab"
+    val b = "cde"
+    val hill = { a: String, b: String -> a.length < b.length }
+    println(hill("ab", "cdf"))
 }
 
 
