@@ -1,8 +1,25 @@
 package com.sf.struct.tool
 
 import kotlinx.coroutines.*
+class TestKt{
+    var lastName: String = "zhang"
+        get() = field.uppercase()   // 将变量赋值后转换为大写
+        set
 
-class TestKt()
+    var no: Int = 100
+        get() = field                // 后端变量
+        set(value) {
+            if (value < 10) {       // 如果传入的值小于 10 返回该值
+                field = value
+            } else {
+                field = -1         // 如果传入的值大于等于 10 返回 -1
+            }
+        }
+
+    var heiht: Float = 145.4f
+        private set
+
+}
 
 fun main(args: Array<String>) {
 //    testIn()
@@ -11,27 +28,44 @@ fun main(args: Array<String>) {
 //    testCoroutines()
 //    collectionTests()
 //    runBlocking { testCoroutinesByJob(); }
-    runBlocking { val startTime = System.currentTimeMillis()
-        val job = launch(Dispatchers.Default) {
-            var nextPrintTime = startTime
-            var i = 0
-//            while (i < 5) { // 一个执行计算的循环，只是为了占用 CPU
-            while (isActive) { // 可以被取消的计算循环
-                // 每秒打印消息两次
-                if (System.currentTimeMillis() >= nextPrintTime) {
-                    println("job: I'm sleeping ${i++} ...")
-                    nextPrintTime += 500L
-                }
-            }
-        }
-        delay(1300L) // 等待一段时间
-        println("main: I'm tired of waiting!")
-        job.cancelAndJoin() // 取消一个作业并且等待它结束
-        println("main: Now I can quit.")}
 
+//    runBlocking { val startTime = System.currentTimeMillis()
+//        val job = launch(Dispatchers.Default) {
+//            var nextPrintTime = startTime
+//            var i = 0
+////            while (i < 5) { // 一个执行计算的循环，只是为了占用 CPU
+//            while (isActive) { // 可以被取消的计算循环
+//                // 每秒打印消息两次
+//                if (System.currentTimeMillis() >= nextPrintTime) {
+//                    println("job: I'm sleeping ${i++} ...")
+//                    nextPrintTime += 500L
+//                }
+//            }
+//        }
+//        delay(1300L) // 等待一段时间
+//        println("main: I'm tired of waiting!")
+//        job.cancelAndJoin() // 取消一个作业并且等待它结束
+//        println("main: Now I can quit.")}
+
+//    testField()
 }
 
-fun collectionTests() {
+    private fun testField() {
+        var kt: TestKt = TestKt()
+
+        kt.lastName = "wang"
+
+        println("lastName:${kt.lastName}")
+
+        kt.no = 9
+        println("no:${kt.no}")
+
+        kt.no = 20
+        println("no:${kt.no}")
+
+    }
+
+    fun collectionTests() {
     val list =
         listOf("Apple", "Google", "Microsoft", "Facebook", "Twitter", "Intel", "QualComm", "Tesla")
     // 遍历，以进行某种操作
