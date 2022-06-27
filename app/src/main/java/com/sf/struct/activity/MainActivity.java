@@ -68,6 +68,7 @@ public class MainActivity extends BaseActivity {
 //                executeReq();
 //                testLooper();
 //                testViewModel();
+            testConflict();
         });
 
 
@@ -77,6 +78,10 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent().setClass(MainActivity.this, WebActivity.class));
             }
         });
+    }
+
+    private void testConflict() {
+        Log.d(TAG,"This method is for testing git conflict");
     }
 
     private void testViewModel() {
