@@ -38,6 +38,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,21 +46,25 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getName();
-    Button helloBtn;
+    TouchButton helloBtn;
     TouchButton helloBtn2;
     ImageView roundImage;
     private Messenger mService;
     private Retrofit mRetrofit;
     private Context context = MainActivity.this;
+    private Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_back);
+        intent = new Intent(MainActivity.this, MessengerService.class);
         helloBtn = findViewById(R.id.helloBtn);
         helloBtn2 = findViewById(R.id.helloBtn2);
         roundImage = findViewById(R.id.roundImage);
         helloBtn.setOnClickListener(view -> {
+//            startService(intent);
+//            bindService(new Intent(MainActivity.this, MessengerService.class), connection, BIND_AUTO_CREATE);
 //            testGlide();
 //                requestPermissionrequestPermission();
 //                handleVue();
@@ -68,16 +73,36 @@ public class MainActivity extends BaseActivity {
 //                executeReq();
 //                testLooper();
 //                testViewModel();
+//            testEquals();
+            testConflict();
         });
 
 
         helloBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                stopService(intent);
+//                unbindService(connection);
                 startActivity(new Intent().setClass(MainActivity.this, WebActivity.class));
             }
         });
     }
+
+    private void testConflict() {
+        Log.i(TAG,"This method is for testing conflict from Q");
+    }
+
+    ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d(TAG, "onServiceConnected");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d(TAG, "onServiceDisconnected");
+        }
+    };
 
     private void testViewModel() {
         MainActivityViewModel model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
