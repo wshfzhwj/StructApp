@@ -63,9 +63,9 @@ public class MainActivity extends BaseActivity {
         helloBtn2 = findViewById(R.id.helloBtn2);
         roundImage = findViewById(R.id.roundImage);
         helloBtn.setOnClickListener(view -> {
-//            startService(intent);
-//            bindService(new Intent(MainActivity.this, MessengerService.class), connection, BIND_AUTO_CREATE);
-//            testGlide();
+//                startService(intent);
+//                bindService(new Intent(MainActivity.this, MessengerService.class), connection, BIND_AUTO_CREATE);
+//                testGlide();
 //                requestPermissionrequestPermission();
 //                handleVue();
 //                testEquals();
@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
 //                executeReq();
 //                testLooper();
 //                testViewModel();
-//            testEquals();
+//                testEquals();
             testConflict();
         });
 
@@ -89,7 +89,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void testConflict() {
-        Log.i(TAG,"This method is for testing conflict from Q");
+        Log.i(TAG, "This method is for testing conflict from Q");
+//        Log.d(TAG,"This method is for testing git conflict");
     }
 
     ServiceConnection connection = new ServiceConnection() {
