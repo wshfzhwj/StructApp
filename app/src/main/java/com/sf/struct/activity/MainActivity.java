@@ -14,7 +14,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -34,7 +33,6 @@ import java.lang.reflect.Type;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
@@ -57,7 +55,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_back);
+        setContentView(R.layout.layout_main);
         intent = new Intent(MainActivity.this, MessengerService.class);
         helloBtn = findViewById(R.id.helloBtn);
         helloBtn2 = findViewById(R.id.helloBtn2);
