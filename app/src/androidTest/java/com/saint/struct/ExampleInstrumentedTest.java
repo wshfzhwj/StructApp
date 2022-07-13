@@ -1,4 +1,4 @@
-package com.sf.back;
+package com.saint.struct;
 
 import android.content.Context;
 import org.junit.Test;

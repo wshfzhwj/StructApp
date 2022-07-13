@@ -1,6 +1,7 @@
-package com.sf.back;
+package com.saint.struct;
 
-import com.saint.struct.practice.InterviewFun;
+import static org.junit.Assert.assertTrue;
+
 import com.saint.struct.practice.SortPractice;
 
 import org.junit.Test;
@@ -8,8 +9,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -34,7 +33,7 @@ public class ExampleUnitTest {
 //        System.out.println("a = " + a);
 //        assertEquals(4, 2 + 2);
         ChangeValues values = new ChangeValues();
-        values.change(values.str,values.ch);
+        values.change(values.str, values.ch);
         System.out.println("a = " + values.str);
         System.out.println(values.ch);
         assertTrue(1 == 1);
@@ -79,12 +78,11 @@ public class ExampleUnitTest {
     }
 
 
+    public class ChangeValues {
+        String str = new String("Hello");
+        char[] ch = {'a', 'b', 'c'};
 
-    public class ChangeValues{
-        String str  = new String("Hello");
-        char[] ch = {'a','b','c'};
-
-        public void change(String str,char[] ch) {
+        public void change(String str, char[] ch) {
             str = "Helloworld";
             ch[0] = 'b';
             ch[1] = 'b';
