@@ -1,7 +1,7 @@
 package com.sf.back;
 
-import com.sf.struct.practice.InterviewFun;
-import com.sf.struct.practice.SortPractice;
+import com.saint.struct.practice.InterviewFun;
+import com.saint.struct.practice.SortPractice;
 
 import org.junit.Test;
 

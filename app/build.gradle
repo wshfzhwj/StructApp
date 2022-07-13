@@ -8,7 +8,7 @@ android {
     compileSdkVersion rootProject.ext.sdkVersion
 
     defaultConfig {
-        applicationId "com.sf.struct"
+        applicationId "com.saint.struct"
         minSdkVersion 24
         targetSdkVersion 31
         versionCode 1
@@ -59,6 +59,7 @@ dependencies {
 
     implementation 'com.android.volley:volley:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation project(path: ':biometiriclib')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

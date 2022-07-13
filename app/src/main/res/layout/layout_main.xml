@@ -2,33 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <com.sf.struct.widget.TouchLinearLayout
+    <com.saint.struct.widget.TouchLinearLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@drawable/bg"
-        android:orientation="horizontal"
         android:layout_marginTop="20dp"
-        >
-        <com.sf.struct.widget.TouchButton
+        android:background="@drawable/bg"
+        android:orientation="vertical">
+
+        <Button
             android:id="@+id/helloBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I'm back" />
 
-        <com.sf.struct.widget.TouchButton
+        <Button
             android:id="@+id/helloBtn2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I'm back2" />
 
-    </com.sf.struct.widget.TouchLinearLayout>
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </com.saint.struct.widget.TouchLinearLayout>
 
     <ImageView
         android:id="@+id/roundImage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp" />
 </LinearLayout>
