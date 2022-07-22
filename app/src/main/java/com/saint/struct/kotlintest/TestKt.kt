@@ -1,10 +1,15 @@
-package com.saint.struct.tool
+package com.saint.struct.kotlintest
 
+import android.app.Application
 import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.util.Log
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.saint.struct.R
+import com.saint.struct.StructApp
 import com.saint.struct.activity.MainActivity
+import com.saint.struct.service.FirstWorkManager
 import kotlinx.coroutines.*
 
 class TestKt{
@@ -59,7 +64,8 @@ fun main(args: Array<String>) {
 //    System.out.println("memory getByteCount = " + bitmap.byteCount);
 }
 
-    private fun testField() {
+
+private fun testField() {
         var kt: TestKt = TestKt()
 
         kt.lastName = "wang"

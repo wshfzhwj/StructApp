@@ -46,7 +46,8 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     buildFeatures {
-        viewBinding true
+        dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -60,6 +61,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation project(path: ':biometiriclib')
+    implementation 'androidx.databinding:databinding-runtime:4.2.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -84,6 +86,8 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.11.0") {
         exclude group: "com.android.support"
     }
+
+    implementation "androidx.work:work-runtime-ktx:$rootProject.ext.work_version"
 
 }
 repositories {

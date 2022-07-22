@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.saint.struct.service.FirstWorkManager;
 import com.saint.struct.service.JobTestService;
 import com.sf.biometiriclib.BiometricPromptManager;
 import com.saint.struct.R;
@@ -46,6 +47,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.JobIntentService;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,7 +82,7 @@ public class MainActivity extends BaseActivity {
 //                requestPermissionrequestPermission();
 //                handleVue();
 //                testEquals();
-//                startAidl();
+                startAidl();
 //                executeReq();
 //                testLooper();
 //                testViewModel();
@@ -87,7 +90,7 @@ public class MainActivity extends BaseActivity {
 //            testConflict();
 //            testBitmapMemory();
 //            testFinger();
-            testService();
+//            testService();
         });
 
 
