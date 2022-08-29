@@ -27,6 +27,28 @@ public class TouchLinearLayout extends LinearLayout {
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                Log.d(TAG,"TouchLinearLayout onInterceptTouchEvent ACTION_DOWN");
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d(TAG,"TouchLinearLayout onInterceptTouchEvent ACTION_MOVE");
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d(TAG,"TouchLinearLayout onInterceptTouchEvent ACTION_UP" );
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                Log.d(TAG,"TouchLinearLayout onInterceptTouchEvent ACTION_CANCEL" );
+                break;
+            default:
+                Log.d(TAG,"TouchLinearLayout onInterceptTouchEvent ACTION = "  + event.getAction());
+                break;
+        }
+        return super.onInterceptTouchEvent(event);
+    }
+
+    @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:

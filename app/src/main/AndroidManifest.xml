@@ -36,6 +36,10 @@
             android:name=".activity.AidlActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".activity.PageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <service
             android:name=".service.MessengerService"
             android:exported="false" />

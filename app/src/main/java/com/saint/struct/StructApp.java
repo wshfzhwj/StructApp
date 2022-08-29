@@ -8,7 +8,7 @@ public class StructApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        CrashHandler crashHandler = new CrashHandler();
-        Thread.setDefaultUncaughtExceptionHandler(crashHandler);
+//        CrashHandler crashHandler = new CrashHandler();
+//        Thread.setDefaultUncaughtExceptionHandler(crashHandler);
     }
 }

@@ -11,54 +11,50 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.MessageQueue;
 import android.os.Messenger;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.saint.struct.service.FirstWorkManager;
-import com.saint.struct.service.JobTestService;
-import com.sf.biometiriclib.BiometricPromptManager;
-import com.saint.struct.R;
-import com.saint.struct.bean.User;
-import com.saint.struct.network.HttpManager;
-import com.saint.struct.practice.InterviewFun;
-import com.saint.struct.service.MessengerService;
-import com.saint.struct.viewmodel.MainActivityViewModel;
-import com.saint.struct.widget.TouchButton;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.JobIntentService;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkRequest;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.bumptech.glide.Glide;
+import com.saint.struct.R;
+import com.saint.struct.bean.InnerClass;
+import com.saint.struct.bean.Node;
+import com.saint.struct.bean.User;
+import com.saint.struct.service.JobTestService;
+import com.saint.struct.service.MessengerService;
+import com.saint.struct.viewmodel.MainActivityViewModel;
+import com.saint.struct.widget.TouchButton;
+import com.sf.biometiriclib.BiometricPromptManager;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import retrofit2.Retrofit;
 
 public class MainActivity extends BaseActivity {
     public static final String EXTRA_KEY_SERVICE = "extra_key_service";
     private static final String TAG = MainActivity.class.getName();
-    Button helloBtn;
+    TouchButton helloBtn;
     Button helloBtn2;
     ImageView roundImage;
     TextView mDescTv;
@@ -67,6 +63,7 @@ public class MainActivity extends BaseActivity {
     private Context context = MainActivity.this;
     private Intent intent;
     private BiometricPromptManager mManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +79,7 @@ public class MainActivity extends BaseActivity {
 //                requestPermissionrequestPermission();
 //                handleVue();
 //                testEquals();
-                startAidl();
+//                startAidl();
 //                executeReq();
 //                testLooper();
 //                testViewModel();
@@ -91,6 +88,9 @@ public class MainActivity extends BaseActivity {
 //            testBitmapMemory();
 //            testFinger();
 //            testService();
+//            testInner();
+//            testThreadPool();
+//            testLooper();
         });
 
 
@@ -99,9 +99,40 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
 //                stopService(intent);
 //                unbindService(connection);
-                startActivity(new Intent().setClass(MainActivity.this, WebActivity.class));
+                startActivity(new Intent().setClass(MainActivity.this, PageActivity.class));
             }
         });
+    }
+
+
+
+
+    public void testLooper() {
+        Looper looper = Looper.getMainLooper();
+        HandlerThread handlerThread = new HandlerThread("test");
+        handlerThread.start();
+        Looper threadThread = handlerThread.getLooper();
+        MessageQueue me = looper.getQueue();
+        MessageQueue queue = threadThread.getQueue();
+        System.out.println("me = " + me.toString());
+        System.out.println("queue = " + queue.toString());
+        handlerThread.quitSafely();
+    }
+
+    private void testThreadPool() {
+        ScheduledExecutorService service = Executors.newScheduledThreadPool(10);
+        service.schedule(new ScheduleCallable(), 10, TimeUnit.SECONDS);
+        service.scheduleAtFixedRate(new ScheduleRunnable(), 10, 10, TimeUnit.SECONDS);
+        service.scheduleWithFixedDelay(new ScheduleRunnable(), 10, 10, TimeUnit.SECONDS);
+    }
+
+    private void testInner() {
+        InnerClass.World world = new InnerClass().new World();
+        world.hello();
+
+        InnerClass.Hello hello = new InnerClass.Hello();
+        InnerClass.Hello.world();
+        hello.hello();
     }
 
     private void testService() {
@@ -118,13 +149,13 @@ public class MainActivity extends BaseActivity {
     private void testFinger() {
         mManager = BiometricPromptManager.from(this);
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("SDK version is "+ Build.VERSION.SDK_INT);
+        stringBuilder.append("SDK version is " + Build.VERSION.SDK_INT);
         stringBuilder.append("\n");
-        stringBuilder.append("isHardwareDetected : "+mManager.isHardwareDetected());
+        stringBuilder.append("isHardwareDetected : " + mManager.isHardwareDetected());
         stringBuilder.append("\n");
-        stringBuilder.append("hasEnrolledFingerprints : "+mManager.hasEnrolledFingerprints());
+        stringBuilder.append("hasEnrolledFingerprints : " + mManager.hasEnrolledFingerprints());
         stringBuilder.append("\n");
-        stringBuilder.append("isKeyguardSecure : "+mManager.isKeyguardSecure());
+        stringBuilder.append("isKeyguardSecure : " + mManager.isKeyguardSecure());
         stringBuilder.append("\n");
         mDescTv.setText(stringBuilder.toString());
 
@@ -165,8 +196,8 @@ public class MainActivity extends BaseActivity {
 
     private void testBitmapMemory() {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.a);
-        Log.d(TAG,"memory getAllocationByteCount = " + bitmap.getAllocationByteCount());
-        Log.d(TAG,"memory getByteCount = " + bitmap.getByteCount());
+        Log.d(TAG, "memory getAllocationByteCount = " + bitmap.getAllocationByteCount());
+        Log.d(TAG, "memory getByteCount = " + bitmap.getByteCount());
     }
 
     private void testConflict() {
@@ -190,24 +221,6 @@ public class MainActivity extends BaseActivity {
         MainActivityViewModel model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
     }
 
-    private void testLooper() {
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                super.run();
-//                Looper.prepare();
-//                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) helloBtn2.getLayoutParams();
-//                helloBtn2.setText("哈哈哈");
-//                params.weight = 1;
-//                helloBtn2.setLayoutParams(params);
-//                helloBtn2.requestLayout();
-//                Toast.makeText(MainActivity.this, "ceshi", Toast.LENGTH_SHORT).show();
-//                Looper.loop();
-//            }
-//        }.start();
-        new ThreadHandler().start();
-    }
-
     public void testEquals() {
         User user = new User("a", "a");
         User user2 = new User("a", "a");
@@ -221,41 +234,18 @@ public class MainActivity extends BaseActivity {
     }
 
     private void testFunc() {
-        new InterviewFun().lightFun();
+//        new InterviewFunc().lightFunc();
+        Node Head = null;
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e(TAG, "onSaveInstanceState");
     }
 
     private void startAidl() {
         startActivity(new Intent().setClass(this, AidlActivity.class));
-    }
-
-    private void executeReq() {
-        Call<String> call = HttpManager.getInstance().getmService().getTxt();
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.e(TAG, "onResponse");
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e(TAG, "onFailure");
-            }
-        });
-    }
-
-    private void executeReq2() {
-        Call<String> call = HttpManager.getInstance().getmService().getName();
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.e(TAG, "onResponse");
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e(TAG, "onFailure");
-            }
-        });
     }
 
     public void getTypeClass() {
@@ -350,15 +340,32 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    class ThreadHandler extends Thread{
+    class ThreadHandler extends Thread {
         @Override
         public void run() {
             super.run();
             Looper.prepare();
             Handler handler = new Handler();
-            Log.e(TAG, "handler id = "+ handler.getLooper().getThread().getId());
-            Log.e(TAG, "handler id = "+ getId());
+            Log.e(TAG, "handler id = " + handler.getLooper().getThread().getId());
+            Log.e(TAG, "handler id = " + getId());
             Looper.loop();
+        }
+    }
+
+    class ScheduleCallable implements Callable {
+
+        @Override
+        public Object call() throws Exception {
+            Log.e(TAG, "ScheduleCallable call...");
+            return true;
+        }
+    }
+
+    class ScheduleRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            Log.e(TAG, "ScheduleRunnable run...");
         }
     }
 }
