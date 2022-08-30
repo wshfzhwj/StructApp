@@ -1,5 +1,7 @@
 package com.saint.struct.data;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.paging.PagingSource;
@@ -12,30 +14,54 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.ResourceSubscriber;
 import kotlin.coroutines.Continuation;
 
 public class Paging3DataSource extends PagingSource<Integer, WanAndroidBean.WanBean.WanListBean> {
+    int page = 0;
     @Nullable
     @Override
     public Object load(@NotNull LoadParams<Integer> params, @NotNull Continuation<? super LoadResult<Integer, WanAndroidBean.WanBean.WanListBean>> continuation) {
-        int page = 0;
         if (params.getKey() != null) {
             page = params.getKey();
         }
         //获取网络数据
-        WanAndroidBean result = (WanAndroidBean) HttpManager.getInstance().getService().getArticleList(page, 60);
-        //需要加载的数据
-        List<WanAndroidBean.WanBean.WanListBean> datas = result.data.datas;
-        //如果可以往上加载更多就设置该参数，否则不设置
-        String prevKey = null;
-        //加载下一页的key 如果传null就说明到底了
-        String nextKey = null;
-        if (result.data.curPage == result.data.pageCount) {
-            nextKey = null;
-        } else {
-            nextKey = String.valueOf(page + 1);
-        }
-        return new LoadResult.Page<>(datas, prevKey, nextKey);
+        Log.e("Paging3DataSource","load =======================");
+        Flowable flowable = HttpManager.getInstance().getService().getArticleList3(page).subscribeOn(Schedulers.io());
+        final LoadResult<Integer, WanAndroidBean.WanBean.WanListBean>[] result = new LoadResult[1];
+        HttpManager.getInstance().toSubscribe(flowable, new ResourceSubscriber() {
+            @Override
+            public void onNext(Object o) {
+                Log.e("Paging3DataSource","onNext =======================");
+                result[0] = toLoadResult((WanAndroidBean) o);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Log.e("Paging3DataSource","onError =======================");
+                result[0] = new LoadResult.Error<>(t);
+            }
+
+            @Override
+            public void onComplete() {
+                Log.e("Paging3DataSource","onComplete =======================");
+            }
+        });
+        return result[0];
+    }
+
+    private LoadResult<Integer, WanAndroidBean.WanBean.WanListBean> toLoadResult(
+            @NonNull WanAndroidBean bean) {
+        Log.e("Paging3DataSource","toLoadResult=======================");
+        LoadResult result = new LoadResult.Page<>(
+                bean.data.datas,
+                null, // Only paging forward.
+                page + 1,
+                LoadResult.Page.COUNT_UNDEFINED,
+                LoadResult.Page.COUNT_UNDEFINED);
+        return result;
     }
 
     @Nullable

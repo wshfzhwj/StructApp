@@ -56,6 +56,9 @@ public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getName();
     TouchButton helloBtn;
     Button helloBtn2;
+    Button helloBtn3;
+    Button helloBtn4;
+    Button helloBtn5;
     ImageView roundImage;
     TextView mDescTv;
     private Messenger mService;
@@ -72,6 +75,9 @@ public class MainActivity extends BaseActivity {
         intent.putExtra(EXTRA_KEY_SERVICE, "service");
         helloBtn = findViewById(R.id.helloBtn);
         helloBtn2 = findViewById(R.id.helloBtn2);
+        helloBtn3 = findViewById(R.id.helloBtn3);
+        helloBtn4 = findViewById(R.id.helloBtn4);
+        helloBtn5 = findViewById(R.id.helloBtn5);
         roundImage = findViewById(R.id.roundImage);
         mDescTv = findViewById(R.id.tv_desc);
         helloBtn.setOnClickListener(view -> {
@@ -99,7 +105,28 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
 //                stopService(intent);
 //                unbindService(connection);
-                startActivity(new Intent().setClass(MainActivity.this, PageActivity.class));
+                startActivity(new Intent().setClass(MainActivity.this, PageKtActivity.class));
+            }
+        });
+
+        helloBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(MainActivity.this, PageOrigenActivity.class));
+            }
+        });
+
+        helloBtn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(MainActivity.this, PageRxActivity.class));
+            }
+        });
+
+        helloBtn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(MainActivity.this, PageOldActivity.class));
             }
         });
     }

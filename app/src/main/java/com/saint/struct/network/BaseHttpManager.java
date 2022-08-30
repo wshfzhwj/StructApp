@@ -18,12 +18,13 @@ public class BaseHttpManager {
     private static final int TIME_OUT = 30;
 
     private Retrofit mRetrofit;
-    public  BaseHttpManager(int timeOut, String url){
-        this(false,timeOut,url);
+
+    public BaseHttpManager(int timeOut, String url) {
+        this(false, timeOut, url);
     }
 
     //构造方法私有
-    public BaseHttpManager(boolean debugLog,int timeOut, String url) {
+    public BaseHttpManager(boolean debugLog, int timeOut, String url) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {

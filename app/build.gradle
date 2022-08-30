@@ -35,6 +35,21 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs{
+        debug{
+            storeFile file(rootProject.getRootDir().getAbsolutePath()+"/saint_key.jks");
+            storePassword "12345678";
+            keyAlias "saint";
+            keyPassword "12345678";
+        }
+        release{
+            storeFile file(rootProject.getRootDir().getAbsolutePath()+"/saint_key.jks");
+            storePassword "12345678";
+            keyAlias "saint";
+            keyPassword "12345678";
+        }
+    }
+
 //    allprojects {
 //        gradle.projectsEvaluated {
 //            tasks.withType(JavaCompile) {
