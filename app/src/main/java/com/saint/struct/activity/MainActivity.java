@@ -77,7 +77,6 @@ public class MainActivity extends BaseActivity {
         helloBtn2 = findViewById(R.id.helloBtn2);
         helloBtn3 = findViewById(R.id.helloBtn3);
         helloBtn4 = findViewById(R.id.helloBtn4);
-        helloBtn5 = findViewById(R.id.helloBtn5);
         roundImage = findViewById(R.id.roundImage);
         mDescTv = findViewById(R.id.tv_desc);
         helloBtn.setOnClickListener(view -> {
@@ -112,23 +111,17 @@ public class MainActivity extends BaseActivity {
         helloBtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent().setClass(MainActivity.this, PageOrigenActivity.class));
+                startActivity(new Intent().setClass(MainActivity.this, PageRxActivity.class));
             }
         });
 
         helloBtn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent().setClass(MainActivity.this, PageRxActivity.class));
-            }
-        });
-
-        helloBtn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 startActivity(new Intent().setClass(MainActivity.this, PageOldActivity.class));
             }
         });
+
     }
 
 

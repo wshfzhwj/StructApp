@@ -10,7 +10,7 @@ public class PagingDataSourceFactory extends DataSource.Factory<String, WanAndro
     @NonNull
     @Override
     public DataSource<String, WanAndroidBean.WanBean.WanListBean> create() {
-        PagingDataSource dataSource = new PagingDataSource();
+        PagingOldDataSource dataSource = new PagingOldDataSource();
         return dataSource;
     }
 }

@@ -15,8 +15,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PagingDataSource extends PageKeyedDataSource<String, WanAndroidBean.WanBean.WanListBean> {
-    private static final String TAG = PagingDataSource.class.getSimpleName();
+public class PagingOldDataSource extends PageKeyedDataSource<String, WanAndroidBean.WanBean.WanListBean> {
+    private static final String TAG = PagingOldDataSource.class.getSimpleName();
     private int mPage = 0;
 
     @Override

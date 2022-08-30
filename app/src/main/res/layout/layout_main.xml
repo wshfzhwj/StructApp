@@ -27,19 +27,14 @@
             android:id="@+id/helloBtn3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I'm Origin" />
+            android:text="I'm RX" />
 
         <Button
             android:id="@+id/helloBtn4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I'm RX" />
-
-        <Button
-            android:id="@+id/helloBtn5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="I'm Old" />
+
         <TextView
             android:id="@+id/tv_desc"
             android:layout_width="match_parent"
