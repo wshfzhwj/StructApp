@@ -7,6 +7,7 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.saint.struct.bean.WanAndroidBean;
+import com.saint.struct.bean.WanListBean;
 import com.saint.struct.data.PagingDataSourceFactory;
 
 public class PageOldViewModel extends ViewModel {
@@ -20,13 +21,13 @@ public class PageOldViewModel extends ViewModel {
             .build();
 
     //DataSource.Factory
-    private DataSource.Factory<String, WanAndroidBean.WanBean.WanListBean> factory = new PagingDataSourceFactory();
+    private DataSource.Factory<String, WanListBean> factory = new PagingDataSourceFactory();
 
     //LiveData
-    private LiveData<PagedList<WanAndroidBean.WanBean.WanListBean>> mPagedList = new LivePagedListBuilder<>(factory, config)
+    private LiveData<PagedList<WanListBean>> mPagedList = new LivePagedListBuilder<>(factory, config)
             .build();
 
-    public LiveData<PagedList<WanAndroidBean.WanBean.WanListBean>> getPagedList() {
+    public LiveData<PagedList<WanListBean>> getPagedList() {
         return mPagedList;
     }
 }

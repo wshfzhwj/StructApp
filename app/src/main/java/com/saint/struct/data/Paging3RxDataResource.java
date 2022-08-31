@@ -8,14 +8,13 @@ import androidx.paging.PagingState;
 import androidx.paging.rxjava2.RxPagingSource;
 
 import com.saint.struct.bean.WanAndroidBean;
-import com.saint.struct.network.HttpManager;
+import com.saint.struct.bean.WanListBean;
 import com.saint.struct.network.service.ConnectService;
-import com.saint.struct.network.service.WanAndroidKtApi;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-public class Paging3RxDataResource extends RxPagingSource<Integer, WanAndroidBean.WanBean.WanListBean> {
+public class Paging3RxDataResource extends RxPagingSource<Integer, WanListBean> {
     private static final String TAG = Paging3RxDataResource.class.getSimpleName();
     @NonNull
     private ConnectService mService;
@@ -27,7 +26,7 @@ public class Paging3RxDataResource extends RxPagingSource<Integer, WanAndroidBea
 
     @NonNull
     @Override
-    public Single<LoadResult<Integer, WanAndroidBean.WanBean.WanListBean>> loadSingle(@NonNull LoadParams<Integer> params) {
+    public Single<LoadResult<Integer, WanListBean>> loadSingle(@NonNull LoadParams<Integer> params) {
         Integer nextPageNumber = params.getKey();
         if (nextPageNumber == null) {
             nextPageNumber = 0;
@@ -44,7 +43,7 @@ public class Paging3RxDataResource extends RxPagingSource<Integer, WanAndroidBea
 
     }
 
-    private LoadResult<Integer, WanAndroidBean.WanBean.WanListBean> toLoadResult(
+    private LoadResult<Integer, WanListBean> toLoadResult(
             @NonNull WanAndroidBean bean) {
         return new LoadResult.Page<>(
                 bean.data.datas,
@@ -56,13 +55,13 @@ public class Paging3RxDataResource extends RxPagingSource<Integer, WanAndroidBea
 
     @Nullable
     @Override
-    public Integer getRefreshKey(@NonNull PagingState<Integer, WanAndroidBean.WanBean.WanListBean> state) {
+    public Integer getRefreshKey(@NonNull PagingState<Integer, WanListBean> state) {
         Integer anchorPosition = state.getAnchorPosition();
         if (anchorPosition == null) {
             return null;
         }
 
-        LoadResult.Page<Integer, WanAndroidBean.WanBean.WanListBean> anchorPage = state.closestPageToPosition(anchorPosition);
+        LoadResult.Page<Integer, WanListBean> anchorPage = state.closestPageToPosition(anchorPosition);
         if (anchorPage == null) {
             return null;
         }

@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.saint.struct.R;
-import com.saint.struct.bean.WanAndroidBean;
+import com.saint.struct.bean.WanListBean;
 
-public class PagingAdapter extends PagingDataAdapter<WanAndroidBean.WanBean.WanListBean, PagingAdapter.ViewHolder> {
+public class PagingAdapter extends PagingDataAdapter<WanListBean, PagingAdapter.ViewHolder> {
     public PagingAdapter() {
         super(itemCallback);
     }
@@ -28,7 +28,7 @@ public class PagingAdapter extends PagingDataAdapter<WanAndroidBean.WanBean.WanL
 
     @Override
     public void onBindViewHolder(@NonNull PagingAdapter.ViewHolder holder, int position) {
-        WanAndroidBean.WanBean.WanListBean bean = getItem(position);
+        WanListBean bean = getItem(position);
         if (bean != null) {
             holder.desc.setText(bean.desc);
             holder.date.setText(bean.niceDate);
@@ -52,15 +52,15 @@ public class PagingAdapter extends PagingDataAdapter<WanAndroidBean.WanBean.WanL
         }
     }
 
-    private static DiffUtil.ItemCallback<WanAndroidBean.WanBean.WanListBean> itemCallback = new DiffUtil.ItemCallback<WanAndroidBean.WanBean.WanListBean>() {
+    private static DiffUtil.ItemCallback<WanListBean> itemCallback = new DiffUtil.ItemCallback<WanListBean>() {
         @Override
-        public boolean areItemsTheSame(@NonNull WanAndroidBean.WanBean.WanListBean oldItem, @NonNull WanAndroidBean.WanBean.WanListBean newItem) {
+        public boolean areItemsTheSame(@NonNull WanListBean oldItem, @NonNull WanListBean newItem) {
             return oldItem.id.equals(newItem.id);
         }
 
         @SuppressLint("DiffUtilEquals")
         @Override
-        public boolean areContentsTheSame(@NonNull WanAndroidBean.WanBean.WanListBean oldItem, @NonNull WanAndroidBean.WanBean.WanListBean newItem) {
+        public boolean areContentsTheSame(@NonNull WanListBean oldItem, @NonNull WanListBean newItem) {
             return oldItem.equals(newItem);
         }
     };

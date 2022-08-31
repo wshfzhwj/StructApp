@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.saint.struct.R;
 import com.saint.struct.adapter.PagingOldAdapter;
-import com.saint.struct.bean.WanAndroidBean;
+import com.saint.struct.bean.WanListBean;
 import com.saint.struct.databinding.LayoutPageBinding;
 import com.saint.struct.viewmodel.PageOldViewModel;
 
@@ -43,12 +43,7 @@ public class PageOldActivity extends BaseActivity{
         mViewModel = mViewModelProvider.get(PageOldViewModel.class);
     }
     public void getData() {
-        mViewModel.getPagedList().observe(this, new Observer<PagedList<WanAndroidBean.WanBean.WanListBean>>() {
-            @Override
-            public void onChanged(PagedList<WanAndroidBean.WanBean.WanListBean> dataBeans) {
-                adapter.submitList(dataBeans);
-            }
-        });
+        mViewModel.getPagedList().observe(this, dataBeans -> adapter.submitList(dataBeans));
     }
 
 }

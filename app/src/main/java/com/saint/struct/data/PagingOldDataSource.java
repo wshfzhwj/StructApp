@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
 import com.saint.struct.bean.WanAndroidBean;
+import com.saint.struct.bean.WanListBean;
 import com.saint.struct.network.HttpManager;
 import com.saint.struct.network.service.ConnectService;
 
@@ -15,12 +16,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PagingOldDataSource extends PageKeyedDataSource<String, WanAndroidBean.WanBean.WanListBean> {
+public class PagingOldDataSource extends PageKeyedDataSource<String, WanListBean> {
     private static final String TAG = PagingOldDataSource.class.getSimpleName();
     private int mPage = 0;
 
     @Override
-    public void loadInitial(@NonNull LoadInitialParams<String> params, @NonNull LoadInitialCallback<String, WanAndroidBean.WanBean.WanListBean> callback) {
+    public void loadInitial(@NonNull LoadInitialParams<String> params, @NonNull LoadInitialCallback<String, WanListBean> callback) {
         ConnectService api = HttpManager.getInstance().getService();
         Call<WanAndroidBean> call = api.getArticleList(mPage, 60);
         call.enqueue(new Callback<WanAndroidBean>() {
@@ -28,7 +29,7 @@ public class PagingOldDataSource extends PageKeyedDataSource<String, WanAndroidB
             public void onResponse(Call<WanAndroidBean> call, Response<WanAndroidBean> response) {
                 Log.e(TAG, "--onResponse-->" + response.body().data.datas.size());
                 if (response.isSuccessful() && response.code() == 200) {
-                    ArrayList<WanAndroidBean.WanBean.WanListBean> data = response.body().data.datas;
+                    ArrayList<WanListBean> data = response.body().data.datas;
                     callback.onResult(data, "before", "after");
                 }
 
@@ -42,12 +43,12 @@ public class PagingOldDataSource extends PageKeyedDataSource<String, WanAndroidB
     }
 
     @Override
-    public void loadBefore(@NonNull LoadParams<String> params, @NonNull LoadCallback<String, WanAndroidBean.WanBean.WanListBean> callback) {
+    public void loadBefore(@NonNull LoadParams<String> params, @NonNull LoadCallback<String, WanListBean> callback) {
         Log.i(TAG, "--loadBefore-->" + params.key);
     }
 
     @Override
-    public void loadAfter(@NonNull LoadParams<String> params, @NonNull LoadCallback<String, WanAndroidBean.WanBean.WanListBean> callback) {
+    public void loadAfter(@NonNull LoadParams<String> params, @NonNull LoadCallback<String, WanListBean> callback) {
         mPage++;
         ConnectService api = HttpManager.getInstance().getService();
         Call<WanAndroidBean> call = api.getArticleList(mPage, 60);
@@ -55,7 +56,7 @@ public class PagingOldDataSource extends PageKeyedDataSource<String, WanAndroidB
             @Override
             public void onResponse(Call<WanAndroidBean> call, Response<WanAndroidBean> response) {
                 if (response.isSuccessful() && response.code() == 200) {
-                    ArrayList<WanAndroidBean.WanBean.WanListBean> data = response.body().data.datas;
+                    ArrayList<WanListBean> data = response.body().data.datas;
                     callback.onResult(data, params.key);
                 }
 

@@ -58,7 +58,6 @@ public class MainActivity extends BaseActivity {
     Button helloBtn2;
     Button helloBtn3;
     Button helloBtn4;
-    Button helloBtn5;
     ImageView roundImage;
     TextView mDescTv;
     private Messenger mService;
