@@ -1,4 +1,4 @@
-package com.example.biometiriclib;
+package com.saint.biometiriclib;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.biometiriclib", appContext.getPackageName());
+        assertEquals("com.saint.biometiriclib.test", appContext.getPackageName());
     }
 }

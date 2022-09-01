@@ -1,7 +1,6 @@
-package com.sf.biometiriclib;
+package com.saint.biometiriclib;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.biometrics.BiometricPrompt;
 import android.os.Build;

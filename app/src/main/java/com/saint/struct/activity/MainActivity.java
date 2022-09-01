@@ -32,6 +32,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
+import com.saint.biometiriclib.BiometricPromptManager;
 import com.saint.struct.R;
 import com.saint.struct.bean.InnerClass;
 import com.saint.struct.bean.Node;
@@ -40,7 +41,6 @@ import com.saint.struct.service.JobTestService;
 import com.saint.struct.service.MessengerService;
 import com.saint.struct.viewmodel.MainActivityViewModel;
 import com.saint.struct.widget.TouchButton;
-import com.sf.biometiriclib.BiometricPromptManager;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

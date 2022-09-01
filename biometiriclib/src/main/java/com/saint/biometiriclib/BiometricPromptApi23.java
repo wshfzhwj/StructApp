@@ -1,14 +1,10 @@
-package com.sf.biometiriclib;
+package com.saint.biometiriclib;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.CancellationSignal;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;

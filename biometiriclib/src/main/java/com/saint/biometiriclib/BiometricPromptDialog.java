@@ -1,4 +1,4 @@
-package com.sf.biometiriclib;
+package com.saint.biometiriclib;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -18,7 +18,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-
 
 /**
  * Created by gaoyang on 2018/06/19.

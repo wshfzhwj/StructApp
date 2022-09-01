@@ -1,4 +1,4 @@
-package com.sf.biometiriclib;
+package com.saint.biometiriclib;
 
 import android.content.Context;
 import android.content.SharedPreferences;
