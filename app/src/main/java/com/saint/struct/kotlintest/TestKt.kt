@@ -10,7 +10,7 @@ import com.saint.struct.activity.MainActivity
 import com.saint.struct.service.FirstWorkManager
 import kotlinx.coroutines.*
 
-class TestKt{
+class TestKt {
     var lastName: String = "zhang"
         get() = field.uppercase()   // 将变量赋值后转换为大写
         set
@@ -60,25 +60,33 @@ fun main(args: Array<String>) {
 //    val bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.a);
 //    System.out.println("memory getAllocationByteCount = " + bitmap.allocationByteCount);
 //    System.out.println("memory getByteCount = " + bitmap.byteCount);
+//    test(10) { num1: Int, num2: Int -> num1 + num2 }
+    val list: List<String> = listOf("a", "aa", "aaa", "aaaa")
+    val result: String? = list.maxBy { it.length }
+    println(::testCoroutinesCancel)
+}
+
+fun testCoroutinesCancel(): String {
+    return "a"
 }
 
 
 private fun testField() {
-        var kt: TestKt = TestKt()
+    var kt: TestKt = TestKt()
 
-        kt.lastName = "wang"
+    kt.lastName = "wang"
 
-        println("lastName:${kt.lastName}")
+    println("lastName:${kt.lastName}")
 
-        kt.no = 9
-        println("no:${kt.no}")
+    kt.no = 9
+    println("no:${kt.no}")
 
-        kt.no = 20
-        println("no:${kt.no}")
+    kt.no = 20
+    println("no:${kt.no}")
 
-    }
+}
 
-    fun collectionTests() {
+fun collectionTests() {
     val list =
         listOf("Apple", "Google", "Microsoft", "Facebook", "Twitter", "Intel", "QualComm", "Tesla")
     // 遍历，以进行某种操作
@@ -113,7 +121,7 @@ fun testCoroutinesBySleep() {
     Thread.sleep(2000L) // 阻塞主线程 2 秒钟来保证 JVM 存活
 }
 
-fun testCoroutinesByBlocking(){
+fun testCoroutinesByBlocking() {
     GlobalScope.launch { // 在后台启动一个新的协程并继续
         delay(1000L)
         println("World!")
@@ -124,17 +132,13 @@ fun testCoroutinesByBlocking(){
     }
 }
 
-suspend fun testCoroutinesByJob(){
+suspend fun testCoroutinesByJob() {
     val job = GlobalScope.launch { // 启动一个新协程并保持对这个作业的引用
         delay(1000L)
         println("World!")
     }
     println("Hello,")
     job.join() // 等待直到子协程执行结束
-}
-
-fun  testCoroutinesCancel(){
-
 }
 
 
@@ -147,6 +151,12 @@ fun testRange() {
     if (list.size !in list.indices) {
         println("list size is out of valid list indices range, too")
     }
+}
+
+
+fun test(a: Int, b: (num1: Int, num2: Int) -> Int): Int {
+    println("------" + (a + b(3, 5)))
+    return a + b.invoke(3, 5)
 }
 
 fun testIn() {

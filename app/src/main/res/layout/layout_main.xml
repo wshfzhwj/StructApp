@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.saint.struct.widget.TouchLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.saint.struct.widget.TouchButton
-            android:id="@+id/helloBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="I'm back" />
-
-        <Button
-            android:id="@+id/helloBtn2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="I'm KT" />
-
-        <Button
-            android:id="@+id/helloBtn3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="I'm RX" />
-
-        <Button
-            android:id="@+id/helloBtn4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="I'm Old" />
-
-        <TextView
-            android:id="@+id/tv_desc"
+        <com.saint.struct.widget.TouchLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="300dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg"
+            android:orientation="vertical">
 
-    </com.saint.struct.widget.TouchLinearLayout>
+            <com.saint.struct.widget.TouchButton
+                android:id="@+id/helloBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I'm back" />
 
-    <ImageView
-        android:id="@+id/roundImage"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="20dp" />
-</LinearLayout>
+            <Button
+                android:id="@+id/helloBtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I'm KT" />
+
+            <Button
+                android:id="@+id/helloBtn3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I'm RX" />
+
+            <Button
+                android:id="@+id/helloBtn4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I'm Old" />
+
+            <Button
+                android:id="@+id/helloBtn5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="finger" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.saint.struct.widget.TouchLinearLayout>
+
+        <ImageView
+            android:id="@+id/roundImage"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+</layout>

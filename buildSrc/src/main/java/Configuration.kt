@@ -75,10 +75,10 @@ object Configuration {
         const val navigation_version = "2.3.1"
 
         /** lifecycle 版本 */
-        const val android_lifecycle_version = "1.2.0"
+        const val arch_lifecycle_version = "1.2.0"
 
         /** lifecycle 版本 */
-        const val androidx_lifecycle_version = "2.3.1"
+        const val androidx_lifecycle_version = "2.2.0"
 
         /** activity 版本 */
         const val activity_version = "1.1.0"
@@ -98,6 +98,7 @@ object Configuration {
         /** retrofit 版本 */
         const val retrofit_version = "2.3.0"
         const val converter_gson_version = "2.9.0"
+
         /** smart refresh 版本 */
         const val smart_refresh_version = "2.0.1"
 
@@ -118,14 +119,19 @@ object Configuration {
 
         /** ARouter 版本 */
         const val arouter_version = "1.5.1"
+
         /** volley 版本 */
         const val volley_version = "1.2.0"
+
         /** databinding 版本 */
         const val data_binding_version = "4.2.2"
+
         /** rxjava2 版本 */
         const val rxjava2_version = "2.1.6"
+
         /** rxandroid 版本 */
         const val rxandroid_version = "2.0.1"
+
         /** work 版本 */
         const val work_version = "2.7.1"
     }
@@ -138,14 +144,18 @@ object Configuration {
         /** 测试 */
         const val test_junit = "junit:junit:4.13.2"
         const val test_mokito_inline = "org.mockito:mockito-inline:${Versions.test_mokito_version}"
-        const val test_mokito_android = "org.mockito:mockito-android:${Versions.test_mokito_version}"
-        const val test_uiautomator_v18 = "com.android.support.test.uiautomator:uiautomator-v18:2.1.3"
+        const val test_mokito_android =
+            "org.mockito:mockito-android:${Versions.test_mokito_version}"
+        const val test_uiautomator_v18 =
+            "com.android.support.test.uiautomator:uiautomator-v18:2.1.3"
         const val androidx_test_ext_junit = "androidx.test.ext:junit:1.1.1"
         const val androidx_test_rules = "androidx.test:rules:1.2.0"
         const val androidx_test_runner = "androidx.test:runner:1.0.2"
         const val androidx_test_espresso_core = "androidx.test.espresso:espresso-core:3.0.2"
         const val android_test_runner = "com.android.support.test:runner:1.0.2"
-        const val android_test_espresso_core = "com.android.support.test.espresso:espresso-core:3.0.2"
+        const val android_test_espresso_core =
+            "com.android.support.test.espresso:espresso-core:3.0.2"
+
         /** Kotlin */
         const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin_version}"
         const val kotlin_jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin_version}"
@@ -182,21 +192,30 @@ object Configuration {
 
         /** androidx activity */
         const val androidx_activity = "androidx.activity:activity:${Versions.activity_version}"
-        const val androidx_activity_ktx = "androidx.activity:activity-ktx:${Versions.activity_version}"
+        const val androidx_activity_ktx =
+            "androidx.activity:activity-ktx:${Versions.activity_version}"
 
         /** androidx fragment */
         const val androidx_fragment = "androidx.fragment:fragment:${Versions.fragment_version}"
-        const val androidx_fragment_ktx = "androidx.fragment:fragment-ktx:${Versions.fragment_version}"
+        const val androidx_fragment_ktx =
+            "androidx.fragment:fragment-ktx:${Versions.fragment_version}"
 
         /** android lifecycle */
-        const val android_lifecycle_runtime = "android.arch.lifecycle:runtime:${Versions.android_lifecycle_version}"
-        const val android_lifecycle_extensions = "android.arch.lifecycle:extensions:${Versions.android_lifecycle_version}"
-        /** androidx lifecycle */
-        const val androidx_lifecycle_runtime = "androidx.lifecycle:runtime:${Versions.androidx_lifecycle_version}"
-        const val androidx_lifecycle_extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.androidx_lifecycle_version}"
-        const val androidx_lifecycle_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidx_lifecycle_version}"
-        const val androidx_lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.androidx_lifecycle_version}"
-        const val androidx_lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.androidx_lifecycle_version}"
+        const val android_lifecycle_runtime =
+            "android.arch.lifecycle:runtime:${Versions.arch_lifecycle_version}"
+        const val android_lifecycle_extensions =
+            "android.arch.lifecycle:extensions:${Versions.arch_lifecycle_version}"
+
+        const val androidx_lifecycle_runtime =
+            "androidx.lifecycle:lifecycle-runtime:${Versions.androidx_lifecycle_version}"
+        const val androidx_lifecycle_extensions =
+            "androidx.lifecycle:lifecycle-extensions:${Versions.androidx_lifecycle_version}"
+        const val androidx_lifecycle_ktx =
+            "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidx_lifecycle_version}"
+        const val androidx_lifecycle_viewmodel_ktx =
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.androidx_lifecycle_version}"
+        const val androidx_lifecycle_livedata_ktx =
+            "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.androidx_lifecycle_version}"
 
         /** androidx room */
         const val androidx_room_runtime = "androidx.room:room-runtime:${Versions.room_version}"
@@ -206,22 +225,36 @@ object Configuration {
         const val androidx_room_testing = "androidx.room:room-testing:${Versions.room_version}"
 
         /** androidx paging */
-        const val androidx_paging_runtime = "androidx.paging:paging-runtime:${Versions.paging_version}"
-        const val androidx_paging_common = "androidx.paging:paging-common:${Versions.paging_version}"
-        const val androidx_paging_rxjava2 = "androidx.paging:paging-rxjava2:${Versions.paging_version}"
-        const val androidx_paging_runtime_ktx = "androidx.paging:paging-runtime-ktx:${Versions.paging_version}"
-        const val androidx_paging_common_ktx = "androidx.paging:paging-common-ktx:${Versions.paging_version}"
-        const val androidx_paging_rxjava2_ktx = "androidx.paging:paging-rxjava2-ktx:${Versions.paging_version}"
+        const val androidx_paging_runtime =
+            "androidx.paging:paging-runtime:${Versions.paging_version}"
+        const val androidx_paging_common =
+            "androidx.paging:paging-common:${Versions.paging_version}"
+        const val androidx_paging_rxjava2 =
+            "androidx.paging:paging-rxjava2:${Versions.paging_version}"
+        const val androidx_paging_runtime_ktx =
+            "androidx.paging:paging-runtime-ktx:${Versions.paging_version}"
+        const val androidx_paging_common_ktx =
+            "androidx.paging:paging-common-ktx:${Versions.paging_version}"
+        const val androidx_paging_rxjava2_ktx =
+            "androidx.paging:paging-rxjava2-ktx:${Versions.paging_version}"
 
         /** androidx navigation */
-        const val androidx_navigation_fragment = "androidx.navigation:navigation-fragment:${Versions.navigation_version}"
-        const val androidx_navigation_ui = "androidx.navigation:navigation-ui:${Versions.navigation_version}"
-        const val androidx_navigation_runtime = "androidx.navigation:navigation-runtime:${Versions.navigation_version}"
-        const val androidx_navigation_common = "androidx.navigation:navigation-common:${Versions.navigation_version}"
-        const val androidx_navigation_fragment_ktx = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation_version}"
-        const val androidx_navigation_ui_ktx = "androidx.navigation:navigation-ui-ktx:${Versions.navigation_version}"
-        const val androidx_navigation_runtime_ktx = "androidx.navigation:navigation-runtime-ktx:${Versions.navigation_version}"
-        const val androidx_navigation_common_ktx = "androidx.navigation:navigation-common-ktx:${Versions.navigation_version}"
+        const val androidx_navigation_fragment =
+            "androidx.navigation:navigation-fragment:${Versions.navigation_version}"
+        const val androidx_navigation_ui =
+            "androidx.navigation:navigation-ui:${Versions.navigation_version}"
+        const val androidx_navigation_runtime =
+            "androidx.navigation:navigation-runtime:${Versions.navigation_version}"
+        const val androidx_navigation_common =
+            "androidx.navigation:navigation-common:${Versions.navigation_version}"
+        const val androidx_navigation_fragment_ktx =
+            "androidx.navigation:navigation-fragment-ktx:${Versions.navigation_version}"
+        const val androidx_navigation_ui_ktx =
+            "androidx.navigation:navigation-ui-ktx:${Versions.navigation_version}"
+        const val androidx_navigation_runtime_ktx =
+            "androidx.navigation:navigation-runtime-ktx:${Versions.navigation_version}"
+        const val androidx_navigation_common_ktx =
+            "androidx.navigation:navigation-common-ktx:${Versions.navigation_version}"
 
 
         /**
@@ -297,8 +330,10 @@ object Configuration {
          * - Github：[https://github.com/square/okhttp]
          */
         const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp_version}"
-        const val okhttp_urlconnection = "com.squareup.okhttp3:okhttp-urlconnection:${Versions.okhttp_version}"
-        const val okhttp_logging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp_version}"
+        const val okhttp_urlconnection =
+            "com.squareup.okhttp3:okhttp-urlconnection:${Versions.okhttp_version}"
+        const val okhttp_logging =
+            "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp_version}"
 
         /**
          * okio
@@ -311,18 +346,25 @@ object Configuration {
          * - Github：[https://github.com/square/retrofit]
          */
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit_version}"
-        const val retrofit_adapter_rxjava2 = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit_version}"
-        const val retrofit_converter_gson = "com.squareup.retrofit2:converter-gson:${Versions.converter_gson_version}"
-        const val retrofit_converter_moshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit_version}"
-        const val retrofit_converter_kt = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+        const val retrofit_adapter_rxjava2 =
+            "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit_version}"
+        const val retrofit_converter_gson =
+            "com.squareup.retrofit2:converter-gson:${Versions.converter_gson_version}"
+        const val retrofit_converter_moshi =
+            "com.squareup.retrofit2:converter-moshi:${Versions.retrofit_version}"
+        const val retrofit_converter_kt =
+            "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 
         /**
          * SmartRefreshLayout
          * - Github：[https://github.com/scwang90/SmartRefreshLayout]
          */
-        const val smart_refresh = "com.scwang.smart:refresh-layout-kernel:${Versions.smart_refresh_version}"
-        const val smart_refresh_header_classics = "com.scwang.smart:refresh-header-classics:${Versions.smart_refresh_version}"
-        const val smart_refresh_footer_classics = "com.scwang.smart:refresh-footer-classics:${Versions.smart_refresh_version}"
+        const val smart_refresh =
+            "com.scwang.smart:refresh-layout-kernel:${Versions.smart_refresh_version}"
+        const val smart_refresh_header_classics =
+            "com.scwang.smart:refresh-header-classics:${Versions.smart_refresh_version}"
+        const val smart_refresh_footer_classics =
+            "com.scwang.smart:refresh-footer-classics:${Versions.smart_refresh_version}"
 
         /**
          * LiveEventBus
@@ -334,8 +376,10 @@ object Configuration {
          * 状态栏工具
          * - Github: [https://github.com/gyf-dev/ImmersionBar]
          */
-        const val immersion_bar = "com.gyf.immersionbar:immersionbar:${Versions.immersion_bar_version}"
-        const val immersion_bar_ktx = "com.gyf.immersionbar:immersionbar-ktx:${Versions.immersion_bar_version}"
+        const val immersion_bar =
+            "com.gyf.immersionbar:immersionbar:${Versions.immersion_bar_version}"
+        const val immersion_bar_ktx =
+            "com.gyf.immersionbar:immersionbar-ktx:${Versions.immersion_bar_version}"
 
         /**
          * MMKV
@@ -384,7 +428,9 @@ object Configuration {
         /**
          * databinding
          */
-        const val databinding = "androidx.databinding:databinding-runtime:${Versions.data_binding_version}"
+        const val databinding =
+            "androidx.databinding:databinding-runtime:${Versions.data_binding_version}"
+
         /**
          * rxjava2
          */
@@ -394,6 +440,7 @@ object Configuration {
          * rxandroid
          */
         const val rxandroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxandroid_version}"
+
         /**
          * work
          */
