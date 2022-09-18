@@ -36,14 +36,12 @@ import java.util.concurrent.TimeUnit
 class MainActivity : BaseActivity() {
     private var mService: Messenger? = null
     private val mRetrofit: Retrofit? = null
-    private val context: Context = this@MainActivity
     private lateinit var mLayoutBinding: LayoutMainBinding
     private var mManager: BiometricPromptManager? = null
 
     companion object {
         const val EXTRA_KEY_SERVICE = "extra_key_service"
         private val TAG = MainActivity::class.java.name
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +52,9 @@ class MainActivity : BaseActivity() {
 
     private fun setListener() {
         mLayoutBinding.helloBtn.setOnClickListener {
-            mLayoutBinding.tvDesc.text = HelloWorld().add(1,2).toString()
+//            val mUrl = "http://cn.bing.com/az/hprichbg/rb/Dongdaemun_ZH-CN10736487148_1920x1080.jpg"
+            val mGif = "http://p1.pstatp.com/large/166200019850062839d3"
+            Glide.with(this@MainActivity).load(mGif).into(mLayoutBinding.roundImage)
         }
         mLayoutBinding.helloBtn2.setOnClickListener {
             startActivity(Intent().setClass(this@MainActivity, PageKtActivity::class.java))
