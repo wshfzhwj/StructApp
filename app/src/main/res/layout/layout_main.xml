@@ -49,13 +49,13 @@
                 android:id="@+id/tv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
         </com.saint.struct.widget.TouchLinearLayout>
-
         <ImageView
             android:id="@+id/roundImage"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginTop="20dp" />
+
+
     </LinearLayout>
 </layout>

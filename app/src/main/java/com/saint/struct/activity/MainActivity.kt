@@ -1,33 +1,30 @@
 package com.saint.struct.activity
 
-import android.Manifest
 import android.content.*
-import retrofit2.Retrofit
-import com.saint.biometiriclib.BiometricPromptManager
-import com.saint.struct.R
-import com.saint.struct.service.MessengerService
-import com.saint.struct.bean.InnerClass.Hello
-import com.saint.struct.service.JobTestService
-import com.saint.biometiriclib.BiometricPromptManager.OnBiometricIdentifyCallback
-import android.widget.Toast
 import android.graphics.BitmapFactory
-import com.saint.struct.viewmodel.MainActivityViewModel
-import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
-import android.content.pm.PackageManager
 import android.os.*
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.saint.jnitest.HelloWorld
+import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.saint.biometiriclib.BiometricPromptManager
+import com.saint.biometiriclib.BiometricPromptManager.OnBiometricIdentifyCallback
+import com.saint.struct.R
 import com.saint.struct.bean.InnerClass
+import com.saint.struct.bean.InnerClass.Hello
 import com.saint.struct.bean.Node
 import com.saint.struct.bean.User
+import com.saint.struct.bean.entity.Student
+import com.saint.struct.database.SaintRoomDB
 import com.saint.struct.databinding.LayoutMainBinding
-import java.lang.Exception
-import java.lang.StringBuilder
+import com.saint.struct.service.JobTestService
+import com.saint.struct.service.MessengerService
+import com.saint.struct.task.QueryStudentTask
+import com.saint.struct.viewmodel.MainActivityViewModel
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.runtime.Permission
+import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
@@ -38,6 +35,8 @@ class MainActivity : BaseActivity() {
     private val mRetrofit: Retrofit? = null
     private lateinit var mLayoutBinding: LayoutMainBinding
     private var mManager: BiometricPromptManager? = null
+    private var studentList:List<Student> = mutableListOf()
+    private lateinit var studentTask: QueryStudentTask;
 
     companion object {
         const val EXTRA_KEY_SERVICE = "extra_key_service"
@@ -47,6 +46,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mLayoutBinding = DataBindingUtil.setContentView(this, R.layout.layout_main)
+        studentTask = QueryStudentTask(SaintRoomDB.getInstance(this),studentList)
+        requestPermission()
         setListener()
     }
 
@@ -65,9 +66,12 @@ class MainActivity : BaseActivity() {
         mLayoutBinding.helloBtn4.setOnClickListener {
             startActivity(Intent().setClass(this@MainActivity, PageOldActivity::class.java))
         }
-        mLayoutBinding.helloBtn5.setOnClickListener { testFinger() }
+        mLayoutBinding.helloBtn5.setOnClickListener { testDB() }
     }
 
+    private fun testDB() {
+        studentTask.execute()
+    }
 
     private fun testExtension() {
         getPreferences(Context.MODE_PRIVATE).modify {
@@ -230,57 +234,53 @@ class MainActivity : BaseActivity() {
         WebActivity.startActivity(this@MainActivity, "title", url)
     }
 
-    fun requestPermission() {
-        //使用兼容库就无需判断系统版本
-        val hasWriteStoragePermission = ContextCompat.checkSelfPermission(
-            application, Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-        if (hasWriteStoragePermission == PackageManager.PERMISSION_GRANTED) {
-            //拥有权限，执行操作
-            Toast.makeText(this@MainActivity, "get it", Toast.LENGTH_LONG).show()
-        } else {
-            //没有权限，向用户请求权限
-            ActivityCompat.requestPermissions(
-                this@MainActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                1
-            )
-        }
+    private fun requestPermission() {
+        val permissions = Permission.Group.STORAGE
+        AndPermission.with(this)
+            .runtime()
+            .permission(permissions)
+            .onGranted {
+                Toast.makeText(this, "get it", Toast.LENGTH_SHORT).show()
+            }
+            .onDenied {
+                Toast.makeText(this, "请打开权限，否则无法获取本地文件", Toast.LENGTH_SHORT).show()
+            }.start()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //用户同意，执行操作
-                Toast.makeText(this@MainActivity, "get it", Toast.LENGTH_LONG).show()
-            } else {
-                //用户不同意，向用户展示该权限作用
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                ) {
-                    AlertDialog.Builder(this@MainActivity)
-                        .setMessage("申请权限")
-                        .setPositiveButton("OK") { dialog1: DialogInterface?, which: Int ->
-                            ActivityCompat.requestPermissions(
-                                this, arrayOf(
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                ),
-                                1
-                            )
-                        }
-                        .setNegativeButton("Cancel", null)
-                        .create()
-                        .show()
-                }
-            }
-        }
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == 1) {
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                //用户同意，执行操作
+//                Toast.makeText(this@MainActivity, "get it", Toast.LENGTH_LONG).show()
+//            } else {
+//                //用户不同意，向用户展示该权限作用
+//                if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                        this,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                    )
+//                ) {
+//                    AlertDialog.Builder(this@MainActivity)
+//                        .setMessage("申请权限")
+//                        .setPositiveButton("OK") { dialog1: DialogInterface?, which: Int ->
+//                            ActivityCompat.requestPermissions(
+//                                this, arrayOf(
+//                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                                ),
+//                                1
+//                            )
+//                        }
+//                        .setNegativeButton("Cancel", null)
+//                        .create()
+//                        .show()
+//                }
+//            }
+//        }
+//    }
 
     private val conn: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {

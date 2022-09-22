@@ -196,15 +196,23 @@ dependencies {
     implementation(Configuration.Dependencies.androidx_paging_rxjava2)
     //work
     implementation(Configuration.Dependencies.work)
+    //room
+    implementation (Configuration.Dependencies.androidx_room_runtime)
+    implementation (Configuration.Dependencies.androidx_room_ktx)
+    kapt  (Configuration.Dependencies.androidx_room_compiler)
     //glide
     implementation(Configuration.Dependencies.glide) {
         exclude (group = "com.android.support")
     }
+    //permission
+    implementation (Configuration.Dependencies.permission)
+
 
     implementation (project (":biometiriclib"))
 }
 repositories {
     mavenCentral()
 }
+
 
 

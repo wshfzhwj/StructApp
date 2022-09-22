@@ -49,11 +49,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".service.MessengerService"
+            android:name=".task.service.MessengerService"
             android:exported="false" />
 
         <service
-            android:name=".service.RemoteService"
+            android:name=".task.service.RemoteService"
             android:enabled="true"
             android:exported="false"
             android:process=":other">
@@ -63,7 +63,7 @@
         </service>
 
         <service
-            android:name=".service.JobTestService"
+            android:name=".task.service.JobTestService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <meta-data

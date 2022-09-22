@@ -65,7 +65,7 @@ object Configuration {
         const val core_version = "1.3.2"
 
         /** room 版本 */
-        const val room_version = "2.2.5"
+        const val room_version = "2.3.0"
 
         /** paging 版本 */
         const val paging_version = "3.1.1"
@@ -91,6 +91,9 @@ object Configuration {
 
         /** glide 版本 */
         const val glide_version = "4.11.0"
+
+        /** permisssion 版本 */
+        const val permission_version = "2.0.3"
 
         /** okhttp 版本 */
         const val okhttp_version = "3.9.0"
@@ -325,6 +328,7 @@ object Configuration {
         const val glide = "com.github.bumptech.glide:glide:${Versions.glide_version}"
         const val glide_compiler = "com.github.bumptech.glide:compiler:${Versions.glide_version}"
 
+        const val permission = "com.yanzhenjie:permission:${Versions.permission_version}"
         /**
          * okhttp
          * - Github：[https://github.com/square/okhttp]

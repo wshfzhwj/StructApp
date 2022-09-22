@@ -7,7 +7,6 @@ import android.util.Log
 import com.saint.struct.R
 import com.saint.struct.StructApp
 import com.saint.struct.activity.MainActivity
-import com.saint.struct.service.FirstWorkManager
 import kotlinx.coroutines.*
 
 class TestKt {
