@@ -1,4 +1,4 @@
-package com.saint.struct.tool
+package com.saint.struct.kotlinstudy
 
 class KotlinExtension {
     //定义两个泛型T,R，T.let代表对任意类T添加let扩展函数，这个扩展函数的返回值为R
@@ -19,12 +19,14 @@ class KotlinExtension {
 
     //with和run的区别在于，run是通过扩展函数实现，with通过顶层函数实现(不借助类或对象可以直接使用)
     //由于with是顶层函数，闭包内不包含上下文，所以调用block函数时需要指定T的对象进行调用，这也导致了with相对于run需要多传入一个参数T
+    //对一个对象实例调用多个方法
     inline fun <T, R> with(receiver: T, block: T.() -> R): R {
         return receiver.block()
     }
 
     //相较于run，apply只有一个泛型，即apply是T的扩展函数，返回的也是T
     //block依旧为T的匿名扩展函数，apply闭包包含T的上下文关系，直接在闭包调用block，返回this
+    //配置对象的属性（apply）这对于配置未出现在对象构造函数中的属性非常有用。
     inline fun <T> T.apply(block: T.() -> Unit): T {
         block()
         return this
