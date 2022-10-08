@@ -6,17 +6,17 @@ import androidx.room.Entity
 import androidx.room.Ignore
 
 @Entity(tableName = "student")
-class Student (){
+data class Student(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id", typeAffinity = ColumnInfo.INTEGER)
-    var id: Int = 0
+    var id: Int?,
     @ColumnInfo(name = "name", typeAffinity = ColumnInfo.TEXT)
-    var name: String = ""
+    var name: String = "",
     @ColumnInfo(name = "age", typeAffinity = ColumnInfo.TEXT)
     var age: String = ""
+) {
 
-    constructor(name: String, age: String) : this() {
-        this.name = name
-        this.age = age
-    }
+    @Ignore
+    constructor(name: String, age: String) : this(null, name, age)
+
 }

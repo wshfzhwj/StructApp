@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -53,6 +54,18 @@ public class ExampleUnitTest {
 //        testRevLinkedList();
 //        testDeleteNode();
 //            testHashMap();
+
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        Iterator it = list.iterator();
+        System.out.println(it.toString());
+        Integer i = (Integer) it.next();
+        System.out.println(i);
+        it.remove();
+        System.out.println(Arrays.toString(list.toArray()));
     }
 
     public void testRevLinkedList() {
@@ -89,12 +102,12 @@ public class ExampleUnitTest {
 
     }
 
-    public void testHashMap(){
+    public void testHashMap() {
         HashMap<String, Integer> map = new HashMap();
         for (int i = 0; i < 25; i++) {
             map.put(String.valueOf(i), i);
         }
-        try{
+        try {
             //获取HashMap整个类
             Class<?> mapType = map.getClass();
             //获取指定属性，也可以调用getDeclaredFields()方法获取属性数组
@@ -109,9 +122,9 @@ public class ExampleUnitTest {
             System.out.println("容量：" + capacity.invoke(map) + "    阈值：" + threshold.get(map) + "    元素数量：" + map.size());
 
             System.out.println("size = " + map.size());
-        }catch (NoSuchFieldException e){
+        } catch (NoSuchFieldException e) {
             e.printStackTrace();
-        }catch (InvocationTargetException e) {
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

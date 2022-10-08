@@ -29,14 +29,15 @@ import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
 class MainActivity : BaseActivity() {
     private var mService: Messenger? = null
     private val mRetrofit: Retrofit? = null
     private lateinit var mLayoutBinding: LayoutMainBinding
     private var mManager: BiometricPromptManager? = null
-    private var studentList:List<Student> = mutableListOf()
-    private lateinit var studentTask: QueryStudentTask;
+    private var studentList = mutableListOf<Student>()
+    private lateinit var mRoomDatabase: SaintRoomDB
 
     companion object {
         const val EXTRA_KEY_SERVICE = "extra_key_service"
@@ -46,7 +47,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mLayoutBinding = DataBindingUtil.setContentView(this, R.layout.layout_main)
-        studentTask = QueryStudentTask(SaintRoomDB.getInstance(this),studentList)
         requestPermission()
         setListener()
     }
@@ -70,7 +70,15 @@ class MainActivity : BaseActivity() {
     }
 
     private fun testDB() {
-        studentTask.execute()
+            mRoomDatabase = SaintRoomDB.getInstance(this@MainActivity)!!
+        thread {
+            mRoomDatabase.studentDao()!!.insertStudent(Student("zhangsan", "11"))
+            mRoomDatabase.studentDao()!!.insertStudent(Student("lisi", "12"))
+            mRoomDatabase.studentDao()!!.updateStudent(Student("lisi", "14"))
+            studentList.clear()
+            studentList.addAll(mRoomDatabase.studentDao()!!.getAll()!! as Collection<Student>)
+            Log.e(TAG, "db>>>>>>>>>>>" + studentList.size);
+        }
     }
 
     private fun testExtension() {
@@ -333,3 +341,7 @@ class MainActivity : BaseActivity() {
 
 
 }
+
+//private fun <E> MutableList<E>.addAll(elements: List<E?>) {
+//    elements.forEach { this.add(it!!) }
+//}

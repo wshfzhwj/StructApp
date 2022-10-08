@@ -1,4 +1,4 @@
-package com.saint.struct.kotlintest
+package com.saint.struct.kotlinstudy
 
 import com.saint.struct.bean.User
 
