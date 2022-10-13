@@ -72,7 +72,7 @@ class MainActivity : BaseActivity() {
     private fun testDB() {
             mRoomDatabase = SaintRoomDB.getInstance(this@MainActivity)!!
         thread {
-            mRoomDatabase.studentDao()!!.insertStudent(Student("zhangsan", "11"))
+            mRoomDatabase.studentDao()!!.insertStudent(Student("zhangsan", "111"))
             mRoomDatabase.studentDao()!!.insertStudent(Student("lisi", "12"))
             mRoomDatabase.studentDao()!!.updateStudent(Student("lisi", "14"))
             studentList.clear()
