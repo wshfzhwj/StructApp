@@ -12,7 +12,7 @@ import androidx.room.Room
 //version属性用于指定数据库版本号，后续数据库的升级正是依据版本号来判断的。
 // 该类需要继承自RoomDatabase，在类中，通过Room.databaseBuilder()结合单例设计模式，完成数据库的创建工作。
 // 另外，我们创建的Dao对象，在这里以抽象方法的形式返回，只需一行代码即可。
-@Database(entities = [Student::class], version = 1)
+@Database(entities = [Student::class], version = 1, exportSchema = false)
 abstract class SaintRoomDB : RoomDatabase() {
     abstract fun studentDao(): StudentDao?
 

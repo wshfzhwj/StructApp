@@ -92,7 +92,7 @@ object Configuration {
         /** glide 版本 */
         const val glide_version = "4.11.0"
 
-        /** permisssion 版本 */
+        /** permission 版本 */
         const val permission_version = "2.0.3"
 
         /** okhttp 版本 */
@@ -107,9 +107,6 @@ object Configuration {
 
         /** immersion bar 版本 */
         const val immersion_bar_version = "3.0.0"
-
-        /** doraemon kit 版本 */
-        const val doraemon_kit_version = "3.1.8"
 
         /** coil 版本 */
         const val coil_version = "1.1.0"
