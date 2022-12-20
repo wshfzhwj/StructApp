@@ -200,6 +200,9 @@ dependencies {
     //room
     implementation (Configuration.Dependencies.androidx_room_runtime)
     implementation (Configuration.Dependencies.androidx_room_ktx)
+    //leakcanary
+    implementation (Configuration.Dependencies.leakcanary)
+
     kapt  (Configuration.Dependencies.androidx_room_compiler)
     //glide
     implementation(Configuration.Dependencies.glide) {
