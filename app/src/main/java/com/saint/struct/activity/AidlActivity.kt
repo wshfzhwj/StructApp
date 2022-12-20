@@ -16,7 +16,7 @@ import com.saint.struct.practice.aidl.IPersonManager
 import com.saint.struct.practice.aidl.Person
 import com.saint.struct.service.FirstWorkManager
 
-class AidlActivity : AppCompatActivity() {
+class AidlActivity : BaseActivity() {
 
     private lateinit var binding: LayoutAidlBinding
 

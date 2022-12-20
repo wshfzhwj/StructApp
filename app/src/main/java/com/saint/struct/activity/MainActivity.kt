@@ -1,6 +1,7 @@
 package com.saint.struct.activity
 
 import android.content.*
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.*
 import android.util.Log
@@ -47,6 +48,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mLayoutBinding = DataBindingUtil.setContentView(this, R.layout.layout_main)
+        init()
         requestPermission()
         setListener()
     }

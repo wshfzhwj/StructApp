@@ -134,6 +134,9 @@ object Configuration {
 
         /** work 版本 */
         const val work_version = "2.7.1"
+
+        /** leakcanary 版本 */
+        const val leak_canary_version = "2.7"
     }
 
     /**
@@ -446,6 +449,8 @@ object Configuration {
          * work
          */
         const val work = "androidx.work:work-runtime-ktx:${Versions.work_version}"
+
+        const val leakcanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leak_canary_version}"
 
     }
 }
