@@ -15,6 +15,6 @@ class InitOrderDemo(name: String) {
 }
 
 fun main(args: Array<String>){
-    val demo = InitOrderDemo("lisi")
+    InitOrderDemo("lisi")
 }
 

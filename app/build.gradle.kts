@@ -189,7 +189,8 @@ dependencies {
     // Kotlin
     implementation(Configuration.Dependencies.kotlin_stdlib)
     // 协程
-    implementation(Configuration.Dependencies.kotlin_coroutines)
+    implementation(Configuration.Dependencies.kotlinx_coroutines_android)
+    implementation(Configuration.Dependencies.kotlinx_coroutines_core)
     // gson
     implementation(Configuration.Dependencies.gson)
     // paging
