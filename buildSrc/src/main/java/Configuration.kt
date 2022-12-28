@@ -137,6 +137,8 @@ object Configuration {
 
         /** leakcanary 版本 */
         const val leak_canary_version = "2.7"
+
+        const val coroutines_android_version = "1.5.2"
     }
 
     /**
@@ -271,7 +273,9 @@ object Configuration {
          * - 指南：[https://www.kotlincn.net/docs/reference/coroutines/coroutines-guide.html]
          * - Github：[https://github.com/Kotlin/kotlinx.coroutines]
          */
-        const val kotlin_coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2"
+        const val kotlinx_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions
+            .coroutines_android_version}"
+        const val kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines_android_version}"
 
         /**
          * kotlin Json 序列化
