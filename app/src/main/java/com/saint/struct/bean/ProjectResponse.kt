@@ -11,6 +11,7 @@ data class Data(
 )
 
 data class Project(
+    val id: String,
     val author: String,
     val envelopePic: String,
     val title: String,

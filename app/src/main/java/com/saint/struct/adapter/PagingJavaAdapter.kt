@@ -1,17 +1,17 @@
 package com.saint.struct.adapter
 
-import androidx.paging.PagingDataAdapter
-import com.saint.struct.bean.WanListBean
-import android.view.ViewGroup
-import android.view.LayoutInflater
-import com.saint.struct.R
 import android.annotation.SuppressLint
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.saint.struct.R
+import com.saint.struct.bean.WanListBean
 
-class PagingAdapter : PagingDataAdapter<WanListBean, PagingAdapter.ViewHolder>(itemCallback) {
+class PagingJavaAdapter : PagedListAdapter<WanListBean, PagingJavaAdapter.ViewHolder>(itemCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_page_recycle, parent, false)
         return ViewHolder(view)

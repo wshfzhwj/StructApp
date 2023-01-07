@@ -158,6 +158,10 @@ dependencies {
 //    implementation(Configuration.Dependencies.android_lifecycle_extensions)
     implementation(Configuration.Dependencies.androidx_lifecycle_runtime)
     implementation(Configuration.Dependencies.androidx_lifecycle_extensions)
+
+    // Kotlin navigation
+    implementation(Configuration.Dependencies.androidx_navigation_fragment_ktx)
+    implementation(Configuration.Dependencies.androidx_navigation_ui_ktx)
     // design
     implementation(Configuration.Dependencies.androidx_material)
     // 约束性布局

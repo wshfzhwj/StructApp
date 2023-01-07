@@ -7,11 +7,12 @@ import android.util.Log
 import androidx.core.app.JobIntentService
 import com.saint.struct.service.JobTestService
 import com.saint.struct.activity.MainActivity
+import com.saint.struct.fragment.MainFragment
 
 class JobTestService : JobIntentService() {
     override fun onHandleWork(intent: Intent) {
         val bundle = intent.extras
-        Log.e(TAG, bundle!!.getString(MainActivity.EXTRA_KEY_SERVICE)!!)
+        Log.e(TAG, bundle!!.getString(MainFragment.EXTRA_KEY_SERVICE)!!)
     }
 
     companion object {

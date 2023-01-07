@@ -55,4 +55,24 @@ class TouchLinearLayout : LinearLayout {
     companion object {
         private const val TAG = "TouchTest TouchLinearLayout"
     }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        for(i in 0 until childCount){
+            var childView  = getChildAt(i)
+            var lp = childView.layoutParams
+            var selfWidth = MeasureSpec.getMode(widthMeasureSpec)
+            var selfHeight = MeasureSpec.getMode(heightMeasureSpec)
+            when(lp.width){
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT ->  {
+                    if(selfWidth == MeasureSpec.EXACTLY || selfWidth == MeasureSpec.AT_MOST){
+                    }
+                }
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT->{
+
+                }
+            }
+
+        }
+    }
 }

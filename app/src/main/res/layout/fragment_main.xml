@@ -8,39 +8,41 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.saint.struct.widget.TouchLinearLayout
+        <include
+            android:id="@+id/layout_app_bar"
+            layout="@layout/layout_app_bar" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <com.saint.struct.widget.TouchButton
-                android:id="@+id/helloBtn"
+                android:id="@+id/helloBtn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="I'm back" />
+                android:text="Glide" />
 
             <Button
                 android:id="@+id/helloBtn2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="I'm KT" />
+                android:text="finger" />
+        </LinearLayout>
 
-            <Button
+        <com.saint.struct.widget.TouchLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.saint.struct.widget.TouchButton
                 android:id="@+id/helloBtn3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="I'm RX" />
+                android:text="database" />
 
             <Button
                 android:id="@+id/helloBtn4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="I'm Old" />
-
-            <Button
-                android:id="@+id/helloBtn5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="finger" />
@@ -50,12 +52,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.saint.struct.widget.TouchLinearLayout>
+
         <ImageView
             android:id="@+id/roundImage"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginTop="20dp" />
-
-
     </LinearLayout>
 </layout>
