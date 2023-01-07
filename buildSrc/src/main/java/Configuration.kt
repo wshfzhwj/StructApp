@@ -62,7 +62,7 @@ object Configuration {
         const val kotlin_version = "1.6.21"
 
         /** core 版本 */
-        const val core_version = "1.3.2"
+        const val core_version = "1.7.0"
 
         /** room 版本 */
         const val room_version = "2.3.0"
@@ -72,7 +72,7 @@ object Configuration {
 //    const val paging_version = "2.1.2"
 
         /** navigation 版本 */
-        const val navigation_version = "2.3.1"
+        const val navigation_version = "2.5.3"
 
         /** lifecycle 版本 */
         const val arch_lifecycle_version = "1.2.0"
@@ -85,6 +85,12 @@ object Configuration {
 
         /** fragment 版本 */
         const val fragment_version = "1.2.5"
+
+        /** material 版本 */
+        const val material_version = "1.5.0"
+
+        /** recyclerView 版本 */
+        const val recycler_version = "1.3.0-alpha02"
 
         /** koin 版本 */
         const val koin_version = "2.2.1"
@@ -177,10 +183,10 @@ object Configuration {
         const val androidx_appcompat = "androidx.appcompat:appcompat:1.2.0"
 
         /** androidx material */
-        const val androidx_material = "com.google.android.material:material:1.2.1"
+        const val androidx_material = "com.google.android.material:material:${Versions.material_version}"
 
         /** androidx recyclerview */
-        const val androidx_recyclerview = "androidx.recyclerview:recyclerview:1.1.0"
+        const val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.recycler_version}"
 
         /** androidx viewpager2 */
         const val androidx_viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
