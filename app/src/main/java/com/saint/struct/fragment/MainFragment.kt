@@ -39,7 +39,7 @@ class MainFragment : BaseFragment() {
     private val mRetrofit: Retrofit? = null
     private var mManager: BiometricPromptManager? = null
     private var studentList = mutableListOf<Student>()
-    private var mRoomDatabase: SaintRoomDB? = null
+    private lateinit var mRoomDatabase: SaintRoomDB
 
     companion object {
         const val EXTRA_KEY_SERVICE = "extra_key_service"
@@ -58,16 +58,15 @@ class MainFragment : BaseFragment() {
 
     private fun setListener() {
         (fragmentBinding as FragmentMainBinding).helloBtn1.setOnClickListener() { testGlide() }
-        (fragmentBinding as FragmentMainBinding).helloBtn2.setOnClickListener { testFinger()}
-//        (fragmentBinding as FragmentMainBinding).helloBtn3.setOnClickListener { testDB() }
-//        (fragmentBinding as FragmentMainBinding).helloBtn4.setOnClickListener { testDB() }
+        (fragmentBinding as FragmentMainBinding).helloBtn2.setOnClickListener { testGif() }
+        (fragmentBinding as FragmentMainBinding).helloBtn3.setOnClickListener { testFinger() }
+        (fragmentBinding as FragmentMainBinding).helloBtn4.setOnClickListener { testDB() }
     }
 
-//    private fun loadGlideImage() {
-//        //            val mUrl = "http://cn.bing.com/az/hprichbg/rb/Dongdaemun_ZH-CN10736487148_1920x1080.jpg"
-//        val mGif = "http://p1.pstatp.com/large/166200019850062839d3"
-//        Glide.with(requireActivity()).load(mGif).into((fragmentBinding as FragmentMainBinding).roundImage)
-//    }
+    private fun testGif() {
+        val mGif = "https://p1.itc.cn/q_70/images03/20210120/e75329453c7a4a84b49363559775499b.gif"
+        Glide.with(requireActivity()).load(mGif).into((fragmentBinding as FragmentMainBinding).gifImage)
+    }
 
     private fun testGlide() {
         val url = "https://alifei04.cfp.cn/creative/vcg/800/version23/VCG41175510742.jpg"
