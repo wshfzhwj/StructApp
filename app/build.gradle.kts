@@ -216,9 +216,9 @@ dependencies {
     //permission
     implementation (Configuration.Dependencies.permission)
 
-
     implementation (project (":biometiriclib"))
 }
+
 repositories {
     mavenCentral()
 }

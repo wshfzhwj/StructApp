@@ -18,19 +18,20 @@ abstract class SaintRoomDB : RoomDatabase() {
 
     companion object {
         private const val DATABASE_NAME = "my_db"
+
+        @Volatile
         private var databaseInstance: SaintRoomDB? = null
-        @Synchronized
-        fun getInstance(context: Context): SaintRoomDB? {
-            if (databaseInstance == null) {
-                databaseInstance = Room
+
+        fun getInstance(context: Context): SaintRoomDB {
+            databaseInstance ?: synchronized(this) {
+                databaseInstance ?: Room
                     .databaseBuilder(
                         context.applicationContext,
                         SaintRoomDB::class.java,
                         DATABASE_NAME
-                    )
-                    .build()
+                    ).build().also { databaseInstance = it }
             }
-            return databaseInstance
+            return databaseInstance!!
         }
     }
 }
