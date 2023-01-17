@@ -40,6 +40,7 @@ class MainFragment : BaseFragment() {
     private var mManager: BiometricPromptManager? = null
     private var studentList = mutableListOf<Student>()
     private lateinit var mRoomDatabase: SaintRoomDB
+    private lateinit var mFragmentMainBinding:FragmentMainBinding
 
     companion object {
         const val EXTRA_KEY_SERVICE = "extra_key_service"
@@ -51,16 +52,17 @@ class MainFragment : BaseFragment() {
     }
 
     override fun doInit() {
+        mFragmentMainBinding = fragmentBinding as FragmentMainBinding
         init()
         requestPermission()
         setListener()
     }
 
     private fun setListener() {
-        (fragmentBinding as FragmentMainBinding).helloBtn1.setOnClickListener() { testGlide() }
-        (fragmentBinding as FragmentMainBinding).helloBtn2.setOnClickListener { testGif() }
-        (fragmentBinding as FragmentMainBinding).helloBtn3.setOnClickListener { testFinger() }
-        (fragmentBinding as FragmentMainBinding).helloBtn4.setOnClickListener { testDB() }
+        mFragmentMainBinding.helloBtn1.setOnClickListener() { testGlide() }
+        mFragmentMainBinding.helloBtn2.setOnClickListener { testGif() }
+        mFragmentMainBinding.helloBtn3.setOnClickListener { testFinger() }
+        mFragmentMainBinding.helloBtn4.setOnClickListener { testDB() }
     }
 
     private fun testGif() {
