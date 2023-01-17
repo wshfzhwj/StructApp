@@ -1,25 +1,41 @@
+/*
+ * Copyright 2018 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 plugins {
     id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
+    id("kotlin-android")
+    id("kotlin-kapt")
     id("kotlin-parcelize")
 }
 
 android {
     // 编译 SDK 版本
-    compileSdk = Configuration.AppConfigs.compile_sdk_version
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         // 应用 id
-        applicationId = Configuration.AppConfigs.application_id
+        applicationId = "com.saint.struct"
         // 最低支持版本
-        minSdk = Configuration.AppConfigs.min_sdk_version
+        minSdk = libs.versions.minSdk.get().toInt()
         // 目标 SDK 版本
-        targetSdk= Configuration.AppConfigs.target_sdk_version
+        targetSdk = libs.versions.targetSdk.get().toInt()
         // 应用版本号
-        versionCode = Configuration.AppConfigs.version_code
+        versionCode = 1
         // 应用版本名
-        versionName = Configuration.AppConfigs.version_name
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
         // 开启 Dex 分包
@@ -29,44 +45,43 @@ android {
             // 设置支持的 SO 库构架，注意这里要根据你的实际情况来设置
             abiFilters += listOf("armeabi-v7a")
         }
+        signingConfig = signingConfigs.getByName("debug")
     }
 
     signingConfigs {
-        getByName("debug")  {
-            storeFile = file(rootProject.rootDir.absolutePath + "/saint_key.jks");
-            keyAlias = Configuration.SigningConfigs.key_alias
-            keyPassword = Configuration.SigningConfigs.key_password
+        getByName("debug") {
+            storeFile = file(rootProject.rootDir.absolutePath + "/saint_key.jks")
+            keyAlias = "saint"
+            keyPassword = "12345678"
 //            storeFile = file(Configuration.SigningConfigs.store_file)
-            storePassword = Configuration.SigningConfigs.store_password
+            storePassword = "12345678"
             enableV1Signing = true
             enableV2Signing = true
         }
         create("release") {
-            keyAlias = Configuration.SigningConfigs.key_alias
-            keyPassword = Configuration.SigningConfigs.key_password
-            storeFile = file(Configuration.SigningConfigs.store_file)
-            storePassword = Configuration.SigningConfigs.store_password
+            keyAlias = "saint"
+            keyPassword = "12345678"
+            storeFile = file(rootProject.rootDir.absolutePath + "/saint_key.jks")
+            storePassword = "12345678"
             enableV1Signing = true
             enableV2Signing = true
         }
     }
 
     buildTypes {
-        getByName("debug") {
+        debug {
             isMinifyEnabled = false
             isShrinkResources = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             )
             signingConfig = signingConfigs.findByName("debug")
         }
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             )
             signingConfig = signingConfigs.findByName("release")
         }
@@ -124,7 +139,7 @@ android {
     sourceSets {
         named("main") {
             java.srcDirs("src/main/java", "src/main/kotlin")
-            aidl.srcDirs( "src/main/aidl")
+            aidl.srcDirs("src/main/aidl")
             jniLibs.srcDirs("libs", "src/main/jniLibs")
         }
     }
@@ -138,6 +153,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs += arrayOf("-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi")
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlinx.coroutines.FlowPreview"
     }
 }
 
@@ -149,78 +165,36 @@ kapt {
 }
 
 dependencies {
-    // v4
-    implementation(Configuration.Dependencies.androidx_legacy)
-    // v7
-    implementation(Configuration.Dependencies.androidx_appcompat)
-    // LifeCycle 拓展
-//    implementation(Configuration.Dependencies.android_lifecycle_runtime)
-//    implementation(Configuration.Dependencies.android_lifecycle_extensions)
-    implementation(Configuration.Dependencies.androidx_lifecycle_runtime)
-    implementation(Configuration.Dependencies.androidx_lifecycle_extensions)
+    kapt(libs.androidx.room.compiler)
 
-    // Kotlin navigation
-    implementation(Configuration.Dependencies.androidx_navigation_fragment_ktx)
-    implementation(Configuration.Dependencies.androidx_navigation_ui_ktx)
-    // design
-    implementation(Configuration.Dependencies.androidx_material)
-    // 约束性布局
-    implementation(Configuration.Dependencies.androidx_constraint)
-    //volley
-    implementation(Configuration.Dependencies.volley)
-    // ViewModel 拓展
-    implementation(Configuration.Dependencies.androidx_lifecycle_viewmodel_ktx)
-    //databinding
-    implementation(Configuration.Dependencies.databinding)
-    //test
-    testImplementation(Configuration.Dependencies.test_junit)
-    androidTestImplementation(Configuration.Dependencies.android_test_runner)
-    androidTestImplementation(Configuration.Dependencies.android_test_espresso_core)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.bundles.androidx.navigation)
+    implementation(libs.bundles.androidx.lifecycle)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.databinding)
+    implementation(libs.bundles.squareup)
+    implementation(libs.bundles.google)
+    implementation(libs.bundles.reactivex)
+    implementation(libs.bundles.kotlinx)
+    implementation(libs.bundles.androidx.paging)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.bundles.androidx.room)
 
-    //retrofit
-    implementation(Configuration.Dependencies.retrofit)
-    implementation(Configuration.Dependencies.retrofit_adapter_rxjava2)
-    implementation(Configuration.Dependencies.retrofit_converter_gson)
-    //rxjava
-    implementation(Configuration.Dependencies.rxjava)
-    implementation(Configuration.Dependencies.rxandroid)
-    // OkHttp
-    implementation(Configuration.Dependencies.okhttp)
-    implementation(Configuration.Dependencies.okhttp_logging)
-
-    //core-ktx
-    implementation(Configuration.Dependencies.androidx_core_ktx)
-    // Kotlin
-    implementation(Configuration.Dependencies.kotlin_stdlib)
-    // 协程
-    implementation(Configuration.Dependencies.kotlinx_coroutines_android)
-    implementation(Configuration.Dependencies.kotlinx_coroutines_core)
-    // gson
-    implementation(Configuration.Dependencies.gson)
-    // paging
-    implementation(Configuration.Dependencies.androidx_paging_runtime)
-    implementation(Configuration.Dependencies.androidx_paging_rxjava2)
-    //work
-    implementation(Configuration.Dependencies.work)
-    //room
-    implementation (Configuration.Dependencies.androidx_room_runtime)
-    implementation (Configuration.Dependencies.androidx_room_ktx)
-    //leakcanary
-    implementation (Configuration.Dependencies.leakcanary)
-
-    kapt  (Configuration.Dependencies.androidx_room_compiler)
     //glide
-    implementation(Configuration.Dependencies.glide) {
-        exclude (group = "com.android.support")
+    implementation(libs.glide) {
+        exclude(group = "com.android.support")
     }
+
     //permission
-    implementation (Configuration.Dependencies.permission)
+    implementation(libs.permission)
 
-    implementation (project (":biometiriclib"))
-}
+    //test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 
-repositories {
-    mavenCentral()
+    implementation(project(":biometric"))
 }
 
 
