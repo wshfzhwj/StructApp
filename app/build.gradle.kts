@@ -19,6 +19,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -162,10 +163,14 @@ kapt {
         arg("AROUTER_MODULE_NAME", project.name)
         arg("AROUTER_GENERATE_DOC", "enable")
     }
+
+    correctErrorTypes = true
 }
 
 dependencies {
     kapt(libs.androidx.room.compiler)
+    kapt(libs.google.hilt.compiler)
+//    kapt(libs.androidx.hilt.viewmodel.compiler)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)

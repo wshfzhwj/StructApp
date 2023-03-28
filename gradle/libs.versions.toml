@@ -17,6 +17,7 @@
 [versions]
 androidGradlePlugin = "7.4.0"
 kotlinPlugin = "1.7.20"
+hiltPlugin = "2.44"
 # @keep
 compileSdk = "31"
 minSdk = "23"
@@ -40,8 +41,11 @@ work = "2.7.1"
 databinding = "4.2.2"
 viewPager = "1.0.0"
 
+
 volley = "1.2.0"
 gson = "2.9.0"
+hilt = "2.44"
+hilt-viewmodel = "1.0.0-alpha03"
 
 espresso = "3.4.0"
 junit = "4.13.2"
@@ -98,14 +102,21 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 
-
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager" }
 databinding = {module = "androidx.databinding:databinding-runtime", version.ref = "databinding"}
+
+hilt-viewmodel = {module = "androidx.hilt:hilt-lifecycle-viewmodel", version.ref = "hilt-viewmodel"}
+androidx-hilt-viewmodel-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-viewmodel" }
 
 #google
 material = { module = "com.google.android.material:material", version.ref = "material" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 volley = {module = "com.android.volley:volley", version.ref = "volley"}
+
+hilt = {module = "com.google.dagger:hilt-android", version.ref = "hilt"}
+google-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+
+
 
 #squareup
 okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttpLogging" }
@@ -123,9 +134,10 @@ permission = {module = "com.yanzhenjie:permission", version.ref = "permission"}
 
 ##[bundles] 部分用于声明依赖包
 [bundles]
-google = ["material","gson","volley"]
+google = ["material","gson","volley","hilt"]
 squareup = ["okhttp3-logging-interceptor","retrofit2","adapter-rxjava2","retrofit2-converter-gson","leakcanary"]
 reactivex = ["rxjava","rxandroid"]
+#androidx-lifecycle = ["androidx-lifecycle-runtime","androidx-lifecycle-extensions","androidx-lifecycle-viewmodel-ktx","hilt-viewmodel"]
 androidx-lifecycle = ["androidx-lifecycle-runtime","androidx-lifecycle-extensions","androidx-lifecycle-viewmodel-ktx"]
 androidx-room = ["androidx-room-ktx", "androidx-room-runtime"]
 androidx-navigation = ["androidx-navigation-fragment-ktx","androidx-navigation-ui-ktx"]
@@ -139,3 +151,4 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugin" }
+android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltPlugin" }
