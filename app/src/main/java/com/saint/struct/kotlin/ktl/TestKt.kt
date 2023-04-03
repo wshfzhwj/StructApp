@@ -1,4 +1,4 @@
-package com.saint.struct.kotlinstudy
+package com.saint.struct.kotlin.ktl
 
 import kotlinx.coroutines.*
 

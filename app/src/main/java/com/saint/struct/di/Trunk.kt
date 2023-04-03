@@ -2,7 +2,6 @@ package com.saint.struct.di
 
 import com.saint.struct.di.annotation.BindElectricEngine
 import com.saint.struct.di.annotation.BindGasEngine
-import com.saint.struct.interfaces.di.Engine
 import javax.inject.Inject
 
 class Trunk @Inject constructor(val driver: Driver){

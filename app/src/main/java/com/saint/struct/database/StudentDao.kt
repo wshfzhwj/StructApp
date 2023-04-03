@@ -1,4 +1,4 @@
-package com.saint.struct.interfaces.room
+package com.saint.struct.database
 
 import androidx.room.*
 import com.saint.struct.bean.entity.Student

@@ -1,8 +1,7 @@
 @file:JvmName("CoroutinesStudyKt")
 
-package com.saint.struct.kotlinstudy
+package com.saint.struct.kotlin.ktl
 
-import android.content.Context
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.system.measureTimeMillis

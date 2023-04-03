@@ -194,6 +194,7 @@ dependencies {
 
     //permission
     implementation(libs.permission)
+//    implementation(libs.leakcanary)
 
     //test
     testImplementation(libs.junit)
