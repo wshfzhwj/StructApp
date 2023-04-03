@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import com.saint.struct.bean.entity.Student
 import androidx.room.RoomDatabase
-import com.saint.struct.interfaces.room.StudentDao
-import com.saint.struct.database.SaintRoomDB
 import androidx.room.Room
 
 //@Database标签用于告诉系统这是Room数据库对象。entities属性用于指定该数据库有哪些表，若需建立多张表，以逗号相隔开。

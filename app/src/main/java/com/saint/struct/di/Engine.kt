@@ -1,4 +1,4 @@
-package com.saint.struct.interfaces.di
+package com.saint.struct.di
 
 interface Engine{
     fun start()

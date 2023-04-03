@@ -1,4 +1,4 @@
-package com.saint.struct.kotlinstudy
+package com.saint.struct.kotlin.ktl
 
 class Derived2(name: String,val lastName: String,
 ) : Base2(name.capitalize().also { println("Argument for Base: $it") }) {

@@ -6,7 +6,6 @@ import com.saint.struct.tool.CrashHandler;
 
 import dagger.hilt.android.HiltAndroidApp;
 
-@HiltAndroidApp
 public class StructApp extends Application {
     @Override
     public void onCreate() {

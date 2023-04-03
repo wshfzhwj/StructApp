@@ -11,7 +11,7 @@ class Paging3KtDataSource(private val repository: Repository) : PagingSource<Int
             //页码未定义置为1
             var nextPage = params.key ?: 1
             //仓库层请求数据
-            var response = repository.getArticleList(nextPage, 60)
+            var response = repository.getProjectsList(nextPage, 60)
 
             LoadResult.Page(
                 data = response.data.datas,

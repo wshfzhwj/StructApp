@@ -2,11 +2,10 @@ package com.saint.struct.bean
 
 import java.util.ArrayList
 
-class WanBean {
-    var curPage = 0
-    var size = 0
-    var total = 0
-    var pageCount = 0
-    @JvmField
-    var datas = ArrayList<WanListBean>()
-}
+data class WanBean(
+    var curPage: Int = 0,
+    var size: Int = 0,
+    var total: Int = 0,
+    var pageCount: Int = 0,
+    @JvmField var datas: ArrayList<WanListBean>
+)
