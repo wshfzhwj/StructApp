@@ -12,7 +12,7 @@ import androidx.room.Room
 // 另外，我们创建的Dao对象，在这里以抽象方法的形式返回，只需一行代码即可。
 @Database(entities = [Student::class], version = 1, exportSchema = false)
 abstract class SaintRoomDB : RoomDatabase() {
-    abstract fun studentDao(): StudentDao?
+    abstract fun studentDao(): StudentDao
 
     companion object {
         private const val DATABASE_NAME = "my_db"

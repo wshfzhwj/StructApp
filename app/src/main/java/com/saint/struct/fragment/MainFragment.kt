@@ -7,18 +7,16 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.saint.biometiriclib.BiometricPromptManager
+import androidx.fragment.app.viewModels
 import com.saint.struct.R
 import com.saint.struct.activity.AidlActivity
 import com.saint.struct.activity.WebActivity
 import com.saint.struct.bean.InnerClass
-import com.saint.struct.bean.User
 import com.saint.struct.bean.entity.Student
-import com.saint.struct.database.SaintRoomDB
 import com.saint.struct.databinding.FragmentMainBinding
 import com.saint.struct.service.JobTestService
 import com.saint.struct.service.MessengerService
+import com.saint.struct.viewmodel.MainFragmentViewModel
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
 import retrofit2.Retrofit
@@ -26,7 +24,6 @@ import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.thread
 
 /**
  * A simple [Fragment] subclass.
@@ -37,10 +34,9 @@ import kotlin.concurrent.thread
 class MainFragment : BaseFragment() {
     private var mService: Messenger? = null
     private val mRetrofit: Retrofit? = null
-    private var mManager: BiometricPromptManager? = null
-    private var studentList = mutableListOf<Student>()
-    private lateinit var mRoomDatabase: SaintRoomDB
-    private lateinit var mFragmentMainBinding:FragmentMainBinding
+    var studentList = mutableListOf<Student>()
+    private lateinit var mFragmentMainBinding: FragmentMainBinding
+    private lateinit var viewModel: MainFragmentViewModel
 
     companion object {
         const val EXTRA_KEY_SERVICE = "extra_key_service"
@@ -52,40 +48,26 @@ class MainFragment : BaseFragment() {
     }
 
     override fun doInit() {
+        viewModel = MainFragmentViewModel(studentList)
         mFragmentMainBinding = fragmentBinding as FragmentMainBinding
         init()
         requestPermission()
-        setListener()
     }
 
-    private fun setListener() {
-        mFragmentMainBinding.helloBtn1.setOnClickListener() { testGlide() }
-        mFragmentMainBinding.helloBtn2.setOnClickListener { testGif() }
-        mFragmentMainBinding.helloBtn3.setOnClickListener { testFinger() }
-        mFragmentMainBinding.helloBtn4.setOnClickListener { testDB() }
+    fun testGif() {
+        viewModel.testGif(this, mFragmentMainBinding.gifImage)
     }
 
-    private fun testGif() {
-        val mGif = "https://p1.itc.cn/q_70/images03/20210120/e75329453c7a4a84b49363559775499b.gif"
-        Glide.with(requireActivity()).load(mGif).into((fragmentBinding as FragmentMainBinding).gifImage)
+    fun testGlide() {
+        viewModel.testGlide(this, mFragmentMainBinding.roundImage)
     }
 
-    private fun testGlide() {
-        val url = "https://alifei04.cfp.cn/creative/vcg/800/version23/VCG41175510742.jpg"
-        Glide.with(this).load(url).into((fragmentBinding as FragmentMainBinding).roundImage)
+    fun testDB() {
+        viewModel.testDB(requireActivity())
     }
 
-
-    private fun testDB() {
-        mRoomDatabase = SaintRoomDB.getInstance(requireActivity())
-        thread {
-            mRoomDatabase?.studentDao()?.insertStudent(Student("zhangsan", "112"))
-            mRoomDatabase?.studentDao()?.insertStudent(Student("lisi", "12"))
-            mRoomDatabase?.studentDao()?.updateStudent(Student("lisi", "14"))
-            studentList.clear()
-            val list = mRoomDatabase?.studentDao()?.getAll() as List<Student>
-            studentList.addAll(list)
-        }
+    fun testFinger() {
+        viewModel.testFinger(requireActivity(), mFragmentMainBinding.tvDesc)
     }
 
     private fun testExtension() {
@@ -140,42 +122,6 @@ class MainFragment : BaseFragment() {
 //                bindService(new Intent(MainActivity.requireActivity(), MessengerService.class), connection, BIND_AUTO_CREATE);
     }
 
-    private fun testFinger() {
-        mManager = BiometricPromptManager.from(requireActivity())
-        val stringBuilder = StringBuilder()
-        stringBuilder.append("SDK version is " + Build.VERSION.SDK_INT)
-        stringBuilder.append("\n")
-        stringBuilder.append("isHardwareDetected : " + mManager!!.isHardwareDetected())
-        stringBuilder.append("\n")
-        stringBuilder.append("hasEnrolledFingerprints : " + mManager!!.hasEnrolledFingerprints())
-        stringBuilder.append("\n")
-        stringBuilder.append("isKeyguardSecure : " + mManager!!.isKeyguardSecure())
-        stringBuilder.append("\n")
-        (fragmentBinding as FragmentMainBinding).tvDesc.text = stringBuilder.toString()
-        if (mManager!!.isBiometricPromptEnable()) {
-            mManager!!.authenticate(object : BiometricPromptManager.OnBiometricIdentifyCallback {
-                override fun onUsePassword() {
-                    Toast.makeText(requireActivity(), "onUsePassword", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onSucceeded() {
-                    Toast.makeText(requireActivity(), "onSucceeded", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onFailed() {
-                    Toast.makeText(requireActivity(), "onFailed", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onError(code: Int, reason: String) {
-                    Toast.makeText(requireActivity(), "onError", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onCancel() {
-                    Toast.makeText(requireActivity(), "onCancel", Toast.LENGTH_SHORT).show()
-                }
-            })
-        }
-    }
 
     private fun testBitmapMemory() {
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.a)
@@ -188,9 +134,10 @@ class MainFragment : BaseFragment() {
         //        Log.d(TAG,"requireActivity() method is for testing git conflict");
     }
 
-    var connection: ServiceConnection = object : ServiceConnection {
+    var conn: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             Log.d(TAG, "onServiceConnected")
+            mService = Messenger(service)
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
@@ -198,11 +145,9 @@ class MainFragment : BaseFragment() {
         }
     }
 
-    fun testEquals() {
-        val user = User("a", "a")
-        val user2 = User("a", "a")
-        Log.e(TAG, "value 1= " + (user === user2))
-        Log.e(TAG, "value 2= " + (user == user2))
+    override fun onDestroy() {
+        requireActivity().unbindService(conn)
+        super.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -223,6 +168,7 @@ class MainFragment : BaseFragment() {
     private fun init() {
         setToolbar()
         bindService()
+        mFragmentMainBinding.handle = this
     }
 
     private fun setToolbar() {
@@ -290,13 +236,6 @@ class MainFragment : BaseFragment() {
 //        }
 //    }
 
-    private val conn: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName, service: IBinder) {
-            mService = Messenger(service)
-        }
-
-        override fun onServiceDisconnected(name: ComponentName) {}
-    }
 
     fun transBitmap() {
         val bundle = Bundle()
@@ -304,30 +243,25 @@ class MainFragment : BaseFragment() {
     }
 
     private val messengerHandler: Handler = object : Handler(Looper.myLooper()!!) {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-        }
     }
-    private val mGetMessager = Messenger(messengerHandler)
-    override fun onDestroy() {
-        requireActivity().unbindService(conn)
-        super.onDestroy()
-    }
+    private val mGetMessenger = Messenger(messengerHandler)
+
 
     internal inner class ThreadHandler : Thread() {
         override fun run() {
             super.run()
             Looper.prepare()
-            val handler = Handler()
+            val handler = Handler(Looper.getMainLooper()!!)
             Log.e(TAG, "handler id = " + handler.looper.thread.id)
             Log.e(TAG, "handler id = $id")
             Looper.loop()
         }
+
     }
 
-    internal inner class ScheduleCallable : Callable<Any?> {
+    internal inner class ScheduleCallable : Callable<Any> {
         @Throws(Exception::class)
-        override fun call(): Any? {
+        override fun call(): Any {
             Log.e(TAG, "ScheduleCallable call...")
             return true
         }
