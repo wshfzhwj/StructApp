@@ -22,15 +22,15 @@ public class InterviewFunc {
     }
 
 
-    public int removeElement(int[] A, int elem) {
-        if (A == null || A.length == 0) {
+    public int removeElement(int[] arrays, int elem) {
+        if (arrays == null || arrays.length == 0) {
             return 0;
         }
 
         int index = 0;
-        for (int i = 0; i < A.length; i++) {
-            if (A[i] != elem) {
-                A[index++] = A[i];
+        for (int i = 0; i < arrays.length; i++) {
+            if (arrays[i] != elem) {
+                arrays[index++] = arrays[i];
             }
         }
 
@@ -54,6 +54,7 @@ public class InterviewFunc {
 
     /**
      * 链表翻转
+     *
      * @param node 头节点
      * @return
      */
@@ -75,15 +76,14 @@ public class InterviewFunc {
 
     /**
      * 删除节点
-     * @param node
+     *
+     * @param head
      */
     public Node deleteNode(Node head, Node nodeToBeDel) {
-        if (head == null ) {
-            return null;
-        }
-        if (nodeToBeDel == null) {
+        if (head == null || nodeToBeDel == null) {
             return head;
         }
+
         if (nodeToBeDel.next != null) {
             // 被删除的是中间节点
             nodeToBeDel.value = nodeToBeDel.next.value;
@@ -91,7 +91,7 @@ public class InterviewFunc {
         } else if (head == nodeToBeDel) {
             // 被删除的是头节点
             head = null;
-        }else {
+        } else {
             // 被删除的是尾部节点
             Node node = head;
             while (node.next != nodeToBeDel) {
@@ -100,5 +100,21 @@ public class InterviewFunc {
             node.next = null;
         }
         return head;
+    }
+
+    public int maxSumArray(int[] arrays) {
+        if (arrays == null || arrays.length == 0) {
+            return 0;
+        }
+        int max = Integer.MIN_VALUE, sum = 0;
+        //{1, 4, -2, 6, -7, 3, 5, 4};
+        for (int i = 0; i < arrays.length; i++) {
+            System.out.println("for...");
+            sum = sum + arrays[i];
+            max = Math.max(max, sum);
+            sum = Math.max(sum, 0);
+            System.out.println("sum = " + sum);
+        }
+        return max;
     }
 }

@@ -9,6 +9,7 @@ import android.os.MessageQueue;
 
 import com.saint.struct.bean.Node;
 import com.saint.struct.practice.InterviewFunc;
+import com.saint.struct.practice.ListedIntegerNode;
 import com.saint.struct.practice.SortPractice;
 
 import org.junit.Test;
@@ -30,10 +31,17 @@ import java.util.List;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
+        SortPractice sortPractice = new SortPractice();
 //        int[] array = {9, 8, 6, 7, 3, 5, 4};
-//        SortPractice sortPractice = new SortPractice();
 //        sortPractice.bubbleSort(array);
 
+        int[] a = new int[10];
+        a[0] = 4;
+        a[1] = 5;
+        a[2] = 6;
+        int[] b = {1, 2, 3};
+        sortPractice.merge(a, b, 3, 3);
+        print(a);
 //        sortPractice.selectSort(array);
 //        sortPractice.insertSort(array);
 //        sortPractice.quickSort(array);
@@ -55,17 +63,17 @@ public class ExampleUnitTest {
 //        testDeleteNode();
 //            testHashMap();
 
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        Iterator it = list.iterator();
-        System.out.println(it.toString());
-        Integer i = (Integer) it.next();
-        System.out.println(i);
-        it.remove();
-        System.out.println(Arrays.toString(list.toArray()));
+//        ArrayList<Integer> list = new ArrayList<>();
+//        list.add(1);
+//        list.add(2);
+//        list.add(3);
+//        list.add(4);
+//        Iterator it = list.iterator();
+//        System.out.println(it.toString());
+//        Integer i = (Integer) it.next();
+//        System.out.println(i);
+//        it.remove();
+//        System.out.println(Arrays.toString(list.toArray()));
     }
 
     public void testRevLinkedList() {
@@ -84,6 +92,13 @@ public class ExampleUnitTest {
         Node<String> a = new Node<>("A", b);
         new InterviewFunc().deleteNode(a, c);
         System.out.println(b.next.value);
+    }
+
+    @Test
+    public void testMaxSubArray() {
+        int[] array = {1, 4, -2, 6, -7, 3, 5, 4};
+        InterviewFunc fun = new InterviewFunc();
+        System.out.println(fun.maxSumArray(array));
     }
 
     @Test
@@ -172,5 +187,51 @@ public class ExampleUnitTest {
         str = "abc";
     }
 
+
+    @Test
+    public void testLinkedAdd() {
+        ListedIntegerNode n1 = new ListedIntegerNode();
+        n1.data = 7;
+        ListedIntegerNode n2 = new ListedIntegerNode();
+        n2.data = 1;
+        ListedIntegerNode n3 = new ListedIntegerNode();
+        n3.data = 6;
+        n2.next = n3;
+        n1.next = n2;
+
+
+        ListedIntegerNode n4 = new ListedIntegerNode();
+        n4.data = 5;
+        ListedIntegerNode n5 = new ListedIntegerNode();
+        n5.data = 9;
+        ListedIntegerNode n6 = new ListedIntegerNode();
+        n6.data = 2;
+        n5.next = n6;
+        n4.next = n5;
+        ListedIntegerNode node = addLists(n1,n4,0);
+        while(node != null){
+            System.out.println("node = " + node.data);
+            node = node.next;
+        }
+    }
+
+    ListedIntegerNode addLists(ListedIntegerNode l1, ListedIntegerNode l2, int carry) {
+        if (l1 == null && l2 == null && carry == 0) {
+            return null;
+        }
+        ListedIntegerNode result = new ListedIntegerNode();
+        int value = carry;
+        if (l1 != null) {
+            value += l1.data;
+        }
+        if (l2 != null) {
+            value += l2.data;
+        }
+        result.data = value % 10;
+
+        ListedIntegerNode more = addLists(l1 == null ? null : l1.next, l2 == null ? null : l2.next, value >= 10 ? 1 : 0);
+        result.next = more;
+        return result;
+    }
 
 }

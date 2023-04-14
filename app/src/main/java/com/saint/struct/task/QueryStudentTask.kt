@@ -8,9 +8,9 @@ import com.saint.struct.task.QueryStudentTask
 
 abstract class QueryStudentTask(var mRoomDatabase: SaintRoomDB, var list: MutableList<Student?>) : AsyncTask<Void, Void, Void>() {
     override fun doInBackground(vararg arg0: Void): Void? {
-        mRoomDatabase.studentDao()!!.insertStudent(Student("zhangsan", "11"))
-        mRoomDatabase.studentDao()!!.insertStudent(Student("lisi", "12"))
-        mRoomDatabase.studentDao()!!.updateStudent(Student("lisi", "14"))
+        mRoomDatabase.studentDao().insertStudent(Student("zhangsan", "11"))
+        mRoomDatabase.studentDao().insertStudent(Student("lisi", "12"))
+        mRoomDatabase.studentDao().updateStudent(Student("lisi", "14"))
         list.clear()
         list.addAll(mRoomDatabase.studentDao()!!.getAll()!!)
         return null
@@ -24,6 +24,6 @@ abstract class QueryStudentTask(var mRoomDatabase: SaintRoomDB, var list: Mutabl
     }
 
     companion object {
-        val TAG = QueryStudentTask::class.java.simpleName
+        val TAG : String = QueryStudentTask::class.java.simpleName
     }
 }

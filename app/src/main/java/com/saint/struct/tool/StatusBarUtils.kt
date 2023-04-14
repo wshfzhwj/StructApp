@@ -7,33 +7,28 @@ import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import android.view.ViewGroup.MarginLayoutParams
-import com.saint.struct.tool.StatusBarUtils
 
 object StatusBarUtils {
     fun setDeepStatusBar(isChange: Boolean, mActivity: Activity): Boolean {
         if (!isChange) {
             return false
         }
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // 透明状态栏
-            val window = mActivity.window
-            window.clearFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                        or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
-            )
-            window.decorView.systemUiVisibility =
-                (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN /*| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION*/
-                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
+        // 透明状态栏
+        val window = mActivity.window
+        window.clearFlags(
+            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+        )
+        window.decorView.systemUiVisibility =
+            (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN /*| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION*/
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = Color.TRANSPARENT
 
-            //设置状态栏文字颜色及图标为深色
-            mActivity.window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
-            true
-        } else {
-            false
-        }
+        //设置状态栏文字颜色及图标为深色
+        mActivity.window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+        return true
     }
 
     fun getStatusBarHeight(context: Context): Int {
