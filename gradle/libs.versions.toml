@@ -15,9 +15,10 @@
 ##
 ##[versions] 部分用于声明可以被依赖项引用的版本。
 [versions]
-androidGradlePlugin = "7.4.0"
-kotlinPlugin = "1.7.20"
+androidGradlePlugin = "7.2.1"
+kotlinPlugin = "1.6.10"
 hiltPlugin = "2.44"
+asmPlugin = "1.0.2"
 # @keep
 compileSdk = "31"
 minSdk = "23"
@@ -69,6 +70,7 @@ permission = "2.0.3"
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinPlugin" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltPlugin" }
+asm-plugin-gradle-plugin = { module = "com.saint.inject:inject-plugin", version.ref = "asmPlugin" }
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
@@ -157,3 +159,4 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugin" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltPlugin" }
+asm-plugin = { id = "com.saint.inject", version.ref = "asmPlugin" }

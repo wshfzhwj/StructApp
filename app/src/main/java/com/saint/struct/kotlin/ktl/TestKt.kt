@@ -54,7 +54,7 @@ fun main(args: Array<String>) {
 //    System.out.println("memory getByteCount = " + bitmap.byteCount);
 //    test(10) { num1: Int, num2: Int -> num1 + num2 }
     val list: List<String> = listOf("a", "aa", "aaa", "aaaa")
-    val result: String? = list.maxBy { it.length }
+//    val result: String? = list.maxBy { it.length }
     println(::testCoroutinesCancel)
     print("Write anything here: ")
 
