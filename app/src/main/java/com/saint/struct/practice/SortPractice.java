@@ -105,8 +105,6 @@ public class SortPractice {
             }
             array[high] = array[low];
         }
-
-
         array[low] = pivot;
         return low;
     }

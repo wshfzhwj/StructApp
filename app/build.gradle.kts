@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
+    id("inject-plugin")
 }
 
 android {
@@ -152,7 +152,7 @@ android {
 
     // kotlin Jvm 版本
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
         freeCompilerArgs += arrayOf("-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi")
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlinx.coroutines.FlowPreview"
     }
@@ -168,6 +168,7 @@ kapt {
 }
 
 dependencies {
+    //    implementation (fileTree("lib"))
     kapt(libs.androidx.room.compiler)
     kapt(libs.google.hilt.compiler)
 //    kapt(libs.androidx.hilt.viewmodel.compiler)

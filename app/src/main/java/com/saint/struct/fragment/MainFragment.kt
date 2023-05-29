@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.saint.struct.R
 import com.saint.struct.activity.AidlActivity
 import com.saint.struct.activity.WebActivity
@@ -59,7 +58,9 @@ class MainFragment : BaseFragment() {
     }
 
     fun testGlide() {
-        viewModel.testGlide(this, mFragmentMainBinding.roundImage)
+//        viewModel.testGlide(this, mFragmentMainBinding.roundImage)
+        val injectTest = InjectTest()
+        injectTest.sayHello()
     }
 
     fun testDB() {

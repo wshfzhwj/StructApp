@@ -96,7 +96,7 @@ public class ExampleUnitTest {
 
     @Test
     public void testMaxSubArray() {
-        int[] array = {1, 4, -2, 6, -7, 3, 5, 4};
+        int[] array = {-1, 4, -2, -6, 7, 3, 5, 4};
         InterviewFunc fun = new InterviewFunc();
         System.out.println(fun.maxSumArray(array));
     }

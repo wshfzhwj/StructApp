@@ -1,24 +1,36 @@
-rootProject.name = "StructApp"
-
-include (":app",":biometric")
-
 //插件脚本
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        maven ("https://maven.aliyun.com/repository/public/")
+        maven { setUrl("https://jitpack.io") }
+        maven { setUrl("https://maven.aliyun.com/repository/releases") }
+        maven { setUrl("https://maven.aliyun.com/repository/jcenter") }
+        maven { setUrl("https://maven.aliyun.com/repository/google") }
+        maven { setUrl("https://maven.aliyun.com/repository/central") }
+        maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
+        maven { setUrl("https://maven.aliyun.com/repository/public") }
+
+        mavenLocal()
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
 //依赖脚本
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
-        google()
-        mavenCentral()
-        maven ("https://maven.aliyun.com/repository/public/")
+        mavenLocal()
+        maven { setUrl("https://jitpack.io") }
+        maven { setUrl("https://maven.aliyun.com/repository/releases") }
+        maven { setUrl("https://maven.aliyun.com/repository/jcenter") }
+        maven { setUrl("https://maven.aliyun.com/repository/google") }
+        maven { setUrl("https://maven.aliyun.com/repository/central") }
+        maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
+        maven { setUrl("https://maven.aliyun.com/repository/public") }
     }
 }
+rootProject.name = "StructApp"
 
+include(":app", ":biometric", ":plugin")
+include(":inject")

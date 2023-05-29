@@ -12,6 +12,7 @@
 //方式二
 buildscript {
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
     }
@@ -20,6 +21,7 @@ buildscript {
         classpath(libs.android.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.hilt.android.gradle.plugin)
+        classpath(libs.asm.plugin.gradle.plugin)
     }
 }
 
