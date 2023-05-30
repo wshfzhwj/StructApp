@@ -2,6 +2,7 @@ package com.saint.struct.fragment;
 
 import android.util.Log;
 
+
 public class InjectTest {
     @PluginTest
     public void sayHello(){

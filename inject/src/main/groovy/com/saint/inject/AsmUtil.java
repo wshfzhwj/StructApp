@@ -1,7 +1,12 @@
-package com.saint.inject
+package com.saint.inject;
 
-import org.objectweb.asm.ClassReader
-import org.objectweb.asm.ClassWriter
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * author: DragonForest
@@ -17,7 +22,7 @@ public class AsmUtil {
     /**
      * 使用ASM 向class中的方法插入记录代码
      */
-    public static void inject(File srcFile,File dstFile) {
+    public static void inject(File srcFile, File dstFile) {
 
         FileInputStream fis = null;
         FileOutputStream fos = null;
@@ -43,6 +48,7 @@ public class AsmUtil {
             fos = new FileOutputStream(dstFile);
             fos.write(newClassBytes);
             fos.flush();
+            System.out.println("执行字节码插桩成功！");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("执行字节码插桩失败！" + e.getMessage());

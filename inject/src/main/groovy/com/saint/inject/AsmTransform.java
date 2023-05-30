@@ -15,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.gradle.api.Project;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
@@ -156,22 +157,7 @@ public class AsmTransform extends Transform {
             }
             return;
         }
+        System.out.println("干插桩......................");
         AsmUtil.inject(inputFile, dstFile);
-    }
-
-    public static void forceDelete(File file) throws IOException {
-        if (file.isDirectory()) {
-            deleteDirectory(file);
-        } else {
-            boolean filePresent = file.exists();
-            if (!file.delete()) {
-                if (!filePresent){
-                    throw new FileNotFoundException("File does not exist: " + file);
-                }
-                String message =
-                        "Unable to delete file: " + file;
-                throw new IOException(message);
-            }
-        }
     }
 }

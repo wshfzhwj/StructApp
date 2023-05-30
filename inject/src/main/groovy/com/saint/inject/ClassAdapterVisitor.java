@@ -3,7 +3,6 @@ package com.saint.inject;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.commons.AdviceAdapter;
 
 /**
  * author: DragonForest
@@ -18,10 +17,11 @@ public class ClassAdapterVisitor extends ClassVisitor {
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         System.out.println("方法名：" + name + ",签名：" + signature);
         MethodVisitor methodVisitor = super.visitMethod(access, name, descriptor, signature, exceptions);
-        return new MethodAdapterVisitor(api, methodVisitor, access, name, descriptor);
-//        if (name.equals("sayHello")) {
-//            return new MethodAdapterVisitor(api, methodVisitor, access, name, descriptor);
-//        }
-//        return methodVisitor;
+//        return new MethodAdapterVisitor(api, methodVisitor, access, name, descriptor);
+        if (name.equals("sayHello")) {
+            System.out.println("sayHello go go gon ..............");
+            return new MethodAdapterVisitor(api, methodVisitor, access, name, descriptor);
+        }
+        return methodVisitor;
     }
 }

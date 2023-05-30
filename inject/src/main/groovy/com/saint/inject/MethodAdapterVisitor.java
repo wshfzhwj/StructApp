@@ -16,7 +16,7 @@ import javax.inject.Inject;
  * 对MethodVisitor进行了扩展，能让我们更轻松的进行分析
  */
 public class MethodAdapterVisitor extends AdviceAdapter {
-//    public static final String DESCRIPTOR_INJECT_CLASS = "Lcom/saint/inject/InjectTest;";
+    //    public static final String DESCRIPTOR_INJECT_CLASS = "Lcom/saint/inject/InjectTest;";
     public static final String DESCRIPTOR_INJECT_CLASS = "Lcom/saint/struct/fragment/PluginTest;";
 
 
@@ -60,7 +60,7 @@ public class MethodAdapterVisitor extends AdviceAdapter {
     @Override
     protected void onMethodEnter() {
         super.onMethodEnter();
-        System.out.println("onMethodEnter");
+        System.out.println("onMethodEnter inject = " + inject );
         if (inject) {
             invokeStatic(Type.getType("Ljava/lang/System;"),
                     new Method("currentTimeMillis", "()J"));
@@ -102,8 +102,9 @@ public class MethodAdapterVisitor extends AdviceAdapter {
     @Override
     protected void onMethodExit(int opcode) {
         super.onMethodExit(opcode);
-        System.out.println("onMethodOuter");
+        System.out.println("onMethodOuter inject = " + inject);
         if (inject) {
+            System.out.println("执行注入 ");
             invokeStatic(Type.getType("Ljava/lang/System;"),
                     new Method("currentTimeMillis", "()J"));
             // 创建本地local变量
