@@ -30,7 +30,8 @@ dependencyResolutionManagement {
         maven { setUrl("https://maven.aliyun.com/repository/public") }
     }
 }
-rootProject.name = "StructApp"
 
-include(":app", ":biometric", ":plugin")
-include(":inject")
+rootProject.name = "StructApp"
+include ':app'
+include ':biometric'
+include ':inject'
