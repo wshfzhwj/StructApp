@@ -58,9 +58,7 @@ class MainFragment : BaseFragment() {
     }
 
     fun testGlide() {
-//        viewModel.testGlide(this, mFragmentMainBinding.roundImage)
-        val injectTest = InjectTest()
-        injectTest.sayHello()
+        viewModel.testGlide(this, mFragmentMainBinding.roundImage)
     }
 
     fun testDB() {
