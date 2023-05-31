@@ -17,7 +17,7 @@ import javax.inject.Inject;
  */
 public class MethodAdapterVisitor extends AdviceAdapter {
     //    public static final String DESCRIPTOR_INJECT_CLASS = "Lcom/saint/inject/InjectTest;";
-    public static final String DESCRIPTOR_INJECT_CLASS = "Lcom/saint/struct/fragment/PluginTest;";
+    public static final String DESCRIPTOR_INJECT_CLASS = "Lcom/saint/annotation/PluginTest;";
 
 
     private int start;

@@ -15,6 +15,7 @@ import com.saint.struct.bean.entity.Student
 import com.saint.struct.databinding.FragmentMainBinding
 import com.saint.struct.service.JobTestService
 import com.saint.struct.service.MessengerService
+import com.saint.struct.tool.InjectTest
 import com.saint.struct.viewmodel.MainFragmentViewModel
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission

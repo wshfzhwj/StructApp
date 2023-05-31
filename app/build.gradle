@@ -148,6 +148,7 @@ android {
 
 
 dependencies {
+
     kapt 'androidx.room:room-compiler:2.3.0'
     //    kapt(libs.androidx.hilt.viewmodel.compiler)
 
@@ -198,4 +199,5 @@ dependencies {
     implementation "com.yanzhenjie:permission:2.0.3"
 
     implementation(project(":biometric"))
+    implementation implementation(project(':asm-annotation',))
 }
