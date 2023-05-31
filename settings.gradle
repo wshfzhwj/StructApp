@@ -34,4 +34,5 @@ dependencyResolutionManagement {
 rootProject.name = "StructApp"
 include ':app'
 include ':biometric'
-include ':inject'
+include ':asm-plugin'
+include ':asm-annotation'
