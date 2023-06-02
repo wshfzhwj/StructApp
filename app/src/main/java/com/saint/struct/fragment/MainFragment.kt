@@ -1,5 +1,6 @@
 package com.saint.struct.fragment
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.BitmapFactory
 import android.os.*
@@ -13,13 +14,10 @@ import com.saint.struct.activity.WebActivity
 import com.saint.struct.bean.InnerClass
 import com.saint.struct.bean.entity.Student
 import com.saint.struct.databinding.FragmentMainBinding
-import com.saint.struct.service.JobTestService
 import com.saint.struct.service.MessengerService
-import com.saint.struct.tool.InjectTest
 import com.saint.struct.viewmodel.MainFragmentViewModel
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
-import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
@@ -33,7 +31,7 @@ import java.util.concurrent.TimeUnit
 
 class MainFragment : BaseFragment() {
     private var mService: Messenger? = null
-    private val mRetrofit: Retrofit? = null
+//    private val mRetrofit: Retrofit? = null
     var studentList = mutableListOf<Student>()
     private lateinit var mFragmentMainBinding: FragmentMainBinding
     private lateinit var viewModel: MainFragmentViewModel
@@ -83,7 +81,7 @@ class MainFragment : BaseFragment() {
         editor.apply()
     }
 
-
+    @SuppressWarnings("unused")
     fun testLooper() {
         val looper = Looper.getMainLooper()
         val handlerThread = HandlerThread("test")
@@ -111,16 +109,6 @@ class MainFragment : BaseFragment() {
         hello.hello()
     }
 
-    private fun testService() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            startForegroundService(intent);
-//        }else{
-//            startService(intent);
-//        }
-        JobTestService.enqueueWork(requireActivity(), requireActivity().intent)
-        //        startService(intent);
-//                bindService(new Intent(MainActivity.requireActivity(), MessengerService.class), connection, BIND_AUTO_CREATE);
-    }
 
 
     private fun testBitmapMemory() {
@@ -155,7 +143,7 @@ class MainFragment : BaseFragment() {
         Log.e(TAG, "onSaveInstanceState")
     }
 
-    private fun startAidl() {
+    public fun startAidl() {
         startActivity(Intent().setClass(requireActivity(), AidlActivity::class.java))
     }
 

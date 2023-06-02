@@ -1,4 +1,4 @@
-package com.saint.struct.kotlin.ktl
+package com.saint.struct
 
 class CollectionStudy{
     //延迟属性
@@ -17,7 +17,6 @@ fun String.customLowercase() {"i from custom" + this.lowercase()}
 
 fun main(){
     //只读list
-    @SuppressWarnings("unused")
     val list = listOf("a", "b", "c")
 
     //只读 map

@@ -1,6 +1,6 @@
 @file:JvmName("CoroutinesStudyKt")
 
-package com.saint.struct.kotlin.ktl
+package com.saint.struct
 
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -17,7 +17,7 @@ class CoroutinesStudy{
         }
 
         coroutineScope.launch(Dispatchers.Main) {    //在 UI 线程开始
-            val image = withContext(Dispatchers.IO) {//切换到 IO 线程，并在执行完成后切回 UI 线程
+            withContext(Dispatchers.IO) {//切换到 IO 线程，并在执行完成后切回 UI 线程
             }
             // avatarIv.setImageBitmap(image)           //回到 UI 线程更新 UI
         }
@@ -65,7 +65,7 @@ class CoroutinesStudy{
         doWorld()
     }
 
-    suspend fun doWorld() = coroutineScope {  // this: CoroutineScope
+    private suspend fun doWorld() = coroutineScope {  // this: CoroutineScope
         launch {
             delay(1000L)
             println("World!")
@@ -74,6 +74,7 @@ class CoroutinesStudy{
     }
 
     private fun test2() {
+        //This is a delicate API and its use requires care. Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.
         GlobalScope.launch { // 在后台启动一个新的协程并继续
             delay(1000L)
             println("World!")

@@ -19,6 +19,7 @@ open class BaseHttpManager(debugLog: Boolean, timeOut: Int, url: String?) {
 
     //构造方法私有
     init {
+        println("$debugLog $timeOut")
         val interceptor = HttpLoggingInterceptor { message -> Log.i("HttpManager: ", message) }
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val builder = OkHttpClient.Builder()

@@ -39,6 +39,16 @@
             app:layout_constraintTop_toBottomOf="@id/layout_app_bar"
             android:onClick="@{(view) -> handle.testGif()}"/>
 
+        <Button
+            android:id="@+id/aidlBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="aidlBtn"
+            android:layout_marginStart="8dp"
+            app:layout_constraintLeft_toRightOf="@id/gifBtn"
+            app:layout_constraintTop_toBottomOf="@id/layout_app_bar"
+            android:onClick="@{(view) -> handle.startAidl()}"/>
+
         <com.saint.struct.widget.TouchLinearLayout
             android:id="@+id/layout_finger"
             android:layout_width="0dp"

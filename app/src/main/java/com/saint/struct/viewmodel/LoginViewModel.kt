@@ -34,6 +34,7 @@ class LoginViewModel(
     }
 
     suspend fun loginBySafeMode(username: String, token: String){
+        println("$username         $token")
         loginRepository.makeLoginSafeRequest("")
     }
 }

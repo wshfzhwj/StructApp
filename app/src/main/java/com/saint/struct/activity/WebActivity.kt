@@ -78,7 +78,6 @@ class WebActivity : BaseActivity() {
 //        it.setBuiltInZoomControls(true);
             it.useWideViewPort = true
             it.allowFileAccess = true
-            it.setAppCacheEnabled(true)
             it.loadWithOverviewMode = true
             it.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
             it.allowContentAccess = true
@@ -108,15 +107,11 @@ class WebActivity : BaseActivity() {
                 }
             }
 
-            override fun shouldInterceptRequest(view: WebView, url: String): WebResourceResponse? {
-                return super.shouldInterceptRequest(view, url)
-            }
-
             override fun shouldInterceptRequest(
                 view: WebView,
                 request: WebResourceRequest
             ): WebResourceResponse? {
-                var wrr: WebResourceResponse? = null
+                var wrr: WebResourceResponse
                 var `is`: InputStream? = null
                 //这里处理url有点粗暴，之后优化
                 val noSepPath = request.url.toString()

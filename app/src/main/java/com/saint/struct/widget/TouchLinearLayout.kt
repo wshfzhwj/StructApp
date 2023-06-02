@@ -62,7 +62,6 @@ class TouchLinearLayout : LinearLayout {
             var childView  = getChildAt(i)
             var lp = childView.layoutParams
             var selfWidth = MeasureSpec.getMode(widthMeasureSpec)
-            var selfHeight = MeasureSpec.getMode(heightMeasureSpec)
             when(lp.width){
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT ->  {
                     if(selfWidth == MeasureSpec.EXACTLY || selfWidth == MeasureSpec.AT_MOST){
