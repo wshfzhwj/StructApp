@@ -14,7 +14,7 @@ class InitOrderDemo(name: String) {
     }
 }
 
-fun main(args: Array<String>){
+fun main(){
     InitOrderDemo("lisi")
 }
 

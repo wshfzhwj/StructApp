@@ -14,6 +14,9 @@ import com.saint.biometiriclib.BiometricPromptManager
 import com.saint.struct.bean.entity.Student
 import com.saint.struct.database.SaintRoomDB
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.concurrent.thread
 
 class MainFragmentViewModel(list: MutableList<Student>) : ViewModel() {
@@ -31,6 +34,18 @@ class MainFragmentViewModel(list: MutableList<Student>) : ViewModel() {
             studentList.clear()
             val list = mRoomDatabase.studentDao().getAll() as List<Student>
             studentList.addAll(list)
+        }
+    }
+
+    suspend fun testDBByCoroutines(){
+        coroutineScope{
+            launch {
+                mRoomDatabase.studentDao().insertStudent(Student("zhangsan", "11"))
+                mRoomDatabase.studentDao().insertStudent(Student("lisi", "12"))
+                mRoomDatabase.studentDao().updateStudent(Student("lisi", "14"))
+                studentList.clear()
+                studentList.addAll(mRoomDatabase.studentDao().getAll()!!)
+            }
         }
     }
 

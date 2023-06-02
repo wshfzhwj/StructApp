@@ -39,7 +39,7 @@ class PagingJavaFragment : BaseFragment() {
         pageAdapter = PagingJavaAdapter()
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        (fragmentBinding as FragmentPagingBinding)!!.recyclerView.apply {
+        (fragmentBinding as FragmentPagingBinding).recyclerView.apply {
             this.layoutManager = layoutManager
             this.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             this.adapter = pageAdapter

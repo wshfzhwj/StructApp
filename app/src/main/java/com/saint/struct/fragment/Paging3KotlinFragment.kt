@@ -20,7 +20,7 @@ class Paging3KotlinFragment : BasePagingFragment<Project, Paging3KotlinAdapter.V
     override fun setModelAndData() {
         lifecycleScope.launchWhenCreated {
             viewModel.projects.collectLatest {
-                pageAdapter?.submitData(lifecycle, it)
+                pageAdapter.submitData(lifecycle, it)
             }
         }
     }

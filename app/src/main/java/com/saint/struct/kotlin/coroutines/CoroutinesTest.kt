@@ -6,30 +6,32 @@ import com.saint.struct.data.remote.LoginRepository
 import com.saint.struct.viewmodel.LoginViewModel
 import kotlinx.coroutines.*
 
-class CoroutinesTest{
+class CoroutinesTest {
     private val loginRepository = LoginRepository()
     private val loginViewModel = LoginViewModel(loginRepository)
 
-    fun loginByContext(){
-        loginViewModel.loginByMainThread("","")
+    fun loginByContext() {
+        loginViewModel.loginByMainThread("", "")
     }
 
-    fun loginByDispatchersIo(){
-        loginViewModel.loginByDispatchersIo("","")
+    fun loginByDispatchersIo() {
+        loginViewModel.loginByDispatchersIo("", "")
     }
 
-    suspend fun loginBySafeMode(){
-        loginViewModel.loginBySafeMode("","")
+    suspend fun loginBySafeMode() {
+        loginViewModel.loginBySafeMode("", "")
     }
 
 }
 
 fun main() {
-    val coroutinesTest =  CoroutinesTest()
+    val coroutinesTest = CoroutinesTest()
     coroutinesTest.loginByDispatchersIo()
     coroutinesTest.loginByContext()
-    GlobalScope.launch(){
-        coroutinesTest.loginBySafeMode()
-    }
+//    This is a delicate API and its use requires care. Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.
+//    GlobalScope.launch() {
+//        coroutinesTest.loginBySafeMode()
+//    }
+
 
 }

@@ -23,7 +23,7 @@ class Paging3RxJavaFragment : BasePagingFragment<WanListBean, PagingRxJavaAdapte
             //            .to(autoDisposable(AndroidLifecycleScopeProvider.from(this)))
             .subscribe { pagingData: PagingData<WanListBean>? ->
                 Log.d(TAG, "pagingData  =====================")
-                pageAdapter!!.submitData(lifecycle, pagingData!!)
+                pageAdapter.submitData(lifecycle, pagingData!!)
             }
     }
 

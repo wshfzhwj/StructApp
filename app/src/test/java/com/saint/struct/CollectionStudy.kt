@@ -1,4 +1,4 @@
-package com.saint.struct.kotlin.ktl
+package com.saint.struct
 
 class CollectionStudy{
     //延迟属性
@@ -15,7 +15,7 @@ object Resource {
 
 fun String.customLowercase() {"i from custom" + this.lowercase()}
 
-fun main(args: Array<String>){
+fun main(){
     //只读list
     val list = listOf("a", "b", "c")
 

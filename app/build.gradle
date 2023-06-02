@@ -3,9 +3,9 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-//    低版本gradle可以通过 高版本通过不了
+//    低版本gradle可以通过 高版本通过不了 自定义插件 用于学习
 //    id com.saint.plugin.AsmPlugin
-    id 'inject-plugin'
+//    id 'inject-plugin'
 }
 
 android {
@@ -51,7 +51,7 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled  false
+            minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.findByName("debug")
@@ -105,7 +105,7 @@ android {
         }
     }
 
-    //    allprojects {
+//    allprojects {
 //        gradle.projectsEvaluated {
 //            tasks.withType(JavaCompile) {
 //                options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
@@ -132,19 +132,18 @@ android {
         freeCompilerArgs = [
                 "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
                 "-Xopt-in=kotlinx.coroutines.FlowPreview"
-                ]
+        ]
     }
 
     kapt {
-        arguments {
-            arg("AROUTER_MODULE_NAME", project.name)
-            arg("AROUTER_GENERATE_DOC", "enable")
-        }
-
         correctErrorTypes = true
     }
-}
 
+    lintOptions {
+        // lintOptions 的配置
+        disable 'UnusedResources'
+    }
+}
 
 
 dependencies {
@@ -194,7 +193,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation ('com.github.bumptech.glide:glide:4.11.0')
+    implementation('com.github.bumptech.glide:glide:4.11.0')
 
     implementation "com.yanzhenjie:permission:2.0.3"
 

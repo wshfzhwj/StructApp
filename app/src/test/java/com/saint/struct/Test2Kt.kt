@@ -1,4 +1,4 @@
-package com.saint.struct.kotlin.ktl
+package com.saint.struct
 
 interface Base {
     fun print()
@@ -14,7 +14,7 @@ class BaseImpl(val x: Int) : Base {
 // 通过关键字 by 建立委托类
 class Derived(b: Base) : Base by b
 
-fun main(args: Array<String>) {
+fun main() {
 //    testBy()
 //    testWith()
 
@@ -62,7 +62,12 @@ fun describe(obj: Any): String =
 class Turtle {
     fun penDown() {}
     fun penUp() {}
-    fun turn(degrees: Double) {}
-    fun forward(pixels: Double) {}
+    fun turn(degrees: Double) {
+        println("degrees $degrees")
+    }
+
+    fun forward(pixels: Double) {
+        println("pixels $pixels")
+    }
 }
 

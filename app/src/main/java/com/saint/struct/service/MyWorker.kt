@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 
-class FirstWorkManager (context: Context, workerParameters: WorkerParameters): Worker(context, workerParameters) {
+class MyWorker (context: Context, workerParameters: WorkerParameters): Worker(context, workerParameters) {
     override fun doWork(): Result {
         Log.e("TEST", "Checking system。。。。。。。。")
         Thread.sleep(3000)
