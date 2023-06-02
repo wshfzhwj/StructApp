@@ -15,8 +15,9 @@ object Resource {
 
 fun String.customLowercase() {"i from custom" + this.lowercase()}
 
-fun main(args: Array<String>){
+fun main(){
     //只读list
+    @SuppressWarnings("unused")
     val list = listOf("a", "b", "c")
 
     //只读 map
