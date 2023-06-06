@@ -9,14 +9,35 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    signingConfigs {
+        debug {
+            storeFile = file("../saint_key.jks")
+            storePassword = "12345678"
+            keyAlias = "saint"
+            keyPassword = "12345678"
+            enableV1Signing = true
+            enableV2Signing = true
+        }
+        release {
+            storeFile = file("../saint_key.jks")
+            storePassword = "12345678"
+            keyAlias = "saint"
+            keyPassword = "12345678"
+            enableV1Signing = true
+            enableV2Signing = true
+        }
+    }
+
+
+
+    compileSdk rootProject.android.compileSdk
 
     defaultConfig {
-        applicationId "com.saint.struct"
-        minSdk 24
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        applicationId rootProject.android.applicationId
+        minSdk rootProject.android.minSdk
+        targetSdk rootProject.android.targetSdk
+        versionCode rootProject.android.versionCode
+        versionName rootProject.android.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -24,43 +45,26 @@ android {
 
         ndk {
             // 设置支持的 SO 库构架，注意这里要根据你的实际情况来设置
+            //noinspection ChromeOsAbiSupport
             abiFilters "armeabi-v7a"
         }
         signingConfig = signingConfigs.getByName("debug")
 
     }
-    signingConfigs {
-        getByName("debug") {
-            storeFile = file(rootProject.rootDir.absolutePath + "/saint_key.jks")
-            keyAlias = "saint"
-            keyPassword = "12345678"
-//            storeFile = file(Configuration.SigningConfigs.store_file)
-            storePassword = "12345678"
-            enableV1Signing = true
-            enableV2Signing = true
-        }
-        create("release") {
-            keyAlias = "saint"
-            keyPassword = "12345678"
-            storeFile = file(rootProject.rootDir.absolutePath + "/saint_key.jks")
-            storePassword = "12345678"
-            enableV1Signing = true
-            enableV2Signing = true
-        }
-    }
+
 
     buildTypes {
         debug {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.findByName("debug")
+            signingConfig signingConfigs.debug
         }
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.findByName("release")
+            signingConfig signingConfigs.release
         }
     }
 
@@ -69,41 +73,42 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+
     // 维度
-    flavorDimensions "version"
+//    flavorDimensions "version"
 
-    productFlavors {
-        // 正式线上版本
-        create("online") {
-            dimension = "version"
-            // 版本名后缀
-            versionNameSuffix = "_online"
-            // 是否使用线上环境
-            buildConfigField("boolean", "IS_ONLINE_ENV", "true")
-        }
-
-        // 测试版本
-        create("offline") {
-            dimension = "version"
-            // 应用包名后缀
-            applicationIdSuffix = ".offline"
-            // 版本名后缀
-            versionNameSuffix = "_offline"
-            // 是否使用线上环境
-            buildConfigField("boolean", "IS_ONLINE_ENV", "false")
-        }
-
-        // 开发版本
-        create("dev") {
-            dimension = "version"
-            // 应用包名后缀
-            applicationIdSuffix = ".dev"
-            // 版本名后缀
-            versionNameSuffix = "_dev"
-            // 是否使用线上环境
-            buildConfigField("boolean", "IS_ONLINE_ENV", "false")
-        }
-    }
+//    productFlavors {
+//        // 正式线上版本
+//        create("online") {
+//            dimension = "version"
+//            // 版本名后缀
+//            versionNameSuffix = "_online"
+//            // 是否使用线上环境
+//            buildConfigField("boolean", "IS_ONLINE_ENV", "true")
+//        }
+//
+//        // 测试版本
+//        create("offline") {
+//            dimension = "version"
+//            // 应用包名后缀
+//            applicationIdSuffix = ".offline"
+//            // 版本名后缀
+//            versionNameSuffix = "_offline"
+//            // 是否使用线上环境
+//            buildConfigField("boolean", "IS_ONLINE_ENV", "false")
+//        }
+//
+//        // 开发版本
+//        create("dev") {
+//            dimension = "version"
+//            // 应用包名后缀
+//            applicationIdSuffix = ".dev"
+//            // 版本名后缀
+//            versionNameSuffix = "_dev"
+//            // 是否使用线上环境
+//            buildConfigField("boolean", "IS_ONLINE_ENV", "false")
+//        }
+//    }
 
 //    allprojects {
 //        gradle.projectsEvaluated {
@@ -139,64 +144,63 @@ android {
         correctErrorTypes = true
     }
 
-    lintOptions {
-        // lintOptions 的配置
-        disable 'UnusedResources'
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
     }
 }
 
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    kapt 'androidx.room:room-compiler:2.3.0'
-    //    kapt(libs.androidx.hilt.viewmodel.compiler)
+    implementation rootProject.depsLibs.appcompat
+    implementation rootProject.depsLibs.coreKtx
 
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation rootProject.depsLibs.navigationFragment
+    implementation rootProject.depsLibs.navigationUI
+    implementation rootProject.depsLibs.constraintlayout
+    implementation rootProject.depsLibs.material
 
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation rootProject.depsLibs.lifecycleRuntime
+    implementation rootProject.depsLibs.lifecycleRuntimeKtx
+    implementation rootProject.depsLibs.lifecycleExtensions
+    implementation rootProject.depsLibs.liveDataKtx
+    implementation rootProject.depsLibs.viewModelKtx
 
-    implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    implementation 'androidx.databinding:databinding-runtime:4.2.2'
-    //    squareup
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
-    implementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+    implementation rootProject.depsLibs.databinding
+    //retrofit2
+    implementation rootProject.depsLibs.retrofit2
+    implementation rootProject.depsLibs.retrofit2AdapterRxjava
+    implementation rootProject.depsLibs.retrofit2Gson
+    implementation rootProject.depsLibs.loggingInterceptor
+    implementation rootProject.depsLibs.leakcanary
     //google
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'com.android.volley:volley:1.2.0'
+    implementation rootProject.depsLibs.gson
+    implementation rootProject.depsLibs.volley
     //reactivex
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation rootProject.depsLibs.rxjava
+    implementation rootProject.depsLibs.rxandroid
     //kotlinx
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation rootProject.depsLibs.coroutines
+    implementation rootProject.depsLibs.coroutinesCore
     //paging
-    implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
-    implementation 'androidx.paging:paging-rxjava2:3.1.1'
+    implementation rootProject.depsLibs.pagingRuntime
+    implementation rootProject.depsLibs.pagingRxjava
     //work
-    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+    implementation rootProject.depsLibs.workRuntime
     //room
-    implementation 'androidx.room:room-ktx:2.3.0'
-    implementation 'androidx.room:room-runtime:2.3.0'
+    kapt rootProject.depsLibs.roomCompiler
+    implementation rootProject.depsLibs.roomKtx
+    implementation rootProject.depsLibs.roomRuntime
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation rootProject.depsLibs.junit
+    androidTestImplementation rootProject.depsLibs.espressoCore
 
-    implementation('com.github.bumptech.glide:glide:4.11.0')
+    implementation rootProject.depsLibs.glide
+    kapt rootProject.depsLibs.glideCompiler
 
-    implementation "com.yanzhenjie:permission:2.0.3"
+    implementation rootProject.depsLibs.permissionYZJ
 
     implementation(project(":biometric"))
-    implementation implementation(project(':asm-annotation',))
+    implementation(project(':asm-annotation'))
 }

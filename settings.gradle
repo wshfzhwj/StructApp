@@ -10,9 +10,9 @@ pluginManagement {
         maven { setUrl("https://maven.aliyun.com/repository/public") }
 
         mavenLocal()
-        google()
-        mavenCentral()
-        gradlePluginPortal()
+//        google()
+//        mavenCentral()
+//        gradlePluginPortal()
     }
 }
 
