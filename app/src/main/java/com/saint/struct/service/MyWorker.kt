@@ -10,6 +10,9 @@ class MyWorker (context: Context, workerParameters: WorkerParameters): Worker(co
         Log.e("TEST", "Checking system。。。。。。。。")
         Thread.sleep(3000)
         Log.e("TEST", "Checking system done.")
+
         return Result.success()
     }
+
+
 }

@@ -102,8 +102,10 @@ class AidlActivity : BaseActivity() {
 //        }
 
 
-        WorkManager.getInstance(applicationContext).getWorkInfosLiveData(WorkQuery.Builder.fromTags(listOf<String?>("Test")).build()).observe(this) { list ->
-//        WorkManager.getInstance(applicationContext).getWorkInfosByTagLiveData("Test").observe(this) { list ->
+//        WorkManager.getInstance(applicationContext).getWorkInfosLiveData(WorkQuery.Builder.fromTags(listOf<String?>("Test")).build()).observe(this) { list ->
+        WorkManager.getInstance(applicationContext).getWorkInfosLiveData(WorkQuery.Builder.fromIds(listOf(checkSystem.id)).build())
+            .observe(this) {
+                list ->
             list.forEach {
                     when (it.state) {
                         WorkInfo.State.ENQUEUED -> Log.e(TAG, "ENQUEUED");

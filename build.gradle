@@ -1,28 +1,26 @@
 //方式一2
 //@Suppress("DSL_SCOPE_VIOLATION")  //添加DSL_SCOPE_VIOLATION,处理alias报错
-//plugins {
-//    //apply false 表示在父项目中声明，但是父项目不会立即加载，可以在子项目中通过ID的方式进行使用
-//    alias(libs.plugins.kotlin.android) apply false
-//    alias(libs.plugins.android.application) apply false
-//    alias(libs.plugins.android.library) apply false
-//    alias(libs.plugins.android.hilt) apply false
-//}
-
-buildscript {
-    repositories {
-        mavenLocal()
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
-        //自定义插件 主要用于学习
-//        classpath 'com.saint.inject:inject-plugin:1.0.3'
-
-    }
+plugins {
+    id 'com.android.application' version '7.2.2' apply false
+    id 'com.android.library' version '7.2.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
 }
+apply from: this.rootProject.file('config.gradle')
+//buildscript {
+//    repositories {
+//        mavenLocal()
+//        google()
+//        mavenCentral()
+//    }
+//
+//    dependencies {
+//        classpath 'com.android.tools.build:gradle:7.2.2'
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+//        //自定义插件 主要用于学习
+////        classpath 'com.saint.inject:inject-plugin:1.0.3'
+//
+//    }
+//}
 
 task clean(type: Delete) {
     delete rootProject.buildDir
