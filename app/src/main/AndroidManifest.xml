@@ -23,7 +23,7 @@
         tools:replace="android:theme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,17 +32,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.WebActivity" />
+        <activity android:name=".ui.activity.WebActivity" />
 
-        <activity android:name=".activity.AidlActivity" />
+        <activity android:name=".ui.activity.AidlActivity" />
 
         <service
-            android:name=".task.service.MessengerService"
+            android:name=".service.MessengerService"
             android:exported="false"
             tools:ignore="MissingClass" />
 
         <service
-            android:name=".task.service.RemoteService"
+            android:name=".service.RemoteService"
             android:enabled="true"
             android:exported="false"
             android:process=":other"
@@ -51,11 +51,6 @@
                 <action android:name="com.saint.struct.aidl.Server.Action" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".task.service.JobTestService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            tools:ignore="MissingClass" />
 
         <meta-data
             android:name="com.google.android.actions"

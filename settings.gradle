@@ -33,6 +33,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "StructApp"
 include ':app'
-include ':biometric'
+include ':lib-biometric'
 //include ':asm-plugin'
 include ':asm-annotation'
+include ':lib-kotlin-test'
+include ':lib-practise'

@@ -1,14 +1,14 @@
 package com.saint.struct.viewmodel;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.saint.struct.bean.WanAndroidBean;
 import com.saint.struct.bean.WanListBean;
-import com.saint.struct.data.PagingDataSourceFactory;
+import com.saint.struct.repository.PagingOldRepository;
 
 public class PageOldViewModel extends ViewModel {
     private int pageSize = 20;
@@ -29,5 +29,15 @@ public class PageOldViewModel extends ViewModel {
 
     public LiveData<PagedList<WanListBean>> getPagedList() {
         return mPagedList;
+    }
+
+
+    class PagingDataSourceFactory extends DataSource.Factory<String, WanListBean> {
+
+        @NonNull
+        @Override
+        public DataSource<String, WanListBean> create() {
+            return new PagingOldRepository();
+        }
     }
 }

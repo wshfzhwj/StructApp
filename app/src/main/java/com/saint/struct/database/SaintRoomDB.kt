@@ -2,7 +2,7 @@ package com.saint.struct.database
 
 import android.content.Context
 import androidx.room.Database
-import com.saint.struct.bean.entity.Student
+import com.saint.struct.bean.Student
 import androidx.room.RoomDatabase
 import androidx.room.Room
 
