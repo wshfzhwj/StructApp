@@ -2,11 +2,6 @@ package com.saint.struct;
 
 import static org.junit.Assert.assertTrue;
 
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.MessageQueue;
-
 import com.saint.struct.bean.Node;
 import com.saint.struct.practice.InterviewFunc;
 import com.saint.struct.practice.ListedIntegerNode;
@@ -20,7 +15,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**

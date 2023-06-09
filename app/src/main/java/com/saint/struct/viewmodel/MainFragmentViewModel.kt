@@ -11,12 +11,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.saint.biometiriclib.BiometricPromptManager
-import com.saint.struct.bean.entity.Student
+import com.saint.struct.bean.Student
 import com.saint.struct.database.SaintRoomDB
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.concurrent.thread
 
 class MainFragmentViewModel(list: MutableList<Student>) : ViewModel() {

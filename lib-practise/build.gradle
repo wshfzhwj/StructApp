@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdk rootProject.android.compileSdk
+    namespace 'com.saint.kotlin.lib_practise'
+    defaultConfig {
+        minSdk rootProject.android.minSdk
+        targetSdk rootProject.android.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    // kotlin Jvm 版本
+    kotlinOptions {
+        jvmTarget = "11"
+        freeCompilerArgs = [
+                "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
+                "-Xopt-in=kotlinx.coroutines.FlowPreview"
+        ]
+    }
+}
+
+dependencies {
+
+    implementation rootProject.depsLibs.coreKtx
+    implementation rootProject.depsLibs.coreKtx
+    implementation rootProject.depsLibs.appcompat
+    implementation rootProject.depsLibs.material
+    testImplementation rootProject.depsLibs.junit
+    androidTestImplementation rootProject.depsLibs.extJunit
+    androidTestCompileOnly rootProject.depsLibs.espressoCore
+}

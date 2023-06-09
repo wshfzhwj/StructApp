@@ -2,9 +2,8 @@ package com.saint.struct.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saint.struct.bean.User
-import com.saint.struct.bean.response.Resource
-import com.saint.struct.data.remote.LoginRepository
+import com.saint.struct.bean.Resource
+import com.saint.struct.repository.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -19,7 +18,7 @@ class LoginViewModel(
             val result = loginRepository.makeLoginRequest(jsonBody)
             // Display result of the network request to the user
             when (result) {
-                is Resource.Success<User> -> println("aaa")// Happy path
+                is Resource.Success<com.saint.kotlin.test.ktl.User> -> println("aaa")// Happy path
                 else -> println("aaa")// Show error in UI
             }
         }

@@ -48,7 +48,6 @@ android {
             //noinspection ChromeOsAbiSupport
             abiFilters "armeabi-v7a"
         }
-        signingConfig = signingConfigs.getByName("debug")
 
     }
 
@@ -200,7 +199,9 @@ dependencies {
     kapt rootProject.depsLibs.glideCompiler
 
     implementation rootProject.depsLibs.permissionYZJ
+    implementation(project(':lib-biometric'))
+    implementation(project(':lib-kotlin-test'))
+    implementation(project(':lib-practise'))
 
-    implementation(project(":biometric"))
     implementation(project(':asm-annotation'))
 }
