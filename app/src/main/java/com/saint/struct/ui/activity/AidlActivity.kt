@@ -25,7 +25,9 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -82,7 +84,8 @@ class AidlActivity : BaseActivity() {
         }
         binding.btnTestWorker.setOnClickListener {
             Log.e(TAG, "startCheckSystemWorker click")
-            startCheckSystemWorker()
+//            startCheckSystemWorker()
+            testMainScope()
         }
     }
 
@@ -211,6 +214,53 @@ class AidlActivity : BaseActivity() {
         Log.e(TAG, "person 列表 $personList")
     }
 
+    private fun testMainScope() {
+
+//         创建一个默认参数的协程，其默认的调度模式为Main 也就是说该协程的线程环境是Main线程
+        val job1 = mainScope.launch {
+            // 这里就是协程体
+
+            // 延迟1000毫秒  delay是一个挂起函数
+            // 在这1000毫秒内该协程所处的线程不会阻塞
+            // 协程将线程的执行权交出去，该线程该干嘛干嘛，到时间后会恢复至此继续向下执行
+            delay(1000)
+        }
+
+        // 创建一个指定了调度模式的协程，该协程的运行线程为IO线程
+        val job2 = mainScope.launch(Dispatchers.IO) {
+
+            // 此处是IO线程模式
+
+            // 切线程 将协程所处的线程环境切至指定的调度模式Main
+            withContext(Dispatchers.Main) {
+                // 现在这里就是Main线程了  可以在此进行UI操作了
+            }
+        }
+
+        // 下面直接看一个例子： 从网络中获取数据  并更新UI
+        // 该例子不会阻塞主线程
+        mainScope.launch(Dispatchers.IO) {
+            // 执行getUserInfo方法时会将线程切至IO去执行
+            val userInfo = getUserInfo()
+            // 获取完数据后 切至Main线程进行更新UI
+            withContext(Dispatchers.Main) {
+                // 更新UI
+                println(userInfo)
+            }
+        }
+    }
+
+    /**
+     * 获取用户信息 该函数模拟IO获取数据
+     * @return String
+     */
+    private suspend fun getUserInfo(): String {
+        return withContext(Dispatchers.IO) {
+            delay(2000)
+            "Kotlin"
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         //最后记得unbindService
@@ -218,5 +268,6 @@ class AidlActivity : BaseActivity() {
             unbindService(serviceConnection)
             isConnect = false
         }
+        mainScope.cancel()
     }
 }

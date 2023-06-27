@@ -1,4 +1,4 @@
-package com.saint.struct
+package com.saint.kotlin.test.ktl
 
 class CollectionStudy{
     //延迟属性
@@ -9,7 +9,7 @@ class CollectionStudy{
 
 }
 
-object Resource {
+object InnerResource {
     val name = "Name"
 }
 
@@ -39,7 +39,7 @@ fun main(){
     (1..10).forEach {}
 
     println("Convert this to camelcase".lowercase())
-    println("Resource.name = $Resource.name")
+    println("Resource.name = $InnerResource.name")
 
 
 }

@@ -57,12 +57,12 @@ public class InterviewFunc {
      * @param node 头节点
      * @return
      */
-    public Node reverseList(Node node) {
+    public <T>  Node<T> reverseList(Node<T> node) {
         if (node == null || node.next == null) {
             return node;
         }
-        Node pre = null;
-        Node next = null;
+        Node<T> pre = null;
+        Node<T> next = null;
         while (node != null) {
             next = node.next;//保存下一个节点
             node.next = pre;//重置next
