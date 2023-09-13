@@ -1,4 +1,4 @@
-package com.saint.kotlin.test.ktl
+package com.saint.kotlin.test.kotlin
 
 class CollectionStudy{
     //延迟属性

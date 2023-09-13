@@ -52,7 +52,8 @@ class MainFragment : BaseFragment() {
     }
 
     fun testGif() {
-        viewModel.testGif(this, mFragmentMainBinding.gifImage)
+//        viewModel.testGif(this, mFragmentMainBinding.gifImage)
+        startWebActivity()
     }
 
     fun testGlide() {

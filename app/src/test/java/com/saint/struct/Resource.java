@@ -1,6 +1,7 @@
 package com.saint.struct;
 
 public class Resource {
+
     public synchronized void method1() {
         try {
             Thread.sleep(1000);
