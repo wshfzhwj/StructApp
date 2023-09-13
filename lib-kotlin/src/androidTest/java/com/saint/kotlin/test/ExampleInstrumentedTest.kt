@@ -21,6 +21,4 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.saint.kotlin.test", appContext.packageName)
     }
-
-
 }

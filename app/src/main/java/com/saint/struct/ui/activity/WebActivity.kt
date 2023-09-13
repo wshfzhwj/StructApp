@@ -1,27 +1,27 @@
 package com.saint.struct.ui.activity
 
-import com.saint.struct.ui.activity.BaseActivity
-import android.webkit.WebView
-import android.os.Bundle
-import com.saint.struct.ui.activity.WebActivity
-import com.saint.struct.R
-import android.webkit.JavascriptInterface
-import android.widget.Toast
 import android.annotation.SuppressLint
 import android.content.Context
-import android.webkit.WebSettings
-import android.webkit.WebChromeClient
-import android.webkit.WebViewClient
-import android.webkit.WebResourceResponse
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceError
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.google.gson.JsonObject
+import com.saint.struct.R
+import com.saint.struct.ui.activity.WebActivity
 import java.io.IOException
 import java.io.InputStream
 
@@ -81,7 +81,7 @@ class WebActivity : BaseActivity() {
             it.loadWithOverviewMode = true
             it.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
             it.allowContentAccess = true
-        //  it.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            //  it.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
         //  mWebView.addJavascriptInterface(this, "justTest");
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -173,7 +173,8 @@ class WebActivity : BaseActivity() {
                 super.onReceivedError(view, request, error)
             }
         }
-        mWebView!!.loadUrl("https://www.baidu.com")
+//        mWebView!!.loadUrl("https://www.baidu.com")
+        mWebView!!.loadUrl("file:///android_asset/test.html")
         //        Bundle bundle = getIntent().getExtras();
 //        if (bundle != null) {
 //            String title = bundle.getString("title");
@@ -183,6 +184,29 @@ class WebActivity : BaseActivity() {
 //
 //            mWebView.loadUrl(url);
 //        }
+
+        mWebView!!.addJavascriptInterface(JsObject(), "JsObject")
+        mWebView!!.addJavascriptInterface(JsObject2(), "JsObject")
+        mWebView!!.addJavascriptInterface(object : Any() {
+            @JavascriptInterface
+            fun jsAndroid(msg: String) {
+                Log.e(TAG, "JsObject  $msg");
+            }
+        }, "JsObject")
+    }
+
+    inner class JsObject {
+        @JavascriptInterface
+        fun jsAndroid(msg: String) {
+            Log.e(TAG, "JsObject  $msg");
+        }
+    }
+
+    inner class JsObject2 {
+        @JavascriptInterface
+        fun jsAndroid(msg: String) {
+            Log.e(TAG, "JsObject2 $msg");
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")

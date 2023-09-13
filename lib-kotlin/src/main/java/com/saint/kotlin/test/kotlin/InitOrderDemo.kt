@@ -1,4 +1,4 @@
-package com.saint.kotlin.test.ktl
+package com.saint.kotlin.test.kotlin
 
 class InitOrderDemo(name: String) {
     val firstProperty = "First property: $name".also(::println)

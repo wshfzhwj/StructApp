@@ -10,11 +10,11 @@ import retrofit2.http.Query
 
 interface ConnectService {
     @GET("article/list/{page}/json")
-    fun getArticleList(@Path("page") page: Int, @Query("cid") cid: Int): Call<WanAndroidBean>?
+    fun getArticleList(@Path("page") page: Int, @Query("cid") cid: Int): Call<WanAndroidBean>
 
     @GET("article/list/{page}/json")
-    fun getArticleList2(@Path("page") page: Int): Single<WanAndroidBean>?
+    fun getArticleList2(@Path("page") page: Int): Single<WanAndroidBean>
 
     @GET("article/list/{page}/json")
-    fun getArticleList3(@Path("page") page: Int): Flowable<WanAndroidBean>?
+    fun getArticleList3(@Path("page") page: Int): Flowable<WanAndroidBean>
 }
