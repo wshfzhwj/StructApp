@@ -1,0 +1,6 @@
+<resources>
+    <!--Jenkins配置使用，勿删勿修改,默认生产环境 add by lvyd-->
+    <string name="build_way">DEV</string>
+    <string name="build_date">160711181121</string>
+</resources>
+
