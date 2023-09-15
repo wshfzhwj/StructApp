@@ -152,7 +152,7 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             if (outputFileName != null && outputFileName.endsWith('.apk')) {
-                outputFileName = "buildWay.toLowerCase()-${variant.buildType.name}-${defaultConfig.versionName}.apk"
+                outputFileName = "${buildWay.toLowerCase()}-${variant.buildType.name}-${defaultConfig.versionName}.apk"
             }
         }
     }
