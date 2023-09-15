@@ -7,8 +7,10 @@ plugins {
 //    id com.saint.plugin.AsmPlugin
 //    id 'inject-plugin'
 }
-
+Node node = getStringsXmlNode()
+String buildWay = readBuildWay(node)
 android {
+
     signingConfigs {
         debug {
             storeFile = file("../saint_key.jks")
@@ -28,9 +30,7 @@ android {
         }
     }
 
-
     compileSdk rootProject.android.compileSdk
-
     defaultConfig {
         applicationId rootProject.android.applicationId
         minSdk rootProject.android.minSdk
@@ -47,9 +47,7 @@ android {
             //noinspection ChromeOsAbiSupport
             abiFilters "armeabi-v7a"
         }
-
     }
-
 
     buildTypes {
         debug {
@@ -73,40 +71,45 @@ android {
 
 
     // 维度
-//    flavorDimensions "version"
+    flavorDimensions "version"
 
-//    productFlavors {
-//        // 正式线上版本
-//        create("online") {
-//            dimension = "version"
-//            // 版本名后缀
-//            versionNameSuffix = "_online"
-//            // 是否使用线上环境
-//            buildConfigField("boolean", "IS_ONLINE_ENV", "true")
-//        }
-//
-//        // 测试版本
-//        create("offline") {
-//            dimension = "version"
-//            // 应用包名后缀
-//            applicationIdSuffix = ".offline"
-//            // 版本名后缀
-//            versionNameSuffix = "_offline"
-//            // 是否使用线上环境
-//            buildConfigField("boolean", "IS_ONLINE_ENV", "false")
-//        }
-//
-//        // 开发版本
-//        create("dev") {
-//            dimension = "version"
-//            // 应用包名后缀
-//            applicationIdSuffix = ".dev"
-//            // 版本名后缀
-//            versionNameSuffix = "_dev"
-//            // 是否使用线上环境
-//            buildConfigField("boolean", "IS_ONLINE_ENV", "false")
-//        }
-//    }
+    productFlavors {
+        String buildDate = readBuildDate(node)
+        if (buildWay == "DEV") {
+            // 开发版本
+            create("dev") {
+                dimension = "version"
+                versionName = "${versionName}.${buildDate}"
+                // 是否使用线上环境
+                buildConfigField("boolean", "IS_ONLINE", "false")
+            }
+        }
+
+        if (buildWay == "TE") {
+            // 测试版本
+            create("te") {
+                dimension = "version"
+                // 版本名后缀
+                versionNameSuffix = "-${buildDate}"
+                versionName = "${versionName}" + "." + buildDate
+                // 是否使用线上环境
+                buildConfigField("boolean", "IS_ONLINE", "false")
+            }
+        }
+
+        // 正式线上版本
+
+        if (buildWay == "PRODUCT") {
+            create("product") {
+                dimension = "version"
+                // 版本名后缀
+                versionNameSuffix = "-${buildDate}"
+                versionName = "${versionName}" + "." + buildDate
+                // 是否使用线上环境
+                buildConfigField("boolean", "IS_ONLINE", "true")
+            }
+        }
+    }
 
 //    allprojects {
 //        gradle.projectsEvaluated {
@@ -145,8 +148,37 @@ android {
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (outputFileName != null && outputFileName.endsWith('.apk')) {
+                outputFileName = "buildWay.toLowerCase()-${variant.buildType.name}-${defaultConfig.versionName}.apk"
+            }
+        }
+    }
 }
 
+Node getStringsXmlNode() {
+
+    def stringsFile = file("src/main/res/values/jenkins.xml")
+    def node = new XmlParser().parse(stringsFile)
+    return node
+}
+
+
+String readBuildWay(Node node) {
+    def buildWay = node.string.find { string ->
+        string.@name == "build_way"
+    }.text()
+    return buildWay
+}
+
+String readBuildDate(Node node) {
+    def buildDate = node.string.find { string ->
+        string.@name == "build_date"
+    }.text()
+    return buildDate
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
