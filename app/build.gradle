@@ -203,7 +203,7 @@ dependencies {
     implementation rootProject.depsLibs.retrofit2AdapterRxjava
     implementation rootProject.depsLibs.retrofit2Gson
     implementation rootProject.depsLibs.loggingInterceptor
-    implementation rootProject.depsLibs.leakcanary
+    debugImplementation rootProject.depsLibs.leakcanary
     //google
     implementation rootProject.depsLibs.gson
     implementation rootProject.depsLibs.volley
@@ -230,7 +230,7 @@ dependencies {
     kapt rootProject.depsLibs.glideCompiler
 
     implementation rootProject.depsLibs.permissionYZJ
-    implementation rootProject.depsLibs.leakcanary
+   
     implementation(project(':lib-biometric'))
     implementation(project(':lib-kotlin'))
     implementation(project(':lib-practise'))
