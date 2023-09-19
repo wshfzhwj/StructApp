@@ -200,7 +200,7 @@ dependencies {
 
     implementation rootProject.depsLibs.permissionYZJ
     implementation(project(':lib-biometric'))
-    implementation implementation(project(':lib-kotlin',))
+    implementation implementation(project(':lib-kotlin'))
     implementation(project(':lib-practise'))
 
     implementation(project(':asm-annotation'))
