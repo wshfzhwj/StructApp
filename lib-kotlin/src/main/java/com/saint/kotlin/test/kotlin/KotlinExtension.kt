@@ -1,4 +1,4 @@
-package com.saint.kotlin.test.ktl
+package com.saint.kotlin.test.kotlin
 
 class KotlinExtension {
     //定义两个泛型T,R，T.let代表对任意类T添加let扩展函数，这个扩展函数的返回值为R

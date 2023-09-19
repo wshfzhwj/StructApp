@@ -1,4 +1,4 @@
-package com.saint.kotlin.test.ktl
+package com.saint.kotlin.test.kotlin
 
 open class Base2(val name: String) {
 

@@ -18,7 +18,7 @@ class LoginViewModel(
             val result = loginRepository.makeLoginRequest(jsonBody)
             // Display result of the network request to the user
             when (result) {
-                is Resource.Success<com.saint.kotlin.test.ktl.User> -> println("aaa")// Happy path
+                is Resource.Success<com.saint.kotlin.test.kotlin.User> -> println("aaa")// Happy path
                 else -> println("aaa")// Show error in UI
             }
         }
