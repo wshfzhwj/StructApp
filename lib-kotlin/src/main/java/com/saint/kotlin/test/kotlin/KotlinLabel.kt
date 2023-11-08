@@ -1,7 +1,8 @@
 package com.saint.kotlin.test.kotlin
 
-class KotlinPoint(name: String) {
+class KotlinLabel(name: String) {
     constructor(firstName: String, lastName: String) : this(firstName.plus(lastName)) {
+        //次构造函数
     }
 
     private val ints = arrayListOf(1, 0, 2, 3)
@@ -17,6 +18,7 @@ class KotlinPoint(name: String) {
             if (it == 0) return@forEach
             print(it)
         }
+
     }
 
     fun foo2() {
