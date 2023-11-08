@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -25,5 +27,16 @@ class KotlinTest {
         }
         val observable = Observable.fromArray(*strings)
         observable.subscribe(observer)
+
+
+        val local = MutableLiveData<String>()
+        val remote = MutableLiveData<String>()
+        val combine = MediatorLiveData<String>()
+        combine.addSource(local) { combine.value = it }
+        combine.addSource(remote) { combine.value = it }
+
     }
+
+    val list = listOf(1, 2, 3)
+    val list2 = testRxJava();
 }

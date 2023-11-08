@@ -1,18 +1,17 @@
 package com.saint.kotlin.test.kotlin
-
-
-class Repository
-private constructor() {
+class KotlinSingleton
+private constructor(){
     private var users: MutableList<User>? = null
 
     companion object {
-        private var INSTANCE: Repository? = null
-        val instance: Repository?
+        @Volatile
+        private var INSTANCE: KotlinSingleton? = null
+        val instance: KotlinSingleton?
             get() {
                 if (INSTANCE == null) {
-                    synchronized(Repository::class.java) {
+                    synchronized(KotlinSingleton::class.java) {
                         if (INSTANCE == null) {
-                            INSTANCE = Repository()
+                            INSTANCE = KotlinSingleton()
                         }
                     }
                 }
@@ -25,10 +24,10 @@ private constructor() {
         val user1 = User("Jane", "")
         val user2 = User("John", null)
         val user3 = User("Anne", "Doe")
-        users = ArrayList()
-        users!!.add(user1)
-        users!!.add(user2)
-        users!!.add(user3)
+        users = mutableListOf(user1,user2,user3)
+//        users!!.add(user1)
+//        users!!.add(user2)
+//        users!!.add(user3)
     }
 
     fun getUsers(): List<User>? {

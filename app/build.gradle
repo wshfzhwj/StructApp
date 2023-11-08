@@ -71,13 +71,13 @@ android {
 
 
     // 维度
-    flavorDimensions "version"
+    flavorDimensions = ["version"]
 
     productFlavors {
         String buildDate = readBuildDate(node)
         if (buildWay == "DEV") {
             // 开发版本
-            create("dev") {
+            dev {
                 dimension = "version"
                 versionName = "${versionName}.${buildDate}"
                 // 是否使用线上环境
@@ -87,7 +87,7 @@ android {
 
         if (buildWay == "TE") {
             // 测试版本
-            create("te") {
+            te {
                 dimension = "version"
                 // 版本名后缀
                 versionNameSuffix = "-${buildDate}"
@@ -97,10 +97,9 @@ android {
             }
         }
 
-        // 正式线上版本
-
         if (buildWay == "PRODUCT") {
-            create("product") {
+            // 正式线上版本
+            product {
                 dimension = "version"
                 // 版本名后缀
                 versionNameSuffix = "-${buildDate}"
@@ -159,7 +158,6 @@ android {
 }
 
 Node getStringsXmlNode() {
-
     def stringsFile = file("src/main/res/values/jenkins.xml")
     def node = new XmlParser().parse(stringsFile)
     return node
@@ -230,7 +228,7 @@ dependencies {
     kapt rootProject.depsLibs.glideCompiler
 
     implementation rootProject.depsLibs.permissionYZJ
-   
+
     implementation(project(':lib-biometric'))
     implementation(project(':lib-kotlin'))
     implementation(project(':lib-practise'))
