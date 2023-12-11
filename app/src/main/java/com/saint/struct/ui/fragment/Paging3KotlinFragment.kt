@@ -23,7 +23,6 @@ class Paging3KotlinFragment : BasePagingFragment<Project, Paging3KotlinAdapter.V
                 pageAdapter.submitData(lifecycle, it)
             }
         }
-        activity
     }
 
     override fun getCustomPageAdapter(): PagingDataAdapter<Project, Paging3KotlinAdapter.ViewHolder> {

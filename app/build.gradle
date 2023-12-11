@@ -140,6 +140,10 @@ android {
         ]
     }
 
+    lintOptions {
+        enable 'Interoperability'
+    }
+
     kapt {
         correctErrorTypes = true
     }
@@ -148,8 +152,8 @@ android {
         exclude 'META-INF/atomicfu.kotlin_module'
     }
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.all {
+    android.applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
             if (outputFileName != null && outputFileName.endsWith('.apk')) {
                 outputFileName = "${buildWay.toLowerCase()}-${variant.buildType.name}-${defaultConfig.versionName}.apk"
             }

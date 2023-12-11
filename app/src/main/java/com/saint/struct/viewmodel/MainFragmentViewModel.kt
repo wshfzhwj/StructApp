@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.saint.biometiriclib.BiometricPromptManager
 import com.saint.struct.bean.Student
@@ -25,7 +26,7 @@ class MainFragmentViewModel(list: MutableList<Student>) : ViewModel() {
 
     fun testDB(context: Context) {
         mRoomDatabase = SaintRoomDB.getInstance(context)
-        thread {
+        viewModelScope.launch {
             mRoomDatabase.studentDao().insertStudent(Student("ZhangSan", "13"))
             mRoomDatabase.studentDao().insertStudent(Student("LiSi", "12"))
             mRoomDatabase.studentDao().updateStudent(Student(2, "LiSi", "14"))
@@ -33,18 +34,17 @@ class MainFragmentViewModel(list: MutableList<Student>) : ViewModel() {
             val list = mRoomDatabase.studentDao().getAll() as List<Student>
             studentList.addAll(list)
         }
+
     }
 
-    suspend fun testDBByCoroutines(){
-        coroutineScope{
-            launch {
+    fun testDBByCoroutines(){
+            viewModelScope.launch {
                 mRoomDatabase.studentDao().insertStudent(Student("zhangsan", "11"))
                 mRoomDatabase.studentDao().insertStudent(Student("lisi", "12"))
                 mRoomDatabase.studentDao().updateStudent(Student("lisi", "14"))
                 studentList.clear()
                 studentList.addAll(mRoomDatabase.studentDao().getAll()!!)
             }
-        }
     }
 
     fun testFinger(activity: Activity, textView: TextView) {
