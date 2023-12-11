@@ -7,16 +7,24 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.saint.struct.R
-import com.saint.struct.ui.activity.AidlActivity
-import com.saint.struct.ui.activity.WebActivity
 import com.saint.kotlin.practise.InnerClass
+import com.saint.struct.R
 import com.saint.struct.bean.Student
 import com.saint.struct.databinding.FragmentMainBinding
 import com.saint.struct.service.MessengerService
+import com.saint.struct.ui.activity.AidlActivity
+import com.saint.struct.ui.activity.WebActivity
 import com.saint.struct.viewmodel.MainFragmentViewModel
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
@@ -30,7 +38,8 @@ import java.util.concurrent.TimeUnit
 
 class MainFragment : BaseFragment() {
     private var mService: Messenger? = null
-//    private val mRetrofit: Retrofit? = null
+
+    //    private val mRetrofit: Retrofit? = null
     var studentList = mutableListOf<Student>()
     private lateinit var mFragmentMainBinding: FragmentMainBinding
     private lateinit var viewModel: MainFragmentViewModel
@@ -61,7 +70,8 @@ class MainFragment : BaseFragment() {
     }
 
     fun testDB() {
-        viewModel.testDB(requireActivity())
+//        viewModel.testDB(requireActivity())
+        testCoroutineScope4()
     }
 
     fun testFinger() {
@@ -94,6 +104,34 @@ class MainFragment : BaseFragment() {
         handlerThread.quitSafely()
     }
 
+    private fun testCoroutineScope4() {
+        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            Log.d("exceptionHandler", "${coroutineContext[CoroutineName]} $throwable")
+        }
+        val myCoroutineScope = CoroutineScope(SupervisorJob() + CoroutineName("coroutineScope"))
+        GlobalScope.launch(CoroutineName("scope1") + exceptionHandler) {
+            Log.d("scope", "0--------- ${coroutineContext[CoroutineName]}")
+            with(myCoroutineScope) {
+                val scope2 = launch(CoroutineName("scope2")) {
+                    Log.d("scope", "1--------- ${coroutineContext[CoroutineName]}")
+                    throw NullPointerException("空指针")
+                }
+                val scope3 = launch(CoroutineName("scope3") + exceptionHandler) {
+                    scope2.join()
+                    Log.d("scope", "2--------- ${coroutineContext[CoroutineName]}")
+                    delay(2000)
+                    Log.d("scope", "3--------- ${coroutineContext[CoroutineName]}")
+                }
+                scope2.join()
+                myCoroutineScope.cancel()
+                Log.d("scope", "4--------- ${coroutineContext[CoroutineName]}")
+                scope3.join()
+                Log.d("scope", "5--------- ${coroutineContext[CoroutineName]}")
+            }
+            Log.d("scope", "6--------- ${coroutineContext[CoroutineName]}")
+        }
+    }
+
     private fun testThreadPool() {
         val service = Executors.newScheduledThreadPool(10)
         service.schedule(ScheduleCallable(), 10, TimeUnit.SECONDS)
@@ -108,7 +146,6 @@ class MainFragment : BaseFragment() {
         InnerClass.Hello.world()
         hello.hello()
     }
-
 
 
     private fun testBitmapMemory() {

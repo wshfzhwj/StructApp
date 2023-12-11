@@ -31,14 +31,14 @@ android {
         jvmTarget = "11"
         freeCompilerArgs = [
                 "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
-                "-Xopt-in=kotlinx.coroutines.FlowPreview"
+                "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                "-Xopt-in=kotlin.RequiresOptIn"
         ]
+
     }
 }
 
 dependencies {
-
-    implementation rootProject.depsLibs.coreKtx
     implementation rootProject.depsLibs.coreKtx
     implementation rootProject.depsLibs.appcompat
     implementation rootProject.depsLibs.material
