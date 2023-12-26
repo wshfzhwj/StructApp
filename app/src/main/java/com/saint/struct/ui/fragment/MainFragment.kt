@@ -1,4 +1,4 @@
-package com.saint.struct.fragment
+package com.saint.struct.ui.fragment
 
 import android.content.*
 import android.graphics.BitmapFactory
@@ -7,6 +7,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.ViewModelFactoryDsl
 import com.saint.kotlin.practise.InnerClass
 import com.saint.struct.R
 import com.saint.struct.bean.Student
@@ -54,7 +57,7 @@ class MainFragment : BaseFragment() {
     }
 
     override fun doInit() {
-        viewModel = MainFragmentViewModel(studentList)
+        viewModel = ViewModelProvider(this, ViewModelFactory(studentList))[MainFragmentViewModel::class.java]
         mFragmentMainBinding = fragmentBinding as FragmentMainBinding
         init()
         requestPermission()
@@ -70,8 +73,8 @@ class MainFragment : BaseFragment() {
     }
 
     fun testDB() {
-//        viewModel.testDB(requireActivity())
-        testCoroutineScope4()
+        viewModel.testDB(requireActivity())
+//        testCoroutineScope4()
     }
 
     fun testFinger() {
@@ -298,4 +301,15 @@ class MainFragment : BaseFragment() {
         }
     }
 
+
+    inner class ViewModelFactory(val list: MutableList<Student>) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            // 判断 MainViewModel 是不是 modelClass 的父类或接口
+            if (modelClass.isAssignableFrom(MainFragmentViewModel::class.java)) {
+                return MainFragmentViewModel(list) as T
+            }
+            throw IllegalArgumentException("UnKnown class")
+        }
+    }
 }

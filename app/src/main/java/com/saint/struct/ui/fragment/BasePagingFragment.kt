@@ -1,4 +1,4 @@
-package com.saint.struct.fragment
+package com.saint.struct.ui.fragment
 
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DividerItemDecoration

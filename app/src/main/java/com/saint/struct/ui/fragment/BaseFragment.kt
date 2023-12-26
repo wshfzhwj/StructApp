@@ -1,4 +1,4 @@
-package com.saint.struct.fragment
+package com.saint.struct.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

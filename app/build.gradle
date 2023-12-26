@@ -135,6 +135,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
         freeCompilerArgs = [
+                "-Xjvm-default=all",
                 "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
                 "-Xopt-in=kotlinx.coroutines.FlowPreview"
         ]

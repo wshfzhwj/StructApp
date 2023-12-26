@@ -25,6 +25,9 @@ class MainActivity : BaseActivity() {
         val bottom = mLayoutBinding.navBottom
         val navController = fragmentContainerView.navController
         bottom.setupWithNavController(navController)
+
+
+
     }
 
 }

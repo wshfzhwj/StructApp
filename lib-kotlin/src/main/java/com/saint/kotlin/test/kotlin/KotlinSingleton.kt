@@ -32,7 +32,7 @@ class KotlinSingleton private constructor() {
     val formattedUserNames: List<String>
         get() {
             val userNames: MutableList<String> = ArrayList(users.size)
-            for ((firstName, lastName) in users!!) {
+            for ((firstName, lastName) in users) {
                 val name: String = if (lastName != null) {
                     if (firstName != null) {
                         "$firstName $lastName"
