@@ -26,7 +26,7 @@ public class Paging3RxViewModel extends ViewModel {
     //rxjava flowable
     Flowable<PagingData<WanListBean>> flowable;
 
-    public Paging3RxViewModel(Context context) {
+    public Paging3RxViewModel() {
         CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
         /**
          * 数据源
@@ -49,17 +49,14 @@ public class Paging3RxViewModel extends ViewModel {
         return flowable;
     }
 
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-        @NonNull
-        private final Application mApplication;
-
-        public Factory(@NonNull Application application) {
-            mApplication = application;
-        }
+    public static class Factory implements ViewModelProvider.Factory {
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
-            return (T) new Paging3RxViewModel(mApplication);
+            if (modelClass.isAssignableFrom(Paging3RxViewModel.class)) {
+                return (T) new Paging3RxViewModel();
+            }
+            throw new IllegalArgumentException("UnKnown class");
         }
     }
 }

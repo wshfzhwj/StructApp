@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.saint.struct.fragment.MainFragment"
+        android:name="com.saint.struct.ui.fragment.MainFragment"
         android:label="MainFragment" />
     <fragment
         android:id="@+id/pageOldFragment"
-        android:name="com.saint.struct.fragment.PagingJavaFragment"
+        android:name="com.saint.struct.ui.fragment.PagingJavaFragment"
         android:label="PageOldFragment" />
     <fragment
         android:id="@+id/pageKtFragment"
-        android:name="com.saint.struct.fragment.Paging3KotlinFragment"
+        android:name="com.saint.struct.ui.fragment.Paging3KotlinFragment"
         android:label="PageKtFragment" />
     <fragment
         android:id="@+id/pageRxFragment"
-        android:name="com.saint.struct.fragment.Paging3RxJavaFragment"
+        android:name="com.saint.struct.ui.fragment.Paging3RxJavaFragment"
         android:label="PageRxFragment" />
 </navigation>

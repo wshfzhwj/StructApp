@@ -20,6 +20,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withLock
@@ -658,14 +659,28 @@ class KotlinCoroutines {
         println("after join job isActive ? = ${job.isActive}")
         println("runBlocking end")
     }
+
+    suspend fun testScope(){
+        val handler = CoroutineExceptionHandler { _, exception ->
+            println("捕获到的异常： $exception")
+        }
+        val scope = CoroutineScope(Job())
+        scope.launch {
+            launch(handler) {//子协程设置没有意义，不会打印数据，因为异常向上传递，而父协程中没有handler则无法捕获
+                throw NullPointerException()//抛出空指针异常
+            }
+        }
+
+        supervisorScope {
+            launch(handler) {//SupervisorJob不会让异常向上传递，会使用子协程内部的异常处理器来处理
+                throw IllegalArgumentException()//抛出非法参数异常
+            }
+        }
+    }
 }
 
 //fun main() {
-//    val kotlinCoroutines = KotlinCoroutines()
-//    kotlinCoroutines.testSupervisorJob()
-//}
-
-fun main() {
+fun main() = runBlocking {
     val kotlinCoroutines = KotlinCoroutines()
-    kotlinCoroutines.testJoin()
+    kotlinCoroutines.testScope()
 }

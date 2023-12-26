@@ -1,12 +1,12 @@
-package com.saint.struct.fragment
+package com.saint.struct.ui.fragment
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingDataAdapter
 import com.saint.struct.adapter.Paging3KotlinAdapter
 import com.saint.struct.bean.Project
 import com.saint.struct.databinding.FragmentPagingBinding
+import com.saint.struct.ui.fragment.BasePagingFragment
 import com.saint.struct.viewmodel.Page3KtViewModel
 import kotlinx.coroutines.flow.collectLatest
 

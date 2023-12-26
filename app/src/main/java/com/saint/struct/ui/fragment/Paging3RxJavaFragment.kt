@@ -1,9 +1,8 @@
-package com.saint.struct.fragment
+package com.saint.struct.ui.fragment
 
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.saint.struct.viewmodel.Paging3RxViewModel
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
@@ -16,7 +15,7 @@ private const val TAG = "PageRxActivity"
 class Paging3RxJavaFragment : BasePagingFragment<WanListBean, PagingRxJavaAdapter.ViewHolder>() {
     @SuppressLint("CheckResult")
     override fun setModelAndData() {
-        val factory = Paging3RxViewModel.Factory(requireActivity().application)
+        val factory = Paging3RxViewModel.Factory()
         val viewModel: Paging3RxViewModel by viewModels { factory }
         viewModel.flowable // Using AutoDispose to handle subscription lifecycle.
             // See: https://github.com/uber/AutoDispose

@@ -1,4 +1,4 @@
-package com.saint.struct.fragment
+package com.saint.struct.ui.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
