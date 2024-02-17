@@ -6,7 +6,6 @@ import androidx.paging.PagingDataAdapter
 import com.saint.struct.adapter.Paging3KotlinAdapter
 import com.saint.struct.bean.Project
 import com.saint.struct.databinding.FragmentPagingBinding
-import com.saint.struct.ui.fragment.BasePagingFragment
 import com.saint.struct.viewmodel.Page3KtViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -26,7 +25,7 @@ class Paging3KotlinFragment : BasePagingFragment<Project, Paging3KotlinAdapter.V
     }
 
     override fun getCustomPageAdapter(): PagingDataAdapter<Project, Paging3KotlinAdapter.ViewHolder> {
-        return Paging3KotlinAdapter()
+        return Paging3KotlinAdapter(requireActivity())
     }
 
     override fun initTitle() {

@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.view.View
-import android.view.WindowManager
 import android.view.ViewGroup.MarginLayoutParams
+import android.view.WindowManager
 
 object StatusBarUtils {
     fun setDeepStatusBar(isChange: Boolean, mActivity: Activity) {

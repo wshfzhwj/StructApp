@@ -9,7 +9,7 @@ class KotlinTest {
 
     companion object {
         @JvmStatic
-        fun testStaticMethod(){
+        fun testStaticMethod() {
 
         }
     }
@@ -18,9 +18,11 @@ class KotlinTest {
         println("无参数")
     }
 }
+
 fun main() {
 //    KotlinTest.testStaticMethod()
     val kotlinTest = KotlinTest()
     kotlinTest.sayHi { println("Hello, $it!") }
 //    kotlinTest.test
 }
+

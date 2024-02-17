@@ -1,14 +1,11 @@
 package com.saint.struct.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.saint.struct.R
 import com.saint.struct.databinding.ActivityMainBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 
 class MainActivity : BaseActivity() {
 //    private val mainActivityViewModel: MainActivityViewModel by viewModels()
@@ -25,8 +22,6 @@ class MainActivity : BaseActivity() {
         val bottom = mLayoutBinding.navBottom
         val navController = fragmentContainerView.navController
         bottom.setupWithNavController(navController)
-
-
 
     }
 

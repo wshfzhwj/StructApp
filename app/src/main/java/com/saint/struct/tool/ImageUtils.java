@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 
 public class ImageUtils {
     public static final int CORNER_TOP_LEFT = 1;
@@ -46,7 +47,6 @@ public class ImageUtils {
         canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
         //异或将需要变为圆角的位置的二进制变为0
         int notRoundedCorners = corners ^ CORNER_ALL;
-
         //哪个角不是圆角我再把你用矩形画出来
         if ((notRoundedCorners & CORNER_TOP_LEFT) != 0) {
             canvas.drawRect(0, 0, roundPx, roundPx, paint);
@@ -67,8 +67,7 @@ public class ImageUtils {
         return output;
     }
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
         // 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -77,11 +76,11 @@ public class ImageUtils {
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
         // 使用获取到的inSampleSize值再次解析图片
         options.inJustDecodeBounds = false;
+
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
-    public static int calculateInSampleSize(BitmapFactory.Options options,
-                                            int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // 源图片的高度和宽度
         final int height = options.outHeight;
         final int width = options.outWidth;
