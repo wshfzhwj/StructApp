@@ -1,5 +1,5 @@
 package com.saint.kotlin.test.kotlin
-
+//StandardKt加备注
 class KotlinExtension {
     //定义两个泛型T,R，T.let代表对任意类T添加let扩展函数，这个扩展函数的返回值为R
     //参数block是一个函数且类型为(T) -> R

@@ -4,6 +4,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.saint.struct.BuildConfig
 import com.saint.struct.R
 import com.saint.struct.databinding.FragmentPagingBinding
 
