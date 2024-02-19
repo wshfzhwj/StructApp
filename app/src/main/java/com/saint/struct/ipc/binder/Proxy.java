@@ -1,11 +1,11 @@
 package com.saint.struct.ipc.binder;
 
-import android.app.Person;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 
 import com.saint.struct.ipc.PersonManager;
+import com.saint.struct.ipc.aidl.Person;
 
 import java.util.List;
 

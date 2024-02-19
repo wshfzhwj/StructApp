@@ -3,7 +3,7 @@ package com.saint.struct.ipc;
 
 import android.os.IInterface;
 
-import android.app.Person;
+import com.saint.struct.ipc.aidl.Person;
 
 import java.util.List;
 
