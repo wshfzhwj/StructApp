@@ -9,6 +9,7 @@ import android.os.DeadObjectException
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.work.Constraints
 import androidx.work.NetworkType
@@ -21,6 +22,7 @@ import com.saint.struct.databinding.LayoutAidlBinding
 import com.saint.struct.ipc.aidl.IPersonManager
 import com.saint.struct.ipc.aidl.Person
 import com.saint.struct.service.MyWorker
+import com.saint.struct.viewmodel.MainActivityViewModel
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -35,7 +37,6 @@ import java.util.concurrent.TimeUnit
 
 
 class AidlActivity : BaseActivity() {
-
     private lateinit var binding: LayoutAidlBinding
     private lateinit var constraints: Constraints
     private val mainScope = MainScope()
@@ -87,8 +88,8 @@ class AidlActivity : BaseActivity() {
         }
         binding.btnTestWorker.setOnClickListener {
             Log.e(TAG, "startCheckSystemWorker click")
-//            startCheckSystemWorker()
-            testMainScope()
+            startCheckSystemWorker()
+//            testMainScope()
         }
     }
 

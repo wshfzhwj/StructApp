@@ -2,23 +2,24 @@ package com.saint.kotlin.test.kotlin
 
 class KotlinCollection {
 
-    fun testReduce(){
+    fun testReduce() {
 //    val ranges = listOf(setOf(1..5), setOf(3..8), setOf(6..10))
-        val ranges = listOf(setOf(1,2,3,4,5), setOf(3,4,5,6,7,8), setOf(8,9,10))
+        val ranges = listOf(setOf(1, 2, 3, 4, 5), setOf(3, 4, 5, 6, 7, 8), setOf(8, 9, 10))
         val combinedRange = ranges.reduce { acc, range -> acc.union(range) }
         println(combinedRange)
     }
 
-    fun testFlatMap(){
+    fun testFlatMap() {
         val list = listOf(
             1..20, 2..5
         )
-//    val newList = list.flatMap { it } // 降维 再映射
         println(list)
-//    println(newList)
+        val newList = list.flatten().map { it > 2 } // 降维 再映射
+//        val newList2 = list.flatMap// 降维 再映射
+        println(newList)
     }
 
-    fun  diffMapWithFlatMap(){
+    fun diffMapWithFlatMap() {
         val list = listOf("张三", "李四", "王五")
 //    val list4: List<String> = listOf("张三", "李四", "王五")
 //    val newList: List<String> = list4.map {
@@ -40,7 +41,6 @@ class KotlinCollection {
     }
 
 }
-
 
 
 
@@ -78,5 +78,25 @@ fun main() {
     }
     println()
     (1..10).forEach { print(it) }
-    println()
+    println("------------------------------")
+
+
+    val list3 = listOf("张三", "李四", "王五")
+//    val list4: List<String> = listOf("张三", "李四", "王五")
+//    val newList: List<String> = list4.map {
+//        "内容是:$it"  //每次返回一个 String
+//    }.map {
+//        "$it, 长度是：${it.length}"
+//    }.flatMap {
+//        listOf("$it,在学习C++", "$it,在学习Java", "$it,在学习Kotlin")
+//    }
+//    println("newList长度 ${newList.size}")
+//    newList.forEach { println(it) }
+
+
+    val newList2: List<String> = list3.flatMap {
+        listOf("$it,在学习C++", "$it,在学习Java", "$it,在学习Kotlin")
+    }
+    println("newList2长度 ${newList2.size}")
+    println(newList2)
 }

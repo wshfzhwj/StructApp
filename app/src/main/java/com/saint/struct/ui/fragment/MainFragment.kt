@@ -2,20 +2,28 @@ package com.saint.struct.ui.fragment
 
 import android.content.*
 import android.graphics.BitmapFactory
+import android.graphics.Paint
 import android.os.*
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.ViewModelFactoryDsl
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.saint.kotlin.practise.InnerClass
+import com.saint.kotlin.test.kotlin.KotlinParamSingleton
+import com.saint.kotlin.test.kotlin.forEach
 import com.saint.struct.R
 import com.saint.struct.bean.Student
 import com.saint.struct.databinding.FragmentMainBinding
 import com.saint.struct.service.MessengerService
+import com.saint.struct.tool.TAG
 import com.saint.struct.ui.activity.AidlActivity
+import com.saint.struct.ui.activity.MainActivity
 import com.saint.struct.ui.activity.WebActivity
 import com.saint.struct.viewmodel.MainFragmentViewModel
 import com.yanzhenjie.permission.AndPermission
@@ -49,7 +57,6 @@ class MainFragment : BaseFragment() {
 
     companion object {
         const val EXTRA_KEY_SERVICE = "extra_key_service"
-        private val TAG = MainFragment::class.java.name
     }
 
     override fun getFragmentLayoutId(): Int {
@@ -64,8 +71,8 @@ class MainFragment : BaseFragment() {
     }
 
     fun testGif() {
-//        viewModel.testGif(this, mFragmentMainBinding.gifImage)
-        startWebActivity()
+        viewModel.testGif(this, mFragmentMainBinding.gifImage)
+//        startWebActivity()
     }
 
     fun testGlide() {
@@ -73,8 +80,7 @@ class MainFragment : BaseFragment() {
     }
 
     fun testDB() {
-        viewModel.testDB(requireActivity())
-//        testCoroutineScope4()
+        viewModel.testDBByCoroutines(requireActivity())
     }
 
     fun testFinger() {
@@ -265,7 +271,7 @@ class MainFragment : BaseFragment() {
 //    }
 
 
-    fun transBitmap() {
+    suspend fun transBitmap() {
         val bundle = Bundle()
         bundle.putBinder("", null)
     }

@@ -7,7 +7,10 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -41,6 +44,15 @@ class ChannelTest {
 //sampleEnd
 
 
+suspend fun testChannelFlow() = channelFlow {
+    for (i in 1..5) {
+        delay(100)
+        send(i)
+    }
+}.collect {
+    println(it)
+}
+
 @OptIn(ExperimentalCoroutinesApi::class)
 fun CoroutineScope.produceSquares(): ReceiveChannel<Int> = produce {
     for (x in 1..5) send(x * x)
@@ -67,23 +79,23 @@ fun CoroutineScope.produceSquares(): ReceiveChannel<Int> = produce {
 //sampleEnd
 
 //sampleStart
-fun main(): Unit = runBlocking {
-    val channel = Channel<Int>()
-
-    launch {
-        for (i in 1..5) {
-            delay(1000)
-            channel.send(i)
-        }
-        channel.close()
-    }
-
-    launch {
-        for (value in channel) {
-            println(value)
-        }
-    }
-}
+//fun main(): Unit = runBlocking {
+//    val channel = Channel<Int>()
+//
+//    launch {
+//        for (i in 1..5) {
+//            delay(1000)
+//            channel.send(i)
+//        }
+//        channel.close()
+//    }
+//
+//    launch {
+//        for (value in channel) {
+//            println(value)
+//        }
+//    }
+//}
 //sampleEnd
 @OptIn(ExperimentalCoroutinesApi::class)
 fun CoroutineScope.produceNumbers() = produce<Int> {
@@ -94,4 +106,15 @@ fun CoroutineScope.produceNumbers() = produce<Int> {
 @OptIn(ExperimentalCoroutinesApi::class)
 fun CoroutineScope.square(numbers: ReceiveChannel<Int>): ReceiveChannel<Int> = produce {
     for (x in numbers) send(x * x)
+}
+
+
+fun main() = runBlocking<Unit> {
+
+    val tickerChannel = ticker(delayMillis = 1000, initialDelayMillis = 0)
+
+    // 每秒打印
+    for (unit in tickerChannel) {
+        System.err.println("unit = $unit")
+    }
 }

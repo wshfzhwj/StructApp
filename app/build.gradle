@@ -55,6 +55,7 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.debug
+            debuggable true
         }
         release {
             minifyEnabled true
@@ -233,6 +234,7 @@ dependencies {
     kapt rootProject.depsLibs.glideCompiler
 
     implementation rootProject.depsLibs.permissionYZJ
+    implementation rootProject.depsLibs.eventBus
 
     implementation(project(':lib-biometric'))
     implementation(project(':lib-kotlin'))
