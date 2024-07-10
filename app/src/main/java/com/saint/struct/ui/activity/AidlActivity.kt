@@ -77,7 +77,7 @@ class AidlActivity : BaseActivity() {
 
     private fun initListener() {
         binding.btnConnect.setOnClickListener {
-            Log.e(TAG, "btnConnect 。。。。。。。。")
+//            Log.e(TAG, "btnConnect 。。。。。。。。")
             connectService()
         }
         binding.btnGetPerson.setOnClickListener {
