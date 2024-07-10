@@ -1,8 +1,13 @@
 package com.saint.kotlin.test.flow
 
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import java.util.concurrent.Executors
+import kotlin.experimental.ExperimentalTypeInference
 import kotlin.system.measureTimeMillis
 
 /**
@@ -21,8 +26,7 @@ class FlowTest {
         flowOf(1, 2, 3, 4, 5)
             .onEach {
                 delay(100)
-            }
-            .collect {
+            }.collect {
                 println(it)
             }
     }
@@ -35,16 +39,6 @@ class FlowTest {
                 println(it)
             }
     }
-
-    suspend fun testChannelFlow() = channelFlow {
-        for (i in 1..5) {
-            delay(100)
-            send(i)
-        }
-    }.collect {
-        println(it)
-    }
-
 
     fun test() = runBlocking {
         val myDispatcher = Executors.newSingleThreadExecutor()
@@ -78,6 +72,29 @@ class FlowTest {
             }
         }
     }
+
+    fun simple(): Flow<Int> = flow {
+        for (i in 1..3) {
+            delay(100) // 假装我们异步等待了 100 毫秒
+            emit(i) // 发射下一个值
+        }
+    }
+
+    fun testSequence() = run {
+        val intSequence = sequence<Int> {
+            Thread.sleep(1000) // 模拟耗时任务1
+            yield(1)
+            Thread.sleep(1000) // 模拟耗时任务2
+            yield(2)
+            Thread.sleep(1000) // 模拟耗时任务3
+            yield(3)
+        }
+
+        intSequence.forEach {
+            println(it)
+        }
+    }
+
 }
 
 //fun main() {
@@ -139,12 +156,6 @@ class FlowTest {
 //}
 //sampleEnd
 
-fun simple(): Flow<Int> = flow {
-    for (i in 1..3) {
-        delay(100) // 假装我们异步等待了 100 毫秒
-        emit(i) // 发射下一个值
-    }
-}
 
 //sampleStart
 //fun main() = runBlocking<Unit> {
@@ -161,18 +172,94 @@ fun simple(): Flow<Int> = flow {
 //sampleEnd
 
 
-fun main() = runBlocking{
+fun main() {
+    runBlocking {
 //sampleStart
-    val time = measureTimeMillis {
-        simple()
-            .conflate() // 合并发射项，不对每个值进行处理
-            .collect { value ->
-                delay(300) // 假装我们花费 300 毫秒来处理它
-                println(value)
-            }
-    }
-    println("Collected in $time ms")
+//    val flowTest = FlowTest()
+//    flowTest.testSequence()
+//    val time = measureTimeMillis {
+//        flowTest.simple()
+//            .conflate() // 合并发射项，不对每个值进行处理
+//            .collect { value ->
+//                delay(300) // 假装我们花费 300 毫秒来处理它
+//                println(value)
+//            }
+//    }
+//    println("Collected in $time ms")
 //sampleEnd
+//    val nums = (1..4).asFlow().shareIn(this,SharingStarted.Eagerly).onEach { delay(300) } // 发射数字 1.;3，间隔 300 毫秒
+//        countdown(1_000, 200) { remainTime -> println(remainTime) }.collect{}
+        foo()
+//        (1..4).asFlow().skipOddAndDuplicateEven().collect { println(it) }
+    }
 }
+
+fun foo() {
+    listOf(1, 2, 3, 4, 5).forEach{
+        if (it == 3) return@forEach // 非局部直接返回到 foo() 的调用者
+        print(it)
+    }
+    println("this point is unreachable")
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
+fun EditText.textChangeFlow(): Flow<CharSequence> = callbackFlow {
+    // 构建输入框监听器
+    val watcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        // 在文本变化后向流发射数据
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            s?.let { trySend(it).isSuccess }
+        }
+    }
+    addTextChangedListener(watcher) // 设置输入框监听器
+    awaitClose { removeTextChangedListener(watcher) } // 阻塞以保证流一直运行
+}
+
+
+fun Flow<Int>.skipOddAndDuplicateEven(): Flow<Int> = transforms { value ->
+    if (value % 2 == 0) { // Emit only even values, but twice
+        emit(value)
+        emit(value)
+    } // Do nothing if odd
+}
+
+@OptIn(ExperimentalTypeInference::class)
+public inline fun <T, R> Flow<T>.transforms(
+    @BuilderInference crossinline transform: suspend FlowCollector<R>.(value: T) -> Unit
+): Flow<R> = flow {
+    collect { value ->
+        return@collect transform(value)
+    }// Note: safe flow is used here, because collector is exposed to transform on each operation
+}
+
+fun nonLocalReturn(){
+    println("useReturn - start")
+    // out@ 标签修饰的后面的 lambda 表达式
+    listOf(1,2).forEach out@{
+        println("out@ start $it")
+        listOf("a", "b",).forEach inside@{
+            // return 作为一个非局部返回
+            // 会停止 listOf(1,2) 和 listOf("a","b") 的遍历
+            if(it == "a") return
+            println("it $it")
+        }
+        println("out@ - end == $it")
+    }
+    println("userReturn - end - 不会被打印")
+}
+
+fun <T> countdown(
+    duration: Long,
+    interval: Long,
+    onCountdown: suspend (Long) -> T
+): Flow<T> =
+    flow { (duration - interval downTo 0 step interval).forEach { emit(it) } }
+        .onEach { delay(interval) }
+        .onStart { emit(duration) }
+        .map { onCountdown(it) }
+        .flowOn(Dispatchers.Default)
 
 fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")

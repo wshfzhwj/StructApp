@@ -9,7 +9,12 @@ import org.junit.Test;
  */
 public class ExampleUnitTest {
     @Test
-    void addition_isCorrect() {
+    public void addition_isCorrect() {
+
+        String a = "a";
+        System.out.println("-------"+ System.identityHashCode(a));
+        a = "-----------b";
+        System.out.println("-------"+ System.identityHashCode(a));
         assert ((2 + 2) == 4);
     }
 }

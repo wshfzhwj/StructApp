@@ -8,9 +8,9 @@ class Paging3KotlinRepository(private val repository: Repository) : PagingSource
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Project> {
         return try {
             //页码未定义置为1
-            var nextPage = params.key ?: 1
+            val nextPage = params.key ?: 1
             //仓库层请求数据
-            var response = repository.getProjectsList(nextPage, 60)
+            val response = repository.getProjectsList(nextPage, 60)
 
             LoadResult.Page(
                 data = response.data.datas,

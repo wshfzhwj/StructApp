@@ -120,4 +120,14 @@ public class ExampleInstrumentedTest {
         Observable<String> observable = Observable.fromArray(strings);
         observable.subscribe(observer);
     }
+
+    @Test
+    public void isCorrect() {
+        String a = "-------a";
+        System.out.println(System.identityHashCode(a));
+        a = "-----------b";
+        System.out.println(System.identityHashCode(a));
+
+        assert ((2 + 2) == 4);
+    }
 }

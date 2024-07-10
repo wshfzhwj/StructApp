@@ -19,4 +19,7 @@ interface StudentDao {
 
     @Query("SELECT * FROM student WHERE id = :id")
     fun getStudentById(id: Int): Student?
+
+    @Query("DELETE FROM student")
+    fun deleteAll()
 }

@@ -14,7 +14,7 @@ ext {
             compileSdk       : 33,
             buildToolsVersion: '32.0.0',
             minSdk           : 24,
-            targetSdk        : 32,
+            targetSdk        : 33,
 
             versionCode      : 1,
             versionName      : "1.0.1",
@@ -47,6 +47,7 @@ ext {
             pagingVersion        : '3.1.1',
             workVersion        : '2.7.1',
             permissionsYZJVersion        : '2.0.3',
+            eventBusVersion        : '3.2.0',
     ]
 
     depsLibs = [
@@ -128,6 +129,7 @@ ext {
             rxandroid         : "io.reactivex.rxjava2:rxandroid:${dependVersion["rxandroidVersion"]}",
 
             permissionYZJ         : "com.yanzhenjie:permission:${dependVersion["permissionsYZJVersion"]}",
+            eventBus         : "org.greenrobot:eventbus:${dependVersion["eventBusVersion"]}",
 
     ]
 
