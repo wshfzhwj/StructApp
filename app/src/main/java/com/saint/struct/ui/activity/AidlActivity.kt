@@ -63,11 +63,11 @@ class AidlActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e(TAG, "testManagerWorker Checking system3。。。。。。。。")
+        Log.e(TAG, "onCreate testManagerWorker Checking system3。。。。。。。。")
         binding = LayoutAidlBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnAddPerson.post(Runnable {
-            Log.e(TAG, "binding.btnAddPerson")
+            Log.e(TAG, "binding.btnAddPerson.post")
         })
 //下面这个写法无法触发点击事件
 //        setContentView(R.layout.layout_aidl)
