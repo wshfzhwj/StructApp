@@ -63,7 +63,7 @@ class AidlActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e(TAG, "testManagerWorker Checking system3。。。。。。。。")
+        Log.e(TAG, "onCreate testManagerWorker Checking system3。。。。。。。。")
         binding = LayoutAidlBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnAddPerson.post(Runnable {
