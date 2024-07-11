@@ -67,7 +67,7 @@ class AidlActivity : BaseActivity() {
         binding = LayoutAidlBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnAddPerson.post(Runnable {
-            Log.e(TAG, "binding.btnAddPerson.post")
+            Log.e(TAG, "binding.btnAddPerson")
         })
 //下面这个写法无法触发点击事件
 //        setContentView(R.layout.layout_aidl)
