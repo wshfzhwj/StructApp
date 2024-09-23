@@ -15,10 +15,13 @@ import com.bumptech.glide.Glide
 import com.saint.struct.bean.Project
 
 class Paging3KotlinAdapter(val context:Context) : PagingDataAdapter<Project, Paging3KotlinAdapter.ViewHolder>(itemCallback) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_page_recycle, parent, false)
         return ViewHolder(view)
     }
+
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val bean = getItem(position)

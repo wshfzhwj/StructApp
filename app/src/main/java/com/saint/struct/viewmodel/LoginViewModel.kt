@@ -2,8 +2,8 @@ package com.saint.struct.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saint.kotlin.test.kotlin.User
 import com.saint.struct.bean.Resource
+import com.saint.struct.bean.User
 import com.saint.struct.repository.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -21,6 +21,17 @@ ext {
     ]
 
     dependVersion = [
+            appcompatVersion         : '1.5.1',
+            activityKtxVersion      : '1.9.0',
+            coreKtxVersion           : '1.9.0',
+            materialVersion          : '1.6.1',
+            constraintlayoutVersion  : '2.1.4',
+            lifecycleVersion        : '2.2.0',
+            navigationVersion      : '2.5.3',
+            coroutinesVersion        : '1.5.2',
+            roomVersion           : '2.3.0',
+            pagingVersion        : '3.1.1',
+            workVersion        : '2.7.1',
             multidexVersion       : '2.0.1',
             retrofitVersion       : '2.9.0',
             retrofitGsonVersion   : '2.4.0',
@@ -35,7 +46,6 @@ ext {
             tbssdkVersion         : '44132',
             exoPlayerVersion      : '2.18.5',
             permissionsVersion    : '0.12',
-            roomVersion           : '2.3.0',
             rxjavaVersion         : '2.1.6',
             rxandroidVersion      : '2.0.1',
             cameraxVersion        : '1.3.0-alpha04',
@@ -43,25 +53,24 @@ ext {
             loggingInterceptorVersion  : '4.9.3',
             leakcanaryVersion        : '2.7',
             volleyVersion        : '1.2.0',
-            coroutinesVersion        : '1.5.2',
-            pagingVersion        : '3.1.1',
-            workVersion        : '2.7.1',
             permissionsYZJVersion        : '2.0.3',
-            eventBusVersion        : '3.2.0',
+            eventBusVersion        : '3.2.0'
+
     ]
 
     depsLibs = [
-            appcompat         : 'androidx.appcompat:appcompat:1.4.1',
-            coreKtx           : 'androidx.core:core-ktx:1.7.0',
-            material          : 'com.google.android.material:material:1.5.0',
-            constraintlayout  : 'androidx.constraintlayout:constraintlayout:2.1.4',
-            lifecycleRuntime  : 'androidx.lifecycle:lifecycle-runtime:2.2.0',
-            lifecycleRuntimeKtx  : 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0',
-            lifecycleExtensions  : 'androidx.lifecycle:lifecycle-extensions:2.2.0',
-            liveDataKtx       : 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0',
-            viewModelKtx      : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
-            navigationFragment: 'androidx.navigation:navigation-fragment-ktx:2.5.3',
-            navigationUI      : 'androidx.navigation:navigation-ui-ktx:2.5.3',
+            appcompat         : "androidx.appcompat:appcompat:${dependVersion["appcompatVersion"]}",
+            activityKtx      : "androidx.acitvity:activity-ktx:${dependVersion["activityKtxVersion"]}",
+            coreKtx           : "androidx.core:core-ktx:${dependVersion["coreKtxVersion"]}",
+            material          : "com.google.android.material:material:${dependVersion["materialVersion"]}",
+            constraintlayout  : "androidx.constraintlayout:constraintlayout:${dependVersion["constraintlayoutVersion"]}",
+            lifecycleRuntime  : "androidx.lifecycle:lifecycle-runtime:${dependVersion["lifecycleVersion"]}",
+            lifecycleRuntimeKtx  : "androidx.lifecycle:lifecycle-runtime-ktx:${dependVersion["lifecycleVersion"]}",
+            lifecycleExtensions  : "androidx.lifecycle:lifecycle-extensions:${dependVersion["lifecycleVersion"]}",
+            liveDataKtx       : "androidx.lifecycle:lifecycle-livedata-ktx:${dependVersion["lifecycleVersion"]}",
+            viewModelKtx      : "androidx.lifecycle:lifecycle-viewmodel-ktx:${dependVersion["lifecycleVersion"]}",
+            navigationFragment: "androidx.navigation:navigation-fragment-ktx:${dependVersion["navigationVersion"]}",
+            navigationUI      : "androidx.navigation:navigation-ui-ktx:${dependVersion["navigationVersion"]}",
 
             //room数据库
             roomKtx           : "androidx.room:room-ktx:${dependVersion["roomVersion"]}",

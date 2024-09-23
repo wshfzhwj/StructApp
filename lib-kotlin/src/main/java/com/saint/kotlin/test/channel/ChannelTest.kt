@@ -1,8 +1,12 @@
 package com.saint.kotlin.test.channel
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
@@ -11,6 +15,7 @@ import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -44,6 +49,7 @@ class ChannelTest {
 //sampleEnd
 
 
+@OptIn(ExperimentalCoroutinesApi::class)
 suspend fun testChannelFlow() = channelFlow {
     for (i in 1..5) {
         delay(100)
@@ -109,12 +115,36 @@ fun CoroutineScope.square(numbers: ReceiveChannel<Int>): ReceiveChannel<Int> = p
 }
 
 
-fun main() = runBlocking<Unit> {
+//@OptIn(ObsoleteCoroutinesApi::class)
+//fun main() = runBlocking<Unit> {
+//    val tickerChannel = ticker(delayMillis = 1000, initialDelayMillis = 0)
+//    // 每秒打印
+//    for (unit in tickerChannel) {
+//        System.err.println("unit = $unit")
+//    }
+//}
 
-    val tickerChannel = ticker(delayMillis = 1000, initialDelayMillis = 0)
+@OptIn(ObsoleteCoroutinesApi::class, DelicateCoroutinesApi::class)
+suspend fun main(): Unit = testBroadcastChannel()
 
-    // 每秒打印
-    for (unit in tickerChannel) {
-        System.err.println("unit = $unit")
+
+@OptIn(ObsoleteCoroutinesApi::class, DelicateCoroutinesApi::class)
+suspend fun testBroadcastChannel() {
+    val broadcastChannel = BroadcastChannel<Int>(Channel.BUFFERED)
+    val producer = GlobalScope.launch {
+        List(3) {
+            delay(100)
+            broadcastChannel.send(it)
+        }
+        broadcastChannel.close()
     }
+
+    List(3) { index ->
+        GlobalScope.launch {
+            val receiveChannel = broadcastChannel.openSubscription()
+            for (i in receiveChannel) {
+                println("[#$index] received: $i")
+            }
+        }
+    }.joinAll()
 }

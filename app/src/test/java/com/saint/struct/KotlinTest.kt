@@ -5,10 +5,10 @@ import org.junit.Test
 class KotlinTest {
     @Test
     fun testEquals() {
-        val user = com.saint.kotlin.test.kotlin.User("a", "a")
-        val user2 = com.saint.kotlin.test.kotlin.User("a", "a")
-        println((user === user2))
-        println((user == user2))
+        val p1 = Person("a", "a")
+        val p2 = Person("a", "a")
+        println((p1 === p2))
+        println((p1 == p2))
     }
 
 

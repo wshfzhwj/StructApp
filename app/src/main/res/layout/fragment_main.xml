@@ -26,9 +26,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Glide"
+            android:onClick="@{(view) -> handle.testGlide()}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_app_bar"
-            android:onClick="@{(view) -> handle.testGlide()}"/>
+            />
 
         <Button
             android:id="@+id/gifBtn"
@@ -71,6 +72,14 @@
                 android:layout_height="wrap_content"
                 android:text="database"
                 android:onClick="@{(view) -> handle.testDB()}"/>
+
+            <Button
+                android:id="@+id/coroutinesBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="coroutines"
+                android:onClick="@{(view) -> handle.testCoroutineScope3()}"/>
         </com.saint.struct.widget.TouchLinearLayout>
 
         <TextView
