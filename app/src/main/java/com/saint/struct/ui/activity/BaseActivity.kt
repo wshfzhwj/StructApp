@@ -7,6 +7,9 @@ import com.saint.struct.tool.StatusBarUtils
 open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        with(this){
+
+        }
     }
 
 }

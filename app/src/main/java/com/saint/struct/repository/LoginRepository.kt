@@ -1,7 +1,7 @@
 package com.saint.struct.repository
 
-import com.saint.kotlin.test.kotlin.User
 import com.saint.struct.bean.Resource
+import com.saint.struct.bean.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

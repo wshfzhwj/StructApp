@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Paint
 import android.os.*
 import android.util.Log
+import android.view.View.OnLongClickListener
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -31,11 +32,13 @@ import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
@@ -76,7 +79,7 @@ class MainFragment : BaseFragment() {
     }
 
     fun testGlide() {
-        viewModel.testGlide(this, mFragmentMainBinding.roundImage)
+        viewModel.testGlide(this, mFragmentMainBinding.gifImage)
     }
 
     fun testDB() {
@@ -113,34 +116,6 @@ class MainFragment : BaseFragment() {
         handlerThread.quitSafely()
     }
 
-    private fun testCoroutineScope4() {
-        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-            Log.d("exceptionHandler", "${coroutineContext[CoroutineName]} $throwable")
-        }
-        val myCoroutineScope = CoroutineScope(SupervisorJob() + CoroutineName("coroutineScope"))
-        GlobalScope.launch(CoroutineName("scope1") + exceptionHandler) {
-            Log.d("scope", "0--------- ${coroutineContext[CoroutineName]}")
-            with(myCoroutineScope) {
-                val scope2 = launch(CoroutineName("scope2")) {
-                    Log.d("scope", "1--------- ${coroutineContext[CoroutineName]}")
-                    throw NullPointerException("空指针")
-                }
-                val scope3 = launch(CoroutineName("scope3") + exceptionHandler) {
-                    scope2.join()
-                    Log.d("scope", "2--------- ${coroutineContext[CoroutineName]}")
-                    delay(2000)
-                    Log.d("scope", "3--------- ${coroutineContext[CoroutineName]}")
-                }
-                scope2.join()
-                myCoroutineScope.cancel()
-                Log.d("scope", "4--------- ${coroutineContext[CoroutineName]}")
-                scope3.join()
-                Log.d("scope", "5--------- ${coroutineContext[CoroutineName]}")
-            }
-            Log.d("scope", "6--------- ${coroutineContext[CoroutineName]}")
-        }
-    }
-
     private fun testThreadPool() {
         val service = Executors.newScheduledThreadPool(10)
         service.schedule(ScheduleCallable(), 10, TimeUnit.SECONDS)
@@ -168,7 +143,109 @@ class MainFragment : BaseFragment() {
         //        Log.d(TAG,"requireActivity() method is for testing git conflict");
     }
 
-    var conn: ServiceConnection = object : ServiceConnection {
+     fun testCoroutineScope3() {
+        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            Log.d("exceptionHandler", "${coroutineContext[CoroutineName]} $throwable")
+        }
+        GlobalScope.launch(Dispatchers.Main + CoroutineName("scope1") + exceptionHandler) {
+            supervisorScope {
+                Log.d("scope", "--------- 1")
+                launch(CoroutineName("scope2")) {
+                    Log.d("scope", "--------- 2")
+                    throw  NullPointerException("空指针")
+                    Log.d("scope", "--------- 3")
+                    val scope3 = launch(CoroutineName("scope3")) {
+                        Log.d("scope", "--------- 4")
+                        delay(2000)
+                        Log.d("scope", "--------- 5")
+                    }
+                    scope3.join()
+                }
+                val scope4 = launch(CoroutineName("scope4")) {
+                    Log.d("scope", "--------- 6")
+                    delay(2000)
+                    Log.d("scope", "--------- 7")
+                }
+                scope4.join()
+                Log.d("scope", "--------- 8")
+            }
+        }
+
+    }
+
+    private fun testCoroutineScope4() {
+        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            Log.d("exceptionHandler", "${coroutineContext[CoroutineName]} $throwable")
+        }
+        val coroutineScope = CoroutineScope(SupervisorJob() +CoroutineName("coroutineScope"))
+        GlobalScope.launch(Dispatchers.Main + CoroutineName("scope1") + exceptionHandler) {
+            with(coroutineScope){
+                val scope2 = launch(CoroutineName("scope2") + exceptionHandler) {
+                    Log.d("scope", "1--------- ${coroutineContext[CoroutineName]}")
+                    throw  NullPointerException("空指针")
+                }
+                val scope3 = launch(CoroutineName("scope3") + exceptionHandler) {
+                    scope2.join()
+                    Log.d("scope", "2--------- ${coroutineContext[CoroutineName]}")
+                    delay(2000)
+                    Log.d("scope", "3--------- ${coroutineContext[CoroutineName]}")
+                }
+                scope2.join()
+                Log.d("scope", "4--------- ${coroutineContext[CoroutineName]}")
+                coroutineScope.cancel()
+                scope3.join()
+                Log.d("scope", "5--------- ${coroutineContext[CoroutineName]}")
+            }
+            Log.d("scope", "6--------- ${coroutineContext[CoroutineName]}")
+        }
+
+    }
+
+    private fun testException(){
+        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            Log.d("exceptionHandler", "${coroutineContext[CoroutineName].toString()} 处理异常 ：$throwable")
+        }
+        GlobalScope.launch(exceptionHandler) {
+            supervisorScope {
+                launch(CoroutineName("异常子协程")) {
+                    Log.d("${Thread.currentThread().name}", "我要开始抛异常了")
+                    throw NullPointerException("空指针异常")
+                }
+                for (index in 0..10) {
+                    launch(CoroutineName("子协程$index")) {
+                        Log.d("${Thread.currentThread().name}正常执行", "$index")
+                        if (index %3 == 0){
+                            throw NullPointerException("子协程${index}空指针异常")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun testExceptionBySupervisorJob(){
+        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            Log.d("exceptionHandler", "${coroutineContext[CoroutineName].toString()} 处理异常 ：$throwable")
+        }
+        val supervisorScope = CoroutineScope(SupervisorJob() + exceptionHandler)
+        with(supervisorScope) {
+            launch(CoroutineName("异常子协程")) {
+                Log.d(Thread.currentThread().name, "我要开始抛异常了")
+                throw NullPointerException("空指针异常")
+            }
+            for (index in 0..10) {
+                launch(CoroutineName("子协程$index")) {
+                    Log.d("${Thread.currentThread().name}正常执行", "$index")
+                    if (index % 3 == 0) {
+                        throw NullPointerException("子协程${index}空指针异常")
+                    }
+                }
+            }
+        }
+    }
+
+
+    private var conn: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             Log.d(TAG, "onServiceConnected")
             mService = Messenger(service)
@@ -203,6 +280,10 @@ class MainFragment : BaseFragment() {
         setToolbar()
         bindService()
         mFragmentMainBinding.handle = this
+        mFragmentMainBinding.glideBtn.setOnClickListener {
+            Log.d(TAG, "onclick")
+            testGlide()
+        }
     }
 
     private fun setToolbar() {

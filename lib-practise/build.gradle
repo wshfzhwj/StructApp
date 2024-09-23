@@ -36,11 +36,7 @@ android {
 }
 
 dependencies {
-
     implementation rootProject.depsLibs.coreKtx
-    implementation rootProject.depsLibs.coreKtx
-    implementation rootProject.depsLibs.appcompat
-    implementation rootProject.depsLibs.material
     testImplementation rootProject.depsLibs.junit
     androidTestImplementation rootProject.depsLibs.extJunit
     androidTestCompileOnly rootProject.depsLibs.espressoCore

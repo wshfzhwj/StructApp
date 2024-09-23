@@ -32,7 +32,7 @@ class FlowTest {
     }
 
     suspend fun testAsFlow() {
-        listOf(1, 2, 3, 4, 5).asFlow()
+        listOf(1, 2, 3, 4, 5).asFlow().map { (it > 3) }
             .onEach {
                 delay(100)
             }.collect {
@@ -174,6 +174,12 @@ class FlowTest {
 
 fun main() {
     runBlocking {
+        listOf(1, 2, 3, 4, 5).filter { it > 3 }.asFlow()
+            .onEach {
+                delay(100)
+            }.collect {
+                println(it)
+            }
 //sampleStart
 //    val flowTest = FlowTest()
 //    flowTest.testSequence()
@@ -189,13 +195,13 @@ fun main() {
 //sampleEnd
 //    val nums = (1..4).asFlow().shareIn(this,SharingStarted.Eagerly).onEach { delay(300) } // 发射数字 1.;3，间隔 300 毫秒
 //        countdown(1_000, 200) { remainTime -> println(remainTime) }.collect{}
-        foo()
+//        foo()
 //        (1..4).asFlow().skipOddAndDuplicateEven().collect { println(it) }
     }
 }
 
 fun foo() {
-    listOf(1, 2, 3, 4, 5).forEach{
+    listOf(1, 2, 3, 4, 5).forEach {
         if (it == 3) return@forEach // 非局部直接返回到 foo() 的调用者
         print(it)
     }
@@ -235,15 +241,15 @@ public inline fun <T, R> Flow<T>.transforms(
     }// Note: safe flow is used here, because collector is exposed to transform on each operation
 }
 
-fun nonLocalReturn(){
+fun nonLocalReturn() {
     println("useReturn - start")
     // out@ 标签修饰的后面的 lambda 表达式
-    listOf(1,2).forEach out@{
+    listOf(1, 2).forEach out@{
         println("out@ start $it")
-        listOf("a", "b",).forEach inside@{
+        listOf("a", "b").forEach inside@{
             // return 作为一个非局部返回
             // 会停止 listOf(1,2) 和 listOf("a","b") 的遍历
-            if(it == "a") return
+            if (it == "a") return
             println("it $it")
         }
         println("out@ - end == $it")

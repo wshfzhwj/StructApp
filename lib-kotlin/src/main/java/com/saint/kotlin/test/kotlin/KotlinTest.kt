@@ -1,10 +1,12 @@
 package com.saint.kotlin.test.kotlin
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
@@ -13,6 +15,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.net.URL
 import java.util.concurrent.Executors
+import kotlin.concurrent.thread
+import kotlin.coroutines.CoroutineContext
 
 class KotlinTest() {
     val lifeGoals: List<String> by lazy { initializeLifeGoals() }
@@ -24,6 +28,9 @@ class KotlinTest() {
     var a = 0
 
     var b = B(a)
+
+    //test()(1, 1)
+    val test = fun(): (Int, Int) -> String = { n1, n2 -> "和为${n1 + n2}" }
 
     fun sayHi(callback: (String) -> Unit) {
         callback("sss")
@@ -110,7 +117,6 @@ class B(var a: Int) {
 //}
 
 
-
 //
 //fun main() {
 //    Executors.newSingleThreadExecutor().asCoroutineDispatcher().use { context ->
@@ -125,24 +131,65 @@ class B(var a: Int) {
 //    }
 //}
 
-fun main() {
-    runBlocking {
-        val ans = async(Dispatchers.Default) {
-            println("执行线程是 ${Thread.currentThread()}")
-            Runtime.getRuntime().availableProcessors()
-        }
-        println("当前线程是${Thread.currentThread()}")
-        println("计算机的核数是${ans.await()}")
+//fun main() {
+//    runBlocking {
+//        val ans = async(Dispatchers.Default) {
+//            println("执行线程是 ${Thread.currentThread()}")
+//            Runtime.getRuntime().availableProcessors()
+//        }
+//        println("当前线程是${Thread.currentThread()}")
+//        println("计算机的核数是${ans.await()}")
+//    }
+//}
+
+//fun main() = runBlocking { // this: CoroutineScope
+//    launch { // 在 runBlocking 的作用范围内启动新的协程
+//        delay(1000L)
+//        println("World!")
+//    }
+//    println("Hello,")
+//}
+
+suspend fun main() = coroutineScope{
+//    withContext(Dispatchers.IO)  {
+//        println("Task from withContext1 ")
+//    }
+//    withContext(Dispatchers.IO)  {
+//        println("Task from withContext2 ")
+//    }
+//    withContext(Dispatchers.IO)  {
+//        println("Task from withContext3 ")
+//    }
+//    println("Task from main")
+
+    launch {
+        println("Task from 2")
     }
-}
+    launch {
+        println("Task from 3")
+    }
+    launch {
+        println("Task from 4")
+    }
+    launch {
+        println("Task from 5")
+    }
+    launch {
+        println("Task from 6")
+    }
+    launch {
+        println("Task from 7")
+    }
+    launch {
+        println("Task from 8")
+    }
+    launch {
+        println("Task from 9")
+    }
+    launch {
+        println("Task from 10")
+    }
 
-fun task1(){
-    println("start task1 in Thread ${Thread.currentThread()}")
-    println("end task1 in Thread ${Thread.currentThread()}")
-}
 
-fun task2(){
-    println("start task2 in Thread ${Thread.currentThread()}")
-    println("end task2 in Thread ${Thread.currentThread()}")
+    println("Task from main")
 }
-

@@ -40,8 +40,6 @@ android {
 
 dependencies {
     implementation rootProject.depsLibs.coreKtx
-    implementation rootProject.depsLibs.appcompat
-    implementation rootProject.depsLibs.material
     implementation rootProject.depsLibs.coroutines
     implementation rootProject.depsLibs.coroutinesCore
     testImplementation rootProject.depsLibs.junit

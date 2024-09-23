@@ -47,17 +47,19 @@ class KotlinCoroutines {
     }
 
     private suspend fun doSomethingUsefulOne(): Int {
+        println("doSomethingUsefulOne!")
         delay(1000L) // pretend we are doing something useful here
         return 13
     }
 
-    suspend fun doSomethingUsefulTwo(): Int {
+    private suspend fun doSomethingUsefulTwo(): Int {
+        println("doSomethingUsefulTwo!")
         delay(1000L) // pretend we are doing something useful here, too
         return 29
     }
 
 
-    suspend fun doWorld() = coroutineScope {  // this: CoroutineScope
+    private suspend fun doWorld() = coroutineScope {  // this: CoroutineScope
         launch {
             delay(1000L)
             println("World!")
@@ -73,7 +75,6 @@ class KotlinCoroutines {
         }
         println("Completed in $time ms")
     }
-
 
     suspend fun func3() = coroutineScope {
         var count = 0
@@ -679,8 +680,20 @@ class KotlinCoroutines {
     }
 }
 
-//fun main() {
-fun main() = runBlocking {
-    val kotlinCoroutines = KotlinCoroutines()
-    kotlinCoroutines.testScope()
+suspend fun main() {
+
+
 }
+//挂起函数创建的子协程是串行运行，协程构建器创建的子协程是并行运行。
+//suspend fun main() = runBlocking {
+////suspend fun main() = runBlocking {
+////    val kotlinCoroutines = KotlinCoroutines()
+////    kotlinCoroutines.testScope()
+//    launch {
+//        println("launch1")
+//    }
+//    launch {
+//        println("launch2")
+//    }
+//    println("main")
+//}

@@ -3,7 +3,7 @@
 plugins {
     id 'com.android.application' version '7.2.2' apply false
     id 'com.android.library' version '7.2.2' apply false
-    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
 }
 apply from: this.rootProject.file('config.gradle')
 //buildscript {
@@ -19,6 +19,23 @@ apply from: this.rootProject.file('config.gradle')
 //        //自定义插件 主要用于学习
 ////        classpath 'com.saint.inject:inject-plugin:1.0.3'
 //
+//    }
+//}
+
+//subprojects {
+//    project.configurations.all {
+//        //在这个例子里用不到这个语句，该语句的作用是全局移除某个依赖
+////        all*.exclude group: 'androidx.navigation', module: 'navigation-fragment'
+//
+//        //遍历所有依赖库，通过判断 requested.group 和 requested.name 来指定使用的版本
+//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+//            def requested = details.requested
+//            if (requested.group == 'androidx.annotation') {
+//                if (requested.module.name == 'annotation') {
+//                    details.useVersion '1.2.0'
+//                }
+//            }
+//        }
 //    }
 //}
 
