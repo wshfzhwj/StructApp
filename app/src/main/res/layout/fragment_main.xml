@@ -4,108 +4,230 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="handle"
-            type="com.saint.struct.ui.fragment.MainFragment"/>
+            type="com.saint.struct.ui.fragment.MainFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/layout_app_bar"
-            layout="@layout/layout_app_bar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:visibility="visible"/>
-
-        <com.saint.struct.widget.TouchButton
-            android:id="@+id/glideBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Glide"
-            android:onClick="@{(view) -> handle.testGlide()}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_app_bar"
-            />
-
-        <Button
-            android:id="@+id/gifBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Glide gif"
-            app:layout_constraintLeft_toRightOf="@id/glideBtn"
-            app:layout_constraintTop_toBottomOf="@id/layout_app_bar"
-            android:onClick="@{(view) -> handle.testGif()}"/>
-
-        <Button
-            android:id="@+id/aidlBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="aidlBtn"
-            android:layout_marginStart="8dp"
-            app:layout_constraintLeft_toRightOf="@id/gifBtn"
-            app:layout_constraintTop_toBottomOf="@id/layout_app_bar"
-            android:onClick="@{(view) -> handle.startAidl()}"/>
-
-        <com.saint.struct.widget.TouchLinearLayout
-            android:id="@+id/layout_finger"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/glideBtn"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:orientation="horizontal">
-
-            <com.saint.struct.widget.TouchButton
-                android:id="@+id/fingerBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="finger"
-                android:onClick="@{(view) -> handle.testFinger()}"/>
-
-            <Button
-                android:id="@+id/dbBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="database"
-                android:onClick="@{(view) -> handle.testDB()}"/>
-
-            <Button
-                android:id="@+id/coroutinesBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="coroutines"
-                android:onClick="@{(view) -> handle.testCoroutineScope3()}"/>
-        </com.saint.struct.widget.TouchLinearLayout>
-
-        <TextView
-            android:id="@+id/tv_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_finger"/>
-
-        <ImageView
-            android:id="@+id/roundImage"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_desc" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/gifImage"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/roundImage"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/layout_app_bar"
+                layout="@layout/layout_app_bar"
+                android:visibility="visible"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/layout0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/layout_app_bar">
+
+                <Button
+                    android:id="@+id/glideBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.testGlide()}"
+                    android:text="Glide" />
+
+                <Button
+                    android:id="@+id/gifBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.testGif()}"
+                    android:text="Glide gif" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layout1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout0">
+
+                <Button
+                    android:id="@+id/aidlBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.startAidl()}"
+                    android:text="aidlBtn" />
+
+                <Button
+                    android:id="@+id/fingerBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.testFinger()}"
+                    android:text="finger" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout1">
+
+                <Button
+                    android:id="@+id/coroutinesBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.testCoroutineScope3()}"
+                    android:text="coroutines" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/daoAreaTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RoomArea"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout2" />
+
+            <LinearLayout
+                android:id="@+id/layout3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/daoAreaTv">
+
+                <Button
+                    android:id="@+id/addDataBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.addData()}"
+                    android:text="add" />
+
+
+                <Button
+                    android:id="@+id/clearDataBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.clearData()}"
+                    android:text="clear" />
+
+                <Button
+                    android:id="@+id/queryFlowBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.queryByFlow()}"
+                    android:text="query" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_flow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="flowArea"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout3" />
+
+            <LinearLayout
+                android:id="@+id/layout4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_flow">
+
+                <Button
+                    android:id="@+id/queryLiveDataBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.queryByLiveData()}"
+                    android:text="liveData" />
+
+                <Button
+                    android:id="@+id/stateFlowBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.queryByStateFlow()}"
+                    android:text="state" />
+
+                <Button
+                    android:id="@+id/shareFlowBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.queryByShareFlow()}"
+                    android:text="share" />
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/tv_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图片区域"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout4" />
+
+
+            <ImageView
+                android:id="@+id/roundImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:src="@color/app_colorPrimary"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_image" />
+
+            <ImageView
+                android:id="@+id/gifImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:src="@color/colorAccent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/roundImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

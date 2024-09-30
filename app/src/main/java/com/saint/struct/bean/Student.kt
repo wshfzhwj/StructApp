@@ -12,11 +12,11 @@ data class Student(
     var id: Int?,
     @ColumnInfo(name = "name", typeAffinity = ColumnInfo.TEXT)
     var name: String = "",
-    @ColumnInfo(name = "age", typeAffinity = ColumnInfo.TEXT)
-    var age: String = ""
+    @ColumnInfo(name = "age", typeAffinity = ColumnInfo.INTEGER)
+    var age: Int = 0
 ) {
 
     @Ignore
-    constructor(name: String, age: String) : this(null, name, age)
+    constructor(name: String, age: Int) : this(null, name, age)
 
 }

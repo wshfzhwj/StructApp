@@ -5,7 +5,7 @@ package com.saint.kotlin.test.kotlin
 //:: 双冒号操作符表示对函数的引用
 //lambda表达式
 //匿名函数
-fun main(args: Array<String>) {
+fun main() {
     // 引用函数
     println(test(1, 2, ::add))
     // 匿名函数

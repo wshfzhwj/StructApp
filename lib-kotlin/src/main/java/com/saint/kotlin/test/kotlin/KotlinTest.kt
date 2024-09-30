@@ -150,6 +150,8 @@ class B(var a: Int) {
 //    println("Hello,")
 //}
 
+//public fun <T> runBlocking(context: kotlin.coroutines.CoroutineContext = COMPILED_CODE, block: suspend kotlinx.coroutines.CoroutineScope.() -> T): T { contract { /* compiled contract */ }; /* compiled code */ }
+//public suspend fun <R> coroutineScope(block: suspend kotlinx.coroutines.CoroutineScope.() -> R): R { contract { /* compiled contract */ }; /* compiled code */ }
 suspend fun main() = coroutineScope{
 //    withContext(Dispatchers.IO)  {
 //        println("Task from withContext1 ")
@@ -163,33 +165,13 @@ suspend fun main() = coroutineScope{
 //    println("Task from main")
 
     launch {
+        withContext(Dispatchers.IO){
+            println("withContext")
+        }
         println("Task from 2")
     }
     launch {
         println("Task from 3")
     }
-    launch {
-        println("Task from 4")
-    }
-    launch {
-        println("Task from 5")
-    }
-    launch {
-        println("Task from 6")
-    }
-    launch {
-        println("Task from 7")
-    }
-    launch {
-        println("Task from 8")
-    }
-    launch {
-        println("Task from 9")
-    }
-    launch {
-        println("Task from 10")
-    }
-
-
     println("Task from main")
 }
