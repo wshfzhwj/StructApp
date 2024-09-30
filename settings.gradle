@@ -1,18 +1,17 @@
 //插件脚本
 pluginManagement {
     repositories {
-        maven { setUrl("https://jitpack.io") }
-        maven { setUrl("https://maven.aliyun.com/repository/releases") }
-        maven { setUrl("https://maven.aliyun.com/repository/jcenter") }
-        maven { setUrl("https://maven.aliyun.com/repository/google") }
-        maven { setUrl("https://maven.aliyun.com/repository/central") }
-        maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
-        maven { setUrl("https://maven.aliyun.com/repository/public") }
-
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+//        maven { setUrl("https://jitpack.io") }
+//        maven { setUrl("https://maven.aliyun.com/repository/releases") }
+//        maven { setUrl("https://maven.aliyun.com/repository/jcenter") }
+//        maven { setUrl("https://maven.aliyun.com/repository/google") }
+//        maven { setUrl("https://maven.aliyun.com/repository/central") }
+//        maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
+//        maven { setUrl("https://maven.aliyun.com/repository/public") }
         mavenLocal()
-//        google()
-//        mavenCentral()
-//        gradlePluginPortal()
     }
 }
 
@@ -20,13 +19,15 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
-        maven { setUrl("https://jitpack.io") }
-        maven { setUrl("https://maven.aliyun.com/repository/releases") }
-        maven { setUrl("https://maven.aliyun.com/repository/jcenter") }
-        maven { setUrl("https://maven.aliyun.com/repository/google") }
-        maven { setUrl("https://maven.aliyun.com/repository/central") }
-        maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
-        maven { setUrl("https://maven.aliyun.com/repository/public") }
+        google()
+        mavenCentral()
+//        maven { setUrl("https://jitpack.io") }
+//        maven { setUrl("https://maven.aliyun.com/repository/releases") }
+//        maven { setUrl("https://maven.aliyun.com/repository/jcenter") }
+//        maven { setUrl("https://maven.aliyun.com/repository/google") }
+//        maven { setUrl("https://maven.aliyun.com/repository/central") }
+//        maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
+//        maven { setUrl("https://maven.aliyun.com/repository/public") }
         mavenLocal()
     }
 }

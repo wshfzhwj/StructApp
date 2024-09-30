@@ -17,7 +17,7 @@ class PagingJavaFragment : BaseFragment() {
     private lateinit var pageAdapter: PagingJavaAdapter
 //    private lateinit var mViewModel: PageOldViewModel
 
-    override fun getFragmentLayoutId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.fragment_paging
     }
 

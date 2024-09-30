@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -197,7 +199,6 @@ dependencies {
 
     implementation rootProject.depsLibs.lifecycleRuntime
     implementation rootProject.depsLibs.lifecycleRuntimeKtx
-    implementation rootProject.depsLibs.lifecycleExtensions
     implementation rootProject.depsLibs.liveDataKtx
     implementation rootProject.depsLibs.viewModelKtx
 
@@ -233,11 +234,17 @@ dependencies {
     implementation rootProject.depsLibs.glide
     kapt rootProject.depsLibs.glideCompiler
 
-    implementation rootProject.depsLibs.permissionYZJ
     implementation rootProject.depsLibs.eventBus
+    implementation rootProject.depsLibs.easyPermission
 
     implementation(project(':lib-biometric'))
     implementation(project(':lib-kotlin'))
     implementation(project(':lib-practise'))
     implementation(project(':asm-annotation'))
 }
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        languageVersion = "1.9"
+    }
+}
+

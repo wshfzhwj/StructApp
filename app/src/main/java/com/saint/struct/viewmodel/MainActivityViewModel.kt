@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.shareIn
 class MainActivityViewModel : ViewModel() {
 
     fun navigationActions() : SharedFlow<Int> {
-      return  flow<Int> { 1..3 }.flowOn(Dispatchers.Default).shareIn(viewModelScope, SharingStarted.Lazily, 1)
+      return  flow<Int> { 1..3 }.flowOn(Dispatchers.Default).shareIn(viewModelScope, SharingStarted.Lazily, 100)
     }
 
 }

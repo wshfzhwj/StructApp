@@ -22,6 +22,7 @@ import kotlin.system.measureTimeMillis
  *      使用 reduce 与 fold 将流规约到单个值。
  */
 class FlowTest {
+
     suspend fun testFlowOf() {
         flowOf(1, 2, 3, 4, 5)
             .onEach {
@@ -39,6 +40,30 @@ class FlowTest {
                 println(it)
             }
     }
+
+    // SharedFlow 示例
+    private val sharedFlow = MutableSharedFlow<String>()
+    suspend fun testSharedFlow() {
+        // 订阅
+        sharedFlow.collect { value ->
+            println("Received: $value")
+        }
+        // 发送数据
+        sharedFlow.emit("Hello, SharedFlow!")
+    }
+
+    // StateFlow 示例
+    private val stateFlow = MutableStateFlow("Initial State")
+
+    // 订阅
+    suspend fun testStateFlow() {
+        stateFlow.collect { value ->
+            println("Current State: $value")
+        }
+        // 更新状态
+        stateFlow.value = "New State"
+    }
+
 
     fun test() = runBlocking {
         val myDispatcher = Executors.newSingleThreadExecutor()

@@ -11,23 +11,23 @@ ext {
     android = [
             applicationId    : "com.saint.struct",
             //使用exoPlayer编译版本需要到33，而33中有bug,xml写代码没有代码提示
-            compileSdk       : 33,
-            buildToolsVersion: '32.0.0',
+            compileSdk       : 34,
+            buildToolsVersion: '33.0.0',
             minSdk           : 24,
-            targetSdk        : 33,
+            targetSdk        : 34,
 
             versionCode      : 1,
             versionName      : "1.0.1",
     ]
 
     dependVersion = [
-            appcompatVersion         : '1.5.1',
+            appcompatVersion         : '1.6.1',
             activityKtxVersion      : '1.9.0',
             coreKtxVersion           : '1.9.0',
             materialVersion          : '1.6.1',
             constraintlayoutVersion  : '2.1.4',
-            lifecycleVersion        : '2.2.0',
-            navigationVersion      : '2.5.3',
+            lifecycleVersion        : '2.7.0',
+            navigationVersion      : '2.7.0',
             coroutinesVersion        : '1.5.2',
             roomVersion           : '2.3.0',
             pagingVersion        : '3.1.1',
@@ -53,8 +53,8 @@ ext {
             loggingInterceptorVersion  : '4.9.3',
             leakcanaryVersion        : '2.7',
             volleyVersion        : '1.2.0',
-            permissionsYZJVersion        : '2.0.3',
-            eventBusVersion        : '3.2.0'
+            eventBusVersion        : '3.2.0',
+            easyPermissionVersion : '3.0.0',
 
     ]
 
@@ -66,7 +66,7 @@ ext {
             constraintlayout  : "androidx.constraintlayout:constraintlayout:${dependVersion["constraintlayoutVersion"]}",
             lifecycleRuntime  : "androidx.lifecycle:lifecycle-runtime:${dependVersion["lifecycleVersion"]}",
             lifecycleRuntimeKtx  : "androidx.lifecycle:lifecycle-runtime-ktx:${dependVersion["lifecycleVersion"]}",
-            lifecycleExtensions  : "androidx.lifecycle:lifecycle-extensions:${dependVersion["lifecycleVersion"]}",
+            lifecycleCommonJvm      : "androidx.lifecycle:lifecycle-common-jvm:${dependVersion["lifecycleVersion"]}",
             liveDataKtx       : "androidx.lifecycle:lifecycle-livedata-ktx:${dependVersion["lifecycleVersion"]}",
             viewModelKtx      : "androidx.lifecycle:lifecycle-viewmodel-ktx:${dependVersion["lifecycleVersion"]}",
             navigationFragment: "androidx.navigation:navigation-fragment-ktx:${dependVersion["navigationVersion"]}",
@@ -137,7 +137,7 @@ ext {
             rxjava            : "io.reactivex.rxjava2:rxjava:${dependVersion["rxjavaVersion"]}",
             rxandroid         : "io.reactivex.rxjava2:rxandroid:${dependVersion["rxandroidVersion"]}",
 
-            permissionYZJ         : "com.yanzhenjie:permission:${dependVersion["permissionsYZJVersion"]}",
+            easyPermission    : "pub.devrel:easypermissions:${dependVersion["easyPermissionVersion"]}",
             eventBus         : "org.greenrobot:eventbus:${dependVersion["eventBusVersion"]}",
 
     ]

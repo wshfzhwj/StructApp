@@ -17,7 +17,7 @@ public class BiometricPromptManager {
 
     private static final String TAG = "BiometricPromptManager";
     private IBiometricPromptImpl mImpl;
-    private Activity mActivity;
+    private final Activity mActivity;
 
     public interface OnBiometricIdentifyCallback {
         void onUsePassword();
@@ -32,11 +32,12 @@ public class BiometricPromptManager {
 
     }
 
-    public static BiometricPromptManager from(Activity activity) {
+    @NonNull
+    public static BiometricPromptManager from(@NonNull Activity activity) {
         return new BiometricPromptManager(activity);
     }
 
-    public BiometricPromptManager(Activity activity) {
+    public BiometricPromptManager(@NonNull Activity activity) {
         mActivity = activity;
         if (isAboveApi28()) {
             mImpl = new BiometricPromptApi28(activity);
