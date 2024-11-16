@@ -3,7 +3,6 @@ package com.saint.struct.viewmodel
 import android.app.Activity
 import android.os.Build
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -15,15 +14,15 @@ import com.saint.biometiriclib.BiometricPromptManager
 import com.saint.struct.bean.Student
 import com.saint.struct.repository.StudentRepository
 import com.saint.struct.tool.log
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -53,22 +52,22 @@ class MainFragmentViewModel(val repository: StudentRepository) : ViewModel() {
     fun queryByFlow(): Flow<List<Student>> = flow {
         log("viewModel queryByFlow")
         emit(repository.getAllUsers())
-    }
+    }.flowOn(Dispatchers.IO)
 
     fun queryByLiveData() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _stuMutableLiveData.value = repository.getAllUsers()
         }
     }
 
     fun queryByShareFlow() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _sharedFlow.tryEmit(repository.getAllUsers())
         }
     }
 
     fun queryByStateFlow() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.getAllUsersFlow().map {
                 UiState.Success(it)
             }.stateIn(
@@ -105,7 +104,7 @@ class MainFragmentViewModel(val repository: StudentRepository) : ViewModel() {
         stringBuilder.append("\n")
         stringBuilder.append("hasEnrolledFingerprints : " + mManager.hasEnrolledFingerprints())
         stringBuilder.append("\n")
-        stringBuilder.append("isKeyguardSecure : " + mManager!!.isKeyguardSecure)
+        stringBuilder.append("isKeyguardSecure : " + mManager.isKeyguardSecure)
         stringBuilder.append("\n")
         log(stringBuilder.toString())
         if (mManager.isBiometricPromptEnable) {

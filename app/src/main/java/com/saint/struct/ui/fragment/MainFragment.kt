@@ -8,9 +8,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,7 +25,9 @@ import com.saint.struct.service.MessengerService
 import com.saint.struct.tool.TAG
 import com.saint.struct.tool.log
 import com.saint.struct.ui.activity.AidlActivity
+import com.saint.struct.ui.activity.MainActivity
 import com.saint.struct.ui.activity.WebActivity
+import com.saint.struct.viewmodel.MainActivityViewModel
 import com.saint.struct.viewmodel.MainFragmentViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineName
@@ -40,6 +45,7 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
+import kotlin.coroutines.EmptyCoroutineContext
 
 
 /**
@@ -122,7 +128,16 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
     }
 
     fun testGif() {
-        viewModel.testGif(this, mFragmentMainBinding.gifImage)
+//        viewModel.testGif(this, mFragmentMainBinding.gifImage)
+        println("1 ${Thread.currentThread().name}")
+        lifecycleScope.launch(Dispatchers.Main){
+            launch {
+                println("2 ${Thread.currentThread().name}")
+            }
+            println("4 ${Thread.currentThread().name}")
+        }
+        println("5 ${Thread.currentThread().name}")
+
     }
 
     fun testGlide() {

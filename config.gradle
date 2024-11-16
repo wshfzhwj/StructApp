@@ -80,6 +80,7 @@ ext {
             //协程
             coroutines : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${dependVersion["coroutinesVersion"]}",
             coroutinesCore : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${dependVersion["coroutinesVersion"]}",
+            coroutinesJdk8 : "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${dependVersion["coroutinesVersion"]}",
 
             //paging
             pagingRuntime : "androidx.paging:paging-runtime-ktx:${dependVersion["pagingVersion"]}",

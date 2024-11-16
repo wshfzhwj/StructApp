@@ -9,6 +9,10 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import java.io.OutputStream
 
@@ -37,6 +41,13 @@ class KotlinTest {
 
     }
 
-    val list = listOf(1, 2, 3)
-    val list2 = testRxJava();
+    @Test
+    fun testLaunch() {
+        val scope = CoroutineScope(Dispatchers.Main.immediate)
+        Log.d("scope1", Thread.currentThread().name)
+        scope.launch{
+            Log.d("scope2", Thread.currentThread().name)
+        }
+        Log.d("scope3", Thread.currentThread().name)
+    }
 }
