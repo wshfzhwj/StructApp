@@ -27,7 +27,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -124,20 +123,11 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void isCorrect() {
-        int a = "abc".hashCode();
-        int s = 0;
-        long l = System.currentTimeMillis();
-        for (int i = 0; i < 1000000000; i++) {
-            s = a % 16;
-        }
-        System.out.println("----1-----" + s);
-        System.out.println("----1-----" + (System.currentTimeMillis() - l));
-        l = System.currentTimeMillis();
-        for (int i = 0; i < 1000000000; i++) {
+        String a = "-------a";
+        System.out.println(System.identityHashCode(a));
+        a = "-----------b";
+        System.out.println(System.identityHashCode(a));
 
-            s = a & (15);
-        }
-        System.out.println("----1-----" + s);
-        System.out.println("----2-----" + (System.currentTimeMillis() - l));
+        assert ((2 + 2) == 4);
     }
 }

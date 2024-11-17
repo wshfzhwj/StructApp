@@ -97,14 +97,13 @@ import java.lang.Character.getName
 //    }
 //}
 
-fun main() = runBlocking{
-    val scope = CoroutineScope(SupervisorJob()+ Dispatchers.Main)
-    //子Job2
-    scope.launch(Dispatchers.Main) {
-        launch(Dispatchers.Main)  {
-            println("1 ${Thread.currentThread().name}")
-        }
-        println("2 ${Thread.currentThread().name}")
+fun main() {
+    foo(listOf(1,3,5,7,9))
+}
+
+fun foo(ints: List<Int>) {
+    ints.forEach {
+        if (it == 5) return@forEach // implicit label for lambda passed to forEach
+        print(it)
     }
-    println("3 ${Thread.currentThread().name}")
 }

@@ -42,7 +42,6 @@ dependencies {
     implementation rootProject.depsLibs.coreKtx
     implementation rootProject.depsLibs.coroutines
     implementation rootProject.depsLibs.coroutinesCore
-    implementation rootProject.depsLibs.coroutinesJdk8
     testImplementation rootProject.depsLibs.junit
     androidTestImplementation rootProject.depsLibs.extJunit
     androidTestCompileOnly rootProject.depsLibs.espressoCore
