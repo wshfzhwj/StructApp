@@ -1,9 +1,11 @@
 package com.saint.struct.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
@@ -17,9 +19,9 @@ import pub.devrel.easypermissions.EasyPermissions
 
 class MainActivity : BaseActivity() {
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
-//    var viewModel: MainActivityViewModel by lazy { ViewModelProvider(this).get(MainActivityViewModel::class)}
-    private lateinit var mLayoutBinding: ActivityMainBinding
 
+    //    var viewModel: MainActivityViewModel by lazy { ViewModelProvider(this).get(MainActivityViewModel::class)}
+    private lateinit var mLayoutBinding: ActivityMainBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +33,21 @@ class MainActivity : BaseActivity() {
         bottom.setupWithNavController(navController)
 
 
-//        lifecycleScope.launch{
-//            repeatOnLifecycle(Lifecycle.State.STARTED){
-//                mainActivityViewModel.navigationActions().collect{
-//                    println()
-//                }
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.CREATED) {
+//                Log.d("MainActivity", "CREATED")
+//
+//            }
+//        }
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                Log.d("MainActivity", "STARTED")
+//            }
+//
+//        }
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+//                Log.d("MainActivity", "RESUMED")
 //            }
 //        }
     }

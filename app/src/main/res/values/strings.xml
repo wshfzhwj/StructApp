@@ -3,4 +3,6 @@
     <string name="app_token">token</string>
     <string name="app_ssh">ssh</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_home">首页</string>
+    <string name="price_format">¥%.2f</string>
 </resources>

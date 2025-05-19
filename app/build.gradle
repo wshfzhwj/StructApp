@@ -237,9 +237,14 @@ dependencies {
     implementation rootProject.depsLibs.eventBus
     implementation rootProject.depsLibs.easyPermission
 
+    implementation rootProject.depsLibs.banner
+    implementation rootProject.depsLibs.refreshLayout
+    implementation rootProject.depsLibs.refreshHeader
+    implementation rootProject.depsLibs.refreshFooter
+
     implementation(project(':lib-biometric'))
-    implementation(project(':lib-kotlin'))
-    implementation(project(':lib-practise'))
+//    implementation(project(':lib-kotlin'))
+//    implementation(project(':lib-practise'))
     implementation(project(':asm-annotation'))
 }
 tasks.withType(KotlinCompile).configureEach {

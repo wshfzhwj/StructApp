@@ -18,8 +18,6 @@ abstract class BasePagingFragment<T : Any,VH : RecyclerView.ViewHolder> : BaseFr
         setListener()
     }
 
-    open fun initTitle() {
-    }
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_paging
@@ -37,10 +35,8 @@ abstract class BasePagingFragment<T : Any,VH : RecyclerView.ViewHolder> : BaseFr
     }
 
     abstract fun getCustomPageAdapter(): PagingDataAdapter<T, VH>
-
+    abstract fun initTitle()
     abstract fun setModelAndData()
-    open fun setListener(){
-
-    }
+    abstract fun setListener()
 
 }

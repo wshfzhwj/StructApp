@@ -1,22 +1,24 @@
 package com.saint.kotlin.test.kotlin
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMap
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.fold
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.net.URL
-import java.util.concurrent.Executors
-import kotlin.concurrent.thread
-import kotlin.coroutines.CoroutineContext
 
 class KotlinTest() {
     val lifeGoals: List<String> by lazy { initializeLifeGoals() }
@@ -52,10 +54,11 @@ class KotlinTest() {
     fun testList() {
         val list = mutableListOf<Int>(1, 2, 3)
 
-        print(list.asSequence()
-            .map { it * 2 }
-            .filter { it % 2 == 0 }
-            .count { it < 3 })
+        print(
+            list.asSequence()
+                .map { it * 2 }
+                .filter { it % 2 == 0 }
+                .count { it < 3 })
 
     }
 
@@ -152,26 +155,41 @@ class B(var a: Int) {
 
 //public fun <T> runBlocking(context: kotlin.coroutines.CoroutineContext = COMPILED_CODE, block: suspend kotlinx.coroutines.CoroutineScope.() -> T): T { contract { /* compiled contract */ }; /* compiled code */ }
 //public suspend fun <R> coroutineScope(block: suspend kotlinx.coroutines.CoroutineScope.() -> R): R { contract { /* compiled contract */ }; /* compiled code */ }
-suspend fun main() = coroutineScope{
-//    withContext(Dispatchers.IO)  {
-//        println("Task from withContext1 ")
+//suspend fun main() = coroutineScope{
+////    withContext(Dispatchers.IO)  {
+////        println("Task from withContext1 ")
+////    }
+////    withContext(Dispatchers.IO)  {
+////        println("Task from withContext2 ")
+////    }
+////    withContext(Dispatchers.IO)  {
+////        println("Task from withContext3 ")
+////    }
+////    println("Task from main")
+//
+//    launch {
+//        withContext(Dispatchers.IO){
+//            println("withContext")
+//        }
+//        println("Task from 2")
 //    }
-//    withContext(Dispatchers.IO)  {
-//        println("Task from withContext2 ")
-//    }
-//    withContext(Dispatchers.IO)  {
-//        println("Task from withContext3 ")
+//    launch {
+//        println("Task from 3")
 //    }
 //    println("Task from main")
+//}
 
-    launch {
-        withContext(Dispatchers.IO){
-            println("withContext")
-        }
-        println("Task from 2")
+
+//sampleStart
+fun simple(): Flow<Int> = flow { // 流构建器
+    for (i in 1..3) {
+        delay(100) // 假装我们在这里做了一些有用的事情
+        emit(i) // 发送下一个值
     }
-    launch {
-        println("Task from 3")
-    }
-    println("Task from main")
+}
+
+
+fun main() = runBlocking{
+    flowOf(1, 2)
+        .collect()
 }

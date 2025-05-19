@@ -54,7 +54,7 @@ public class ExampleInstrumentedTest {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ConnectService iCity = retrofit.create(ConnectService.class);
-        Call<WanAndroidBean> call = iCity.getArticleList(1, 1);
+        Call<WanAndroidBean> call = iCity.getArticleListByCall(1, 1);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {

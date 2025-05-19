@@ -1,21 +1,23 @@
 package com.saint.struct.ui.fragment
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagedList
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saint.struct.R
-import com.saint.struct.adapter.PagingJavaAdapter
-import com.saint.struct.bean.WanListBean
+import com.saint.struct.adapter.PagingArticleAdapter
 import com.saint.struct.databinding.FragmentPagingBinding
-import com.saint.struct.viewmodel.PageOldViewModel
-
-private const val TAG = "PageOldFragment"
+import com.saint.struct.viewmodel.PageArticleViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class PagingJavaFragment : BaseFragment() {
-    private lateinit var pageAdapter: PagingJavaAdapter
-//    private lateinit var mViewModel: PageOldViewModel
+    private lateinit var pageAdapter: PagingArticleAdapter
+
+    //    private lateinit var mViewModel: PageOldViewModel
+    private val viewModel: PageArticleViewModel by viewModels()
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_paging
@@ -36,7 +38,7 @@ class PagingJavaFragment : BaseFragment() {
     }
 
     private fun initRecyclerView() {
-        pageAdapter = PagingJavaAdapter()
+        pageAdapter = PagingArticleAdapter()
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         (fragmentBinding as FragmentPagingBinding).recyclerView.apply {
@@ -54,8 +56,12 @@ class PagingJavaFragment : BaseFragment() {
 //            ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
 //        )
 //        mViewModel = mViewModelProvider[PageOldViewModel::class.java]
-        val factory = ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
-        val mViewModel: PageOldViewModel by viewModels { factory }
-        mViewModel.pagedList.observe(requireActivity()) { dataBeans: PagedList<WanListBean> -> pageAdapter.submitList(dataBeans) }
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.articles.collectLatest {
+                    pageAdapter.submitData(lifecycle, it)
+                }
+            }
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.saint.struct.network.service
 
 import com.saint.struct.bean.ProjectResponse
 import com.saint.struct.bean.WanAndroidBean
-import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -13,4 +12,7 @@ interface WanAndroidKtApi {
 
 //    @GET("article/list/{page}/json")
 //    fun getArticleList2(@Path("page") page: Int): Single<WanAndroidBean?>
+
+    @GET("article/list/{page}/json")
+    suspend fun getArticleList(@Path("page") page: Int, @Query("cid") cid: Int): WanAndroidBean
 }

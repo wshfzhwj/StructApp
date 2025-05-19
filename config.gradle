@@ -55,6 +55,7 @@ ext {
             volleyVersion        : '1.2.0',
             eventBusVersion        : '3.2.0',
             easyPermissionVersion : '3.0.0',
+            banner : '2.2.3',
 
     ]
 
@@ -139,6 +140,7 @@ ext {
 
             easyPermission    : "pub.devrel:easypermissions:${dependVersion["easyPermissionVersion"]}",
             eventBus         : "org.greenrobot:eventbus:${dependVersion["eventBusVersion"]}",
+            banner         : "io.github.youth5201314:banner:${dependVersion["banner"]}",
 
     ]
 

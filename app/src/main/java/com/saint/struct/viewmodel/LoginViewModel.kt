@@ -20,7 +20,7 @@ class LoginViewModel(
             // Display result of the network request to the user
             when (result) {
                 is Resource.Success<User> -> println("aaa")// Happy path
-                else -> Resource.DataError<User>("error",100)// Show error in UI
+                else -> Resource.DataError<User>("error", 100)// Show error in UI
             }
         }
     }
@@ -33,7 +33,7 @@ class LoginViewModel(
         }
     }
 
-    suspend fun loginBySafeMode(username: String, token: String){
+    suspend fun loginBySafeMode(username: String, token: String) {
         println("$username         $token")
         loginRepository.makeLoginSafeRequest("")
     }

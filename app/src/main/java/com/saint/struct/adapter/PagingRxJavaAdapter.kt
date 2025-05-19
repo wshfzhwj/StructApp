@@ -18,27 +18,21 @@ class PagingRxJavaAdapter : PagingDataAdapter<WanListBean, PagingRxJavaAdapter.V
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val bean = getItem(position)
-        if (bean != null) {
-            holder.desc.text = bean.desc
-            holder.date.text = bean.niceDate
-            holder.title.text = bean.title
-            holder.auth.text = bean.author
+        getItem(position)?.let { bean ->
+            with(holder) {
+                desc.text = bean.desc
+                date.text = bean.niceDate
+                title.text = bean.title
+                auth.text = bean.author
+            }
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var desc: TextView
-        var date: TextView
-        var title: TextView
-        var auth: TextView
-
-        init {
-            desc = itemView.findViewById(R.id.desc)
-            date = itemView.findViewById(R.id.date)
-            title = itemView.findViewById(R.id.title)
-            auth = itemView.findViewById(R.id.author)
-        }
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val desc: TextView = itemView.findViewById(R.id.desc)
+        val date: TextView = itemView.findViewById(R.id.date)
+        val title: TextView = itemView.findViewById(R.id.title)
+        val auth: TextView = itemView.findViewById(R.id.author)
     }
 
     companion object {

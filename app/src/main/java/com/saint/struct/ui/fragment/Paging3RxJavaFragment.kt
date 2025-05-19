@@ -17,22 +17,19 @@ class Paging3RxJavaFragment : BasePagingFragment<WanListBean, PagingRxJavaAdapte
     override fun setModelAndData() {
         val factory = Paging3RxViewModel.Factory()
         val viewModel: Paging3RxViewModel by viewModels { factory }
-        viewModel.flowable // Using AutoDispose to handle subscription lifecycle.
-            // See: https://github.com/uber/AutoDispose
-            //            .to(autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+        viewModel.flowable
             .subscribe { pagingData: PagingData<WanListBean>? ->
-                Log.d(TAG, "pagingData  =====================")
                 pageAdapter.submitData(lifecycle, pagingData!!)
             }
     }
 
-    override fun setListener() {
-    }
+    override fun setListener() {}
 
     override fun getCustomPageAdapter(): PagingDataAdapter<WanListBean, PagingRxJavaAdapter.ViewHolder> {
         return PagingRxJavaAdapter()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun initTitle() {
         (fragmentBinding as FragmentPagingBinding).layoutAppBar.titleBar.text = "PageRxFragment"
     }

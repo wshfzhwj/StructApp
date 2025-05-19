@@ -26,9 +26,12 @@ object ServiceCreator {
         .addInterceptor(interceptor)
         .connectTimeout(60, TimeUnit.SECONDS)
 
-    private val retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(builder.build()).addConverterFactory(
-        GsonConverterFactory.create()
-    ).build()
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(builder.build())
+        .addConverterFactory(
+            GsonConverterFactory.create()
+        ).build()
 
     fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)
 

@@ -9,10 +9,12 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava2.cachedIn
 import androidx.paging.rxjava2.flowable
 import com.saint.struct.bean.WanListBean
-import com.saint.struct.network.HttpManager.Companion.getInstance
+import com.saint.struct.network.HttpManager
 import com.saint.struct.repository.Paging3RxRepository
 import io.reactivex.Flowable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class Paging3RxViewModel : ViewModel() {
     private var mPager: Pager<Int, WanListBean>
     private var mPaging3RxRepository: Paging3RxRepository
@@ -25,7 +27,7 @@ class Paging3RxViewModel : ViewModel() {
         /**
          * 数据源
          */
-        mPaging3RxRepository = Paging3RxRepository(getInstance().service)
+        mPaging3RxRepository = Paging3RxRepository(HttpManager.getInstance().service)
         /**
          * Pager ：分页大管家, 使用网络数据源构造
          */

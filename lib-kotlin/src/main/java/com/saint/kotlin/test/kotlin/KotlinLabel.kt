@@ -1,6 +1,6 @@
 package com.saint.kotlin.test.kotlin
 
-class KotlinLabel() {
+class KotlinLabel {
     private val ints = arrayListOf(1, 0, 2, 3)
     fun foo() {
         ints.forEach lit@{

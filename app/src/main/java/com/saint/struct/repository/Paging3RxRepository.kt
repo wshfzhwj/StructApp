@@ -19,7 +19,7 @@ class Paging3RxRepository(private val mService: ConnectService) : RxPagingSource
         }
         nextPageKey = nextPageNumber
         Log.d(TAG, "Paging3框架，PagingSource loadSingle call,  page = $nextPageKey")
-        return mService.getArticleList2(nextPageKey)!!
+        return mService.getArticleListRxjava(nextPageKey)
             .subscribeOn(Schedulers.io())
             .map { bean: WanAndroidBean -> toLoadResult(bean) }
             .onErrorReturn { LoadResult.Error<Int, WanListBean>(Throwable()) }

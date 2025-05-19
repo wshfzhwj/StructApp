@@ -6,6 +6,7 @@ import android.widget.EditText
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
+import java.util.UUID
 import java.util.concurrent.Executors
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.system.measureTimeMillis
@@ -20,6 +21,10 @@ import kotlin.system.measureTimeMillis
  *      转化为各种集合，例如 toList 与 toSet。
  *      获取第一个（first）值与确保流发射单个（single）值的操作符。
  *      使用 reduce 与 fold 将流规约到单个值。
+ *
+ *
+ *      map filter onEach debounce sample reduce fold flatMapConcat
+ *      flatMapMerge flatMapLatest zip buffer conflate
  */
 class FlowTest {
 
@@ -30,7 +35,13 @@ class FlowTest {
             }.collect {
                 println(it)
             }
+
+        flow<Int>{
+            emit(1)
+        }
     }
+
+
 
     suspend fun testAsFlow() {
         listOf(1, 2, 3, 4, 5).asFlow().map { (it > 3) }
@@ -90,12 +101,25 @@ class FlowTest {
 
     fun zip() {
         runBlocking {
-            val flow = flowOf(1, 2, 3).onEach { delay(1000) }
-            val flow2 = flowOf("a", "b", "c", "d").onEach { delay(15) }
+            val flow = sendRealtimeWeatherRequest()
+            val flow2 = sendSevenDaysWeatherRequest()
             flow.zip(flow2) { i, s -> i.toString() + s }.collect {
                 println(it) // Will print "1a 2b 3c"
             }
         }
+    }
+
+    fun sendRealtimeWeatherRequest(): Flow<String> = flow {
+        // send request to realtime weather
+        emit("1")
+        emit("2")
+        emit("3")
+    }
+
+    fun sendSevenDaysWeatherRequest(): Flow<String> = flow {
+        // send request to get 7 days weather
+        emit("a")
+        emit("b")
     }
 
     fun simple(): Flow<Int> = flow {
@@ -122,18 +146,18 @@ class FlowTest {
 
 }
 
-//fun main() {
-//    val flowTest = FlowTest()
-////    val scope = CoroutineScope(SupervisorJob())
-////    scope.launch{
-////        flowTest.testAsFlow()
-////        flowTest.testFlowOf()
-////        flowTest.testChannelFlow()
-////    }
-//
-////    flowTest.test()
-//    flowTest.zip()
-//}
+fun main() = runBlocking{
+    val flowTest = FlowTest()
+//    val scope = CoroutineScope(SupervisorJob())
+//    scope.launch{
+//        flowTest.testAsFlow()
+//        flowTest.testFlowOf()
+//        flowTest.testChannelFlow()
+//    }
+
+//    flowTest.test()
+    flowTest.testFlowOf()
+}
 
 //sampleStart
 //fun simple(): Flow<Int> = flow { // 流构建器
@@ -197,14 +221,30 @@ class FlowTest {
 //sampleEnd
 
 
-fun main() {
-    runBlocking {
-        listOf(1, 2, 3, 4, 5).filter { it > 3 }.asFlow()
-            .onEach {
-                delay(100)
-            }.collect {
-                println(it)
-            }
+//fun main() = runBlocking{
+//    runBlocking {
+//        listOf(1, 2, 3, 4, 5).filter { it > 3 }.asFlow()
+//            .onEach {
+//                delay(100)
+//            }.collect {
+//                println(it)
+//            }
+//}
+//
+//    val flow1 = flowOf(1, 2, 3)
+//    val flow2 = flowOf("one", "two")
+//    flow1.combine(flow2) { i, s ->
+//        "$i -> $s"
+//    }.collect {
+//        println(it)
+//    }
+//--------- 打印 ---------
+//1 -> one
+//2 -> two
+//3 -> three
+//3 -> four
+
+
 //sampleStart
 //    val flowTest = FlowTest()
 //    flowTest.testSequence()
@@ -222,8 +262,7 @@ fun main() {
 //        countdown(1_000, 200) { remainTime -> println(remainTime) }.collect{}
 //        foo()
 //        (1..4).asFlow().skipOddAndDuplicateEven().collect { println(it) }
-    }
-}
+//}
 
 fun foo() {
     listOf(1, 2, 3, 4, 5).forEach {

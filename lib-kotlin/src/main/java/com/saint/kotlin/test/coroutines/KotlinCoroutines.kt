@@ -680,9 +680,28 @@ class KotlinCoroutines {
     }
 }
 
-suspend fun main() {
 
+val mutex = Mutex()
 
+suspend fun doSomething(i: Int) {
+    //类似@Synchronized  但@Synchronized在协程里面不管用
+    mutex.withLock {
+        println("#$i enter critical section.")
+
+        // do something
+        delay(1000) // <- The 'delay' suspension point is inside a critical section
+
+        println("#$i exit critical section.")
+    }
+}
+
+fun main() = runBlocking {
+    repeat(2) { i ->
+        launch(Dispatchers.Default) {
+            println("#$i thread name: ${Thread.currentThread().name}")
+            doSomething(i)
+        }
+    }
 }
 //挂起函数创建的子协程是串行运行，协程构建器创建的子协程是并行运行。
 //suspend fun main() = runBlocking {
