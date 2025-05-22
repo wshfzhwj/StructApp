@@ -1,35 +1,26 @@
 package com.saint.struct.adapter
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import com.saint.struct.R
 import com.saint.struct.databinding.ItemHomeProductBinding
 import com.saint.struct.model.HomeItem
 import com.youth.banner.Banner
 import com.youth.banner.indicator.CircleIndicator
-import com.saint.struct.R
-import com.saint.struct.tool.TAG
 
 private const val TYPE_BANNER = 0
 private const val TYPE_CONTENT = 1
 
 
-// 修正PagingDataAdapter的继承参数
-class HomeAdapter(private val onItemClick: (HomeItem) -> Unit) :
+class HomeAdapter(private val onItemClick: (HomeItem) -> Unit, val hasBanner: Boolean = false) :
     PagingDataAdapter<HomeItem, RecyclerView.ViewHolder>(HomeItemDiffCallback) {
-
     // 添加DiffCallback实现
     object HomeItemDiffCallback : DiffUtil.ItemCallback<HomeItem>() {
         override fun areItemsTheSame(oldItem: HomeItem, newItem: HomeItem): Boolean {
@@ -48,7 +39,11 @@ class HomeAdapter(private val onItemClick: (HomeItem) -> Unit) :
     )
 
     override fun getItemCount(): Int {
-        return super.getItemCount() + 1 // 增加Banner占位
+        return if (hasBanner) {
+            super.getItemCount() + 1
+        } else {
+            super.getItemCount()
+        }
     }
 
 
@@ -61,7 +56,9 @@ class HomeAdapter(private val onItemClick: (HomeItem) -> Unit) :
 
             else -> {
                 return ProductViewHolder(
-                    ItemHomeProductBinding.inflate(LayoutInflater.from(parent.context),parent,false),
+                    ItemHomeProductBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    ),
                     onItemClick
                 )
             }
@@ -69,16 +66,25 @@ class HomeAdapter(private val onItemClick: (HomeItem) -> Unit) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0 && !snapshot().isEmpty()) TYPE_BANNER else TYPE_CONTENT
+        return if (hasBanner) {
+            return if (position == 0 && snapshot().isNotEmpty()) TYPE_BANNER else TYPE_CONTENT
+        } else {
+            return TYPE_CONTENT
+        }
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is BannerViewHolder -> holder.bind(bannerItems)
             is ProductViewHolder -> {
-                // Handle empty state properly
+                // snapShot()方法获取当前列表
                 if (snapshot().isEmpty()) return
-                val adjustedPosition = position - if (snapshot().items.isNotEmpty()) 1 else 0
+                var adjustedPosition = if (hasBanner) {
+                    position - (if (snapshot().items.isNotEmpty()) 1 else 0)
+                } else {
+                    position
+                }
                 getItem(adjustedPosition)?.let { holder.bind(it) }
             }
         }
@@ -92,8 +98,7 @@ class ProductViewHolder(
     fun bind(item: HomeItem) {
         binding.apply {
             product = item
-            Glide.with(itemView.context).load(item?.imageUrl).into(binding.ivProduct)
-
+            Glide.with(itemView.context).load(item.imageUrl).into(binding.ivProduct)
             root.setOnClickListener { onItemClick(item) } // 设置点击监听
             executePendingBindings()
         }

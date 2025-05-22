@@ -18,7 +18,7 @@ abstract class BaseFragment : Fragment() {
     lateinit var fragmentBinding: ViewBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        fragmentBinding = DataBindingUtil.inflate(inflater, getLayoutId(), null, false)
+        fragmentBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
         doInit()
         return fragmentBinding.root
     }
