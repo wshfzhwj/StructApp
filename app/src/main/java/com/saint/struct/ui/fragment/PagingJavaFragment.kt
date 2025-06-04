@@ -1,5 +1,7 @@
 package com.saint.struct.ui.fragment
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,22 +21,20 @@ class PagingJavaFragment : BaseFragment() {
     //    private lateinit var mViewModel: PageOldViewModel
     private val viewModel: PageArticleViewModel by viewModels()
 
-    override fun initLayoutId(): Int {
-        return R.layout.fragment_paging
-    }
+    override fun initLayoutId() = R.layout.fragment_paging
 
-    override fun doInit() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initTitle()
         initRecyclerView()
         setModelAndData()
-        setListener()
+    }
+
+    override fun initData() {
     }
 
     fun initTitle() {
         (fragmentBinding as FragmentPagingBinding).layoutAppBar.titleBar.text = "PagingJavaFragment"
-    }
-
-    private fun setListener() {
     }
 
     private fun initRecyclerView() {
@@ -46,8 +46,6 @@ class PagingJavaFragment : BaseFragment() {
             this.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             this.adapter = pageAdapter
         }
-
-        setModelAndData()
     }
 
     fun setModelAndData() {

@@ -19,10 +19,10 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentBinding = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
-        doInit()
+        initData()
         return fragmentBinding.root
     }
 
     abstract fun initLayoutId(): Int
-    abstract fun doInit()
+    abstract fun initData()
 }

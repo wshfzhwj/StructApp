@@ -42,17 +42,21 @@ class HomeFragment : BaseFragment() {
 
     override fun initLayoutId() = R.layout.fragment_home
 
-    override fun doInit() {}
+    override fun initData() {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
+        observeViewModel()
+    }
+
+    fun initView(){
         binding = fragmentBinding as FragmentHomeBinding
         recyclerView = binding.recyclerView
         refreshLayout = binding.refreshLayout
         progressBar = binding.progressBar
         initRecyclerView()
         initRefreshLayout()
-        observeViewModel()
     }
 
     private fun initRecyclerView() {

@@ -45,14 +45,12 @@ class CoordinatorFragment : BaseFragment() {
 
     override fun initLayoutId() = R.layout.fragment_coordinator
 
-    override fun doInit() {}
+    override fun initData() {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = fragmentBinding as FragmentCoordinatorBinding
-        initBanner()
-        initRecyclerView()
-        initRefreshLayout()
+        initView()
         observeViewModel()
     }
 
@@ -193,4 +191,9 @@ class CoordinatorFragment : BaseFragment() {
     }
 
 
+    fun initView() {
+        initBanner()
+        initRecyclerView()
+        initRefreshLayout()
+    }
 }

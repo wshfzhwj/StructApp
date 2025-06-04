@@ -66,6 +66,22 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
+        mFragmentMainBinding.handle = this
+        observeViewModel()
+    }
+
+
+    override fun initData() {
+        mStudentRepository = StudentRepository(SaintRoomDB.getInstance(requireActivity()).studentDao())
+        viewModel = ViewModelProvider(this, ViewModelFactory(mStudentRepository))[MainFragmentViewModel::class.java]
+
+
+        requestPermission()
+    }
+
+
+    fun observeViewModel(){
         //LiveData
         viewModel.studentLiveData.observe(viewLifecycleOwner) { value ->
             log("MainFragment studentLiveData -${value}")
@@ -111,14 +127,6 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 //                }
 //            }
 //        }
-    }
-
-    override fun doInit() {
-        mStudentRepository = StudentRepository(SaintRoomDB.getInstance(requireActivity()).studentDao())
-        viewModel = ViewModelProvider(this, ViewModelFactory(mStudentRepository))[MainFragmentViewModel::class.java]
-        mFragmentMainBinding = fragmentBinding as FragmentMainBinding
-        initView()
-        requestPermission()
     }
 
     fun testGif() {
@@ -292,9 +300,8 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         }
 
     private fun initView() {
+        mFragmentMainBinding = fragmentBinding as FragmentMainBinding
         setToolbar()
-//        bindService()
-        mFragmentMainBinding.handle = this
     }
 
     private fun setToolbar() {
