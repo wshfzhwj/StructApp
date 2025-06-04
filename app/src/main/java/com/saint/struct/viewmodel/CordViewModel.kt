@@ -6,10 +6,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.liveData
-import androidx.paging.toLiveData
-import com.saint.struct.repository.HomePagingSource
 import com.saint.struct.model.HomeItem
+import com.saint.struct.repository.CordPagingSource
 import com.saint.struct.repository.HomeRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -18,20 +16,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
+class CordViewModel(private val repository: HomeRepository) : ViewModel() {
     // 添加刷新和加载更多方法
     private val _refreshTrigger = MutableStateFlow(0)
     private val _loadMoreTrigger = MutableStateFlow(0)
 
-    private val _pagingSource = MutableStateFlow<HomePagingSource?>(null)
+    private val pagingSource = MutableStateFlow<CordPagingSource?>(null)
+
     @OptIn(ExperimentalCoroutinesApi::class)
-    val homeData: Flow<PagingData<HomeItem>> = _pagingSource.flatMapLatest {
+    val cordData: Flow<PagingData<HomeItem>> = pagingSource.flatMapLatest {
         Pager(
             config = PagingConfig(
                 pageSize = 5,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { it ?: HomePagingSource(repository) }
+            pagingSourceFactory = { it ?: CordPagingSource(repository) }
         ).flow.cachedIn(viewModelScope)
     }
 
@@ -39,7 +38,7 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
         viewModelScope.launch {
             _refreshState.value = true
             // 强制创建新PagingSource实现刷新
-            _pagingSource.value = HomePagingSource(repository)
+            pagingSource.value = CordPagingSource(repository)
             _refreshState.value = false
         }
     }
@@ -48,10 +47,11 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
         viewModelScope.launch {
             _loadMoreState.value = true
             // 触发PagingSource加载下一页
-            _pagingSource.value?.invalidate()
+            pagingSource.value?.invalidate()
             _loadMoreState.value = false
         }
     }
+
     // 添加状态字段
     private val _refreshState = MutableStateFlow<Boolean>(false)
     val refreshState: StateFlow<Boolean> = _refreshState

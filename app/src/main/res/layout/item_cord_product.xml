@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.saint.struct.tool.DataBindingUtils"/>
+        <variable
+            name="product"
+            type="com.saint.struct.model.HomeItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        >
+
+        <ImageView
+            android:id="@+id/ivProduct"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{product.imageUrl}"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/placeholder"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{product.name}"
+            android:textSize="14sp"
+            android:maxLines="2"
+            app:layout_constraintTop_toBottomOf="@id/ivProduct"
+            tools:text="商品标题"/>
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/price_format(product.price)}"
+            android:textColor="@color/text_red"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="¥99.99"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

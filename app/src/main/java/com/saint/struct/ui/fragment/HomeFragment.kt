@@ -146,7 +146,9 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
+        Log.e("CoordinatorFragment", "Home = ")
         lifecycleScope.launch {
+            Log.e("CoordinatorFragment", "Home lifecycleScope = ")
             viewModel.homeData.collectLatest { pagingData ->
                 homeAdapter.submitData(pagingData)
             }
