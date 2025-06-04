@@ -19,7 +19,7 @@ class PagingJavaFragment : BaseFragment() {
     //    private lateinit var mViewModel: PageOldViewModel
     private val viewModel: PageArticleViewModel by viewModels()
 
-    override fun getLayoutId(): Int {
+    override fun initLayoutId(): Int {
         return R.layout.fragment_paging
     }
 

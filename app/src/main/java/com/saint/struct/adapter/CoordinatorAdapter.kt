@@ -35,7 +35,6 @@ class CoordinatorAdapter(private val onItemClick: (HomeItem) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: CordViewHolder, position: Int) {
-        Log.e("CoordinatorAdapter", "snapshot = ${snapshot()}")
         if (snapshot().isEmpty()) return
         getItem(position)?.let { bean ->
             with(holder) {

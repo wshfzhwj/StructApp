@@ -40,7 +40,7 @@ class HomeFragment : BaseFragment() {
             })
     }
 
-    override fun getLayoutId() = R.layout.fragment_home
+    override fun initLayoutId() = R.layout.fragment_home
 
     override fun doInit() {}
 

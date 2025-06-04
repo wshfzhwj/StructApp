@@ -62,7 +62,7 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         const val TAG: String = "MainFragment"
     }
 
-    override fun getLayoutId() = R.layout.fragment_main
+    override fun initLayoutId() = R.layout.fragment_main
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -43,7 +43,7 @@ class CoordinatorFragment : BaseFragment() {
         })
     }
 
-    override fun getLayoutId() = R.layout.fragment_coordinator
+    override fun initLayoutId() = R.layout.fragment_coordinator
 
     override fun doInit() {}
 

@@ -19,7 +19,7 @@ abstract class BasePagingFragment<T : Any,VH : RecyclerView.ViewHolder> : BaseFr
     }
 
 
-    override fun getLayoutId(): Int {
+    override fun initLayoutId(): Int {
         return R.layout.fragment_paging
     }
 
