@@ -75,8 +75,6 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
     override fun initData() {
         mStudentRepository = StudentRepository(SaintRoomDB.getInstance(requireActivity()).studentDao())
         viewModel = ViewModelProvider(this, ViewModelFactory(mStudentRepository))[MainFragmentViewModel::class.java]
-
-
         requestPermission()
     }
 

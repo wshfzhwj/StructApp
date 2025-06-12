@@ -1,12 +1,18 @@
 package com.saint.struct.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,46 +26,58 @@ import com.saint.struct.repository.HomeRepository
 import com.saint.struct.tool.MockUtils
 import com.saint.struct.viewmodel.CordViewModel
 import com.saint.struct.viewmodel.CordViewModelFactory
+import com.scwang.smart.refresh.layout.api.RefreshFooter
+import com.scwang.smart.refresh.layout.api.RefreshHeader
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.constant.RefreshState
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
+import com.scwang.smart.refresh.layout.listener.OnMultiListener
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.youth.banner.indicator.CircleIndicator
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CoordinatorFragment : BaseFragment() {
     private lateinit var cordAdapter: CoordinatorAdapter
     private lateinit var bannerAdapter: SaintBannerImageAdapter
     private lateinit var binding: FragmentCoordinatorBinding
+    private lateinit var viewModel: CordViewModel
+    private var items: MutableList<HomeItem> = mutableListOf()
+    private var page: Int = 1
     private val bannerItems = listOf(
         "https://fastly.picsum.photos/id/662/375/200.jpg?hmac=NTKu5GoJnCBC_0-esaeG3CAaRRsyuGc8xMgjtDvGeC8",
         "https://fastly.picsum.photos/id/553/375/200.jpg?hmac=W_W2fS4O2RKH6gKjvmMFXutuMAVAxR2vFo2D1z4kzco",
         "https://fastly.picsum.photos/id/190/375/200.jpg?hmac=Cl6YxbEYeSH_C1ogIcp0TchXds58uMgDo27UwVlfOCE"
     )
 
-    private val viewModel: CordViewModel by viewModels {
-        CordViewModelFactory(object : HomeRepository {
-            override suspend fun getHomeData(page: Int): List<HomeItem> {
-//              return apiService.fetchHomeData(page).data
-                return MockUtils().mockData(page)
-            }
-        })
-    }
-
     override fun initLayoutId() = R.layout.fragment_coordinator
 
-    override fun initData() {}
+    override fun initData() {
+        val repository = object : HomeRepository {
+            override suspend fun getHomeData(page: Int): List<HomeItem> {
+                Log.e("CoordinatorFragment", "mockData page = $page")
+                return MockUtils().mockData(page)
+            }
+        }
+        viewModel =
+            ViewModelProvider(this, CordViewModelFactory(repository))[CordViewModel::class.java]
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = fragmentBinding as FragmentCoordinatorBinding
         initView()
+        viewModel.getHomeData(1)
         observeViewModel()
     }
 
     private fun initRecyclerView() {
-        cordAdapter = CoordinatorAdapter(onItemClick = { item ->
+        cordAdapter = CoordinatorAdapter(items, onItemClick = { item ->
             // 处理商品点击事件
             Log.e("CoordinatorFragment", "item = ${item.id}")
         })
-        setLoadStateListener()
 
         binding.recyclerView.apply {
             adapter = cordAdapter
@@ -68,62 +86,9 @@ class CoordinatorFragment : BaseFragment() {
                 // 添加初始滚动位置控制
                 setHasFixedSize(true)  // 添加性能优化参数
             }
-            setScrollListener()
         }
     }
 
-    fun setLoadStateListener() {
-        cordAdapter.addLoadStateListener { loadStates: CombinedLoadStates ->
-            when {
-                loadStates.source.refresh is LoadState.Loading -> {
-                    binding.recyclerView.visibility = View.VISIBLE
-                    binding.banner.visibility = View.VISIBLE
-                }
-                loadStates.source.refresh is LoadState.NotLoading -> {
-                    if (cordAdapter.itemCount == 0) {
-                        binding.recyclerView.visibility = View.GONE
-                        binding.banner.visibility = View.GONE
-                    } else {
-                        // 确保RecyclerView可见
-                        binding.recyclerView.visibility = View.VISIBLE
-                        binding.banner.visibility = View.VISIBLE
-                    }
-                }
-                loadStates.append is LoadState.Loading -> {
-                    // 显示底部加载进度条
-                    binding.refreshLayout.finishLoadMoreWithNoMoreData()
-                }
-                loadStates.append is LoadState.Error -> {
-                    Toast.makeText(requireContext(), "加载更多失败", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    fun setScrollListener() {
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            private var totalDy = 0
-            private val maxBannerHeight = resources.getDimensionPixelSize(R.dimen.banner_max_height)
-            private val minBannerHeight = resources.getDimensionPixelSize(R.dimen.banner_min_height)
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                Log.e("CoordinatorFragment", "onScrolled dy = $dy dx = $dx")
-                totalDy += dy
-
-                // 计算新的Banner高度
-                val newHeight = (maxBannerHeight - totalDy.coerceAtLeast(0)).coerceIn(
-                    minBannerHeight, maxBannerHeight
-                )
-
-                // 动态更新Banner高度
-                binding.banner.layoutParams?.let {
-                    it.height = newHeight
-                    binding.banner.layoutParams = it
-                }
-            }
-        })
-    }
 
     private fun initRefreshLayout() {
         binding.refreshLayout.apply {
@@ -132,44 +97,85 @@ class CoordinatorFragment : BaseFragment() {
             setEnableOverScrollDrag(false)
             setDisableContentWhenRefresh(true);
             setReboundDuration(300)
-            setOnRefreshListener {
-                cordAdapter.refresh()
-            }
+            setOnRefreshListener(object : OnRefreshListener {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onRefresh(refreshLayout: RefreshLayout) {
+                    Log.e("CoordinatorFragment", "onRefresh")
+                    page = 1
+                    viewModel.getHomeData(1)
+                    items.clear()
+                    cordAdapter.notifyDataSetChanged()
+
+                }
+
+            })
+
+            setOnLoadMoreListener(object : OnLoadMoreListener {
+                override fun onLoadMore(refreshLayout: RefreshLayout) {
+                    Log.e("CoordinatorFragment", "onLoadMore $page")
+                    page++
+                    viewModel.getHomeData(page)
+                }
+
+            })
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun observeViewModel() {
-        lifecycleScope.launch {
-            viewModel.cordData.collectLatest { pagingData ->
-                Log.e("CoordinatorFragment", "observeViewModel = $pagingData")
-                cordAdapter.submitData(pagingData)
-            }
-        }
-
-        lifecycleScope.launch {
-            cordAdapter.loadStateFlow.collect { loadState ->
-                binding.refreshLayout.apply {
-                    // 处理下拉刷新状态
-                    if (loadState.refresh is LoadState.NotLoading) {
-                        finishRefresh()
-                    }
-                    if (loadState.refresh is LoadState.Error) {
-                        finishRefresh(false)
-                    }
-
-                    // 处理上拉加载状态
-                    when (loadState.append) {
-                        is LoadState.NotLoading -> {
-                            if (cordAdapter.itemCount == 0) {
-                                finishLoadMoreWithNoMoreData()
-                            } else {
-                                finishLoadMore()
-                            }
+        Log.e("CoordinatorFragment", "Lifecycle.State.RESUMED")
+        viewModel.items.observe(viewLifecycleOwner) { list ->
+            lifecycleScope.launch {
+                withContext(Dispatchers.Main) {
+                    when {
+                        binding.refreshLayout.isRefreshing -> {
+                            items.clear()
+                            items.addAll(list)
+                            binding.refreshLayout.finishRefresh()
+                            cordAdapter.notifyDataSetChanged()
                         }
 
-                        is LoadState.Error -> finishLoadMore(false)
-                        else -> Unit
+                        binding.refreshLayout.isLoading -> {
+                            var startPos = items.size
+                            items.clear()
+                            items.addAll(list)
+                            cordAdapter.notifyItemRangeInserted(startPos, list.size)
+                            cordAdapter.notifyItemRangeChanged(startPos, list.size)
+                            binding.refreshLayout.finishLoadMore(true)
+                        }
+
+                        else -> {
+                            items.addAll(list)
+                            cordAdapter.notifyDataSetChanged()
+
+                        }
                     }
+//                Log.e("CoordinatorFragment", "observe list ${list.size}")
+//                if (items.isEmpty()) {
+//                    //第一次初始化
+//                    Log.e("CoordinatorFragment", "observe else")
+//                    items.addAll(list)
+//                    cordAdapter.notifyItemRangeInserted(0, list.size)
+//                    cordAdapter.notifyItemRangeChanged(0, list.size)
+//                } else {
+//                    var tempSize = items.size
+//                    Log.e("CoordinatorFragment", "tempSize = $tempSize")
+//                    if (binding.refreshLayout.isRefreshing) {
+//                        Log.e("CoordinatorFragment", "observe isRefreshing")
+//
+//                    } else if (binding.refreshLayout.isLoading) {
+//                        if (list.size > tempSize) {
+//                            items.clear()
+//                            items.addAll(list)
+//                            binding.refreshLayout.finishLoadMore(true)
+//                            cordAdapter.notifyItemRangeInserted(tempSize, list.size)
+//                            cordAdapter.notifyItemRangeChanged(tempSize, list.size)
+//                        } else {
+//                            binding.refreshLayout.finishLoadMore(true)
+//                        }
+//                    }
+//                }
+
                 }
             }
         }

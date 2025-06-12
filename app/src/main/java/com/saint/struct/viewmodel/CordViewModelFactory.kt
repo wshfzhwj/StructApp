@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.saint.struct.repository.HomeRepository
 
-class CordViewModelFactory(
-    private val repository: HomeRepository
-) : ViewModelProvider.Factory {
+class CordViewModelFactory(val repository: HomeRepository) : ViewModelProvider.Factory {
     
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
