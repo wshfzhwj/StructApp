@@ -44,7 +44,6 @@ class CoordinatorFragment : BaseFragment() {
     private lateinit var bannerAdapter: SaintBannerImageAdapter
     private lateinit var binding: FragmentCoordinatorBinding
     private lateinit var viewModel: CordViewModel
-    private var items: MutableList<HomeItem> = mutableListOf()
     private var page: Int = 1
     private val bannerItems = listOf(
         "https://fastly.picsum.photos/id/662/375/200.jpg?hmac=NTKu5GoJnCBC_0-esaeG3CAaRRsyuGc8xMgjtDvGeC8",
@@ -69,12 +68,13 @@ class CoordinatorFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = fragmentBinding as FragmentCoordinatorBinding
         initView()
+        Log.e("CoordinatorFragment", "getHomeData onViewCreated")
         viewModel.getHomeData(1)
         observeViewModel()
     }
 
     private fun initRecyclerView() {
-        cordAdapter = CoordinatorAdapter(items, onItemClick = { item ->
+        cordAdapter = CoordinatorAdapter(onItemClick = { item ->
             // 处理商品点击事件
             Log.e("CoordinatorFragment", "item = ${item.id}")
         })
@@ -100,20 +100,17 @@ class CoordinatorFragment : BaseFragment() {
             setOnRefreshListener(object : OnRefreshListener {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onRefresh(refreshLayout: RefreshLayout) {
-                    Log.e("CoordinatorFragment", "onRefresh")
+                    Log.e("CoordinatorFragment", "getHomeData onRefresh")
                     page = 1
                     viewModel.getHomeData(1)
-                    items.clear()
-                    cordAdapter.notifyDataSetChanged()
-
                 }
 
             })
 
             setOnLoadMoreListener(object : OnLoadMoreListener {
                 override fun onLoadMore(refreshLayout: RefreshLayout) {
-                    Log.e("CoordinatorFragment", "onLoadMore $page")
                     page++
+                    Log.e("CoordinatorFragment", "getHomeData onLoadMore page = $page")
                     viewModel.getHomeData(page)
                 }
 
@@ -123,31 +120,27 @@ class CoordinatorFragment : BaseFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun observeViewModel() {
-        Log.e("CoordinatorFragment", "Lifecycle.State.RESUMED")
         viewModel.items.observe(viewLifecycleOwner) { list ->
             lifecycleScope.launch {
+                Log.e("CoordinatorFragment", "observeViewModel = ${list.size}")
                 withContext(Dispatchers.Main) {
                     when {
                         binding.refreshLayout.isRefreshing -> {
-                            items.clear()
-                            items.addAll(list)
+                            cordAdapter.setData(list)
                             binding.refreshLayout.finishRefresh()
-                            cordAdapter.notifyDataSetChanged()
                         }
 
                         binding.refreshLayout.isLoading -> {
-                            var startPos = items.size
-                            items.clear()
-                            items.addAll(list)
-                            cordAdapter.notifyItemRangeInserted(startPos, list.size)
-                            cordAdapter.notifyItemRangeChanged(startPos, list.size)
+                            if (list.isEmpty()) {
+                                page--
+                            }
+                            cordAdapter.addAll(list)
                             binding.refreshLayout.finishLoadMore(true)
+
                         }
 
                         else -> {
-                            items.addAll(list)
-                            cordAdapter.notifyDataSetChanged()
-
+                            cordAdapter.setData(list)
                         }
                     }
 //                Log.e("CoordinatorFragment", "observe list ${list.size}")

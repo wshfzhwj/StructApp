@@ -1,5 +1,6 @@
 package com.saint.struct.adapter
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +15,35 @@ import com.saint.struct.R
 import com.saint.struct.adapter.CoordinatorAdapter.CordViewHolder
 import com.saint.struct.model.HomeItem
 
-class CoordinatorAdapter(private var items: MutableList<HomeItem>, private val onItemClick: (HomeItem) -> Unit) :
+class CoordinatorAdapter(private val onItemClick: (HomeItem) -> Unit) :
     RecyclerView.Adapter<CordViewHolder>(){
-
+    private var items: MutableList<HomeItem> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CordViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_cord_product, parent, false)
         return CordViewHolder(view)
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(items: MutableList<HomeItem>){
+        this.items = items
+        notifyDataSetChanged()
+    }
+
+    fun clearData(){
+        this.items.clear()
+    }
+
+    fun addAll(list: MutableList<HomeItem>){
+        if (list.isEmpty()) {
+            return
+        }
+        val lastIndex = this.items.size
+        if (this.items.addAll(list)) {
+            notifyItemRangeInserted(lastIndex, list.size)
+        }
+    }
+
 
     override fun onBindViewHolder(holder: CordViewHolder, position: Int) {
         if (items.isEmpty()) return

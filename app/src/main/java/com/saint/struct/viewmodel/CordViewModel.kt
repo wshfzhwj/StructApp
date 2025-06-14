@@ -10,12 +10,13 @@ import com.saint.struct.repository.HomeRepository
 import kotlinx.coroutines.launch
 
 class CordViewModel(val repository: HomeRepository) : ViewModel() {
-    private var _items = MutableLiveData<MutableList<HomeItem>>()
-    val items: LiveData<MutableList<HomeItem>> = _items
+    private var _items: MutableLiveData<MutableList<HomeItem>> = MutableLiveData()
+    val items: LiveData<MutableList<HomeItem>> get() = _items
 
     fun getHomeData(page: Int) {
         viewModelScope.launch {
-            var list = _items.value ?: mutableListOf()
+            Log.e("CoordinatorFragment", "getHomeData page = $page")
+            var list = mutableListOf<HomeItem>()
             list.addAll(repository.getHomeData(page))
             _items.value = list
         }
