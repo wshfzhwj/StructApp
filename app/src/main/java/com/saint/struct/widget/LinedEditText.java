@@ -15,9 +15,8 @@ import androidx.appcompat.widget.AppCompatEditText;
  */
 
 public class LinedEditText extends AppCompatEditText {
-    private Rect mRect;
-    private Paint mPaint;
-    private int margin = 30;
+    private final Rect mRect;
+    private final Paint mPaint;
 
     public LinedEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,6 +39,7 @@ public class LinedEditText extends AppCompatEditText {
         Paint paint = mPaint;
         int baseline = getLineBounds(0, r);
         for (curHeight = baseline + 1; curHeight < height; curHeight += getLineHeight()) {
+            int margin = 30;
             canvas.drawLine(r.left, curHeight + margin, r.right, curHeight + margin, paint);
         }
         super.onDraw(canvas);

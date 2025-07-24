@@ -33,14 +33,12 @@ class HomeFragment : BaseFragment() {
         HomeViewModelFactory(
             object : HomeRepository {
                 override suspend fun getHomeData(page: Int): List<HomeItem> {
-                    // 这里实现具体的数据获取逻辑
-//                    return apiService.fetchHomeData(page).data
                     return MockUtils().mockData(page)
                 }
             })
     }
 
-    override fun initLayoutId() = R.layout.fragment_home
+    override fun setLayoutId() = R.layout.fragment_home
 
     override fun initData() {}
 
@@ -65,14 +63,7 @@ class HomeFragment : BaseFragment() {
             Log.e("HomeFragment", "item = ${item.id}")
         }, true)
 
-//            LoadStates.append：适用于在用户当前位置之后获取的项的LoadState
-//            LoadStates.prepend：适用于在用户当前位置之前获取的项的LoadState
-//            LoadStates.refresh：适用于初始加载的LoadState
         homeAdapter.apply {
-//            withLoadStateHeaderAndFooter(
-//                header = headerAndFooterAdapter,
-//                footer = headerAndFooterAdapter
-//            )
             addLoadStateListener { loadStates ->
                 when (loadStates.refresh) {
                     is LoadState.NotLoading -> {

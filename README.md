@@ -95,4 +95,26 @@ GlobalScope.launch {
     }
   }
 
+CoordinatorLayout部分属性
+scroll：所有想滚动出屏幕的view都需要设置这个flag，没有设置这个flag的view将被固定在屏幕顶部。
+enterAlways：设置这个flag时，向下的滚动都会导致该view变为可见，启用“快速返回模式”。
+enterAlwaysCollapsed：当你的视图已经设置minHeight属性又使用此标志时，你的视图只能以最小高度进入，只有当滚动视图到达顶部时才扩大到完整高度。
+snap：磁性吸附，在滑动到一定程度后松手可以自动缩到顶端或自动拉伸到最大。
 
+
+CollapsingToolbarLayout部分属性
+
+app:contentScrim CollapsingToolbarLayout完全折叠后的背景颜色
+app:titleEnabled 是否显示标题 app:title 标题 app:toolbarId toolbar 对应的view id
+app:statusBarScrim 折叠后状态栏的背景
+app:scrimVisibleHeightTrigger 设置收起多少高度时，显示ContentScrim的内容
+app:scrimAnimationDuration 展开状态和折叠状态之间，内容转换的动画时间
+app:expandedTitleTextAppearance 布局张开的时候title的样式
+app:expandedTitleMarginTop 布局张开的时候title的margin top
+app:expandedTitleMarginStart 布局张开的时候title的margin start
+app:expandedTitleMarginEnd 布局张开的时候title的margin end
+app:expandedTitleMarginBottom 布局张开的时候title的margin bottom
+app:expandedTitleMargin 布局张开的时候title的margin
+app:expandedTitleGravity 布局张开的时候title的位置
+app:collapsedTitleTextAppearance 布局折叠的时候title的样式
+app:collapsedTitleGravity 布局折叠的时候title的gravity

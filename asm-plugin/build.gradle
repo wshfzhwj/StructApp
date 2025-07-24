@@ -2,12 +2,18 @@ apply plugin: 'groovy'
 apply plugin:  'java-gradle-plugin'
 apply plugin: 'maven-publish'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 dependencies {
     // gradle插件必须的引用
     implementation gradleApi()
     implementation localGroovy()
+    implementation "com.android.tools.build:gradle:${rootProject.agpVersion}"
 
-    implementation 'com.android.tools.build:gradle:7.2.2'
+
 
     // asm依赖
     implementation 'org.ow2.asm:asm:9.4'

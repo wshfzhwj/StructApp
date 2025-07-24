@@ -6,4 +6,5 @@
     <string name="fragment_home">首页</string>
     <string name="price_format">¥%.2f</string>
     <string name="no_data_available">暂无数据</string>
+    <string name="bmi">BMI/KG</string>
 </resources>

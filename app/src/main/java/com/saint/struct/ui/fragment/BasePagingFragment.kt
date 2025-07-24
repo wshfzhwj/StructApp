@@ -25,7 +25,7 @@ abstract class BasePagingFragment<T : Any,VH : RecyclerView.ViewHolder> : BaseFr
     }
 
 
-    override fun initLayoutId() = R.layout.fragment_paging
+    override fun setLayoutId() = R.layout.fragment_paging
 
     private fun initRecyclerView() {
         pageAdapter = getCustomPageAdapter()

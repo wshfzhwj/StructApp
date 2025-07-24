@@ -8,6 +8,7 @@ class StructApp : Application() {
     override fun onCreate() {
         super.onCreate()
         application = this;
+
 //        val crashHandler = CrashHandler();
 //        Thread.setDefaultUncaughtExceptionHandler(crashHandler);
 //        Looper.getMainLooper().setMessageLogging { s -> Log.v("debug", s) }
@@ -20,4 +21,7 @@ class StructApp : Application() {
     companion object {
         lateinit var application: StructApp
     }
+
+
+
 }

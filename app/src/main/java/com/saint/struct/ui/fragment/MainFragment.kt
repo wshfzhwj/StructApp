@@ -1,13 +1,21 @@
 package com.saint.struct.ui.fragment
 
 import android.Manifest
-import android.content.*
-import android.os.*
+import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
+import android.os.Build
+import android.os.Messenger
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,9 +27,10 @@ import com.saint.struct.database.SaintRoomDB
 import com.saint.struct.databinding.FragmentMainBinding
 import com.saint.struct.repository.StudentRepository
 import com.saint.struct.service.MessengerService
-import com.saint.struct.tool.TAG
 import com.saint.struct.tool.log
 import com.saint.struct.ui.activity.AidlActivity
+import com.saint.struct.ui.activity.TestCordActivity
+import com.saint.struct.ui.activity.TestScrollActivity
 import com.saint.struct.ui.activity.WebActivity
 import com.saint.struct.viewmodel.MainFragmentViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -31,22 +40,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import pub.devrel.easypermissions.PermissionRequest
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MainFragment.newInstance] factory method to
- * create an instance of requireActivity() fragment.
- */
 
 class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
     private var mService: Messenger? = null
@@ -62,7 +64,7 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         const val TAG: String = "MainFragment"
     }
 
-    override fun initLayoutId() = R.layout.fragment_main
+    override fun setLayoutId() = R.layout.fragment_main
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,12 +84,12 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
     fun observeViewModel(){
         //LiveData
         viewModel.studentLiveData.observe(viewLifecycleOwner) { value ->
-            log("MainFragment studentLiveData -${value}")
+            Log.e(TAG,"MainFragment studentLiveData -${value}")
         }
 
         lifecycleScope.launch {
             viewModel.shareFLow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collect { value ->
-                log("MainFragment shareFLow -${value}")
+                Log.e(TAG,"MainFragment shareFLow -${value}")
             }
         }
 
@@ -95,7 +97,7 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.stateFlow.collect { value ->
-                    log("MainFragment stateFlow$value")
+                    Log.e(TAG,"MainFragment stateFlow$value")
                 }
             }
         }
@@ -164,10 +166,18 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.queryByFlow().collect {
-                    log("MainFragment queryByFlow$it")
+                    Log.e(TAG,"MainFragment queryByFlow$it")
                 }
             }
         }
+    }
+
+    fun goCord() {
+        startActivity(Intent().setClass(requireActivity(), TestCordActivity::class.java))
+    }
+
+    fun goScroll() {
+        startActivity(Intent().setClass(requireActivity(), TestScrollActivity::class.java))
     }
 
     fun SharedPreferences.modify(block: SharedPreferences.Editor.() -> Unit) {
@@ -300,6 +310,7 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
     private fun initView() {
         mFragmentMainBinding = fragmentBinding as FragmentMainBinding
         setToolbar()
+        mFragmentMainBinding.bmiView.bmiValue = 18.0f
     }
 
     private fun setToolbar() {
@@ -343,7 +354,7 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
     internal inner class ScheduleCallable : Callable<Any> {
         @Throws(Exception::class)
         override fun call(): Any {
-            Log.e(TAG, "ScheduleCallable call...")
+            log("ScheduleCallable call...")
             return true
         }
     }
@@ -365,27 +376,46 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     @AfterPermissionGranted(PERMISSION_REQUEST_CODE)
     private fun requestPermission() {
-        val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (EasyPermissions.hasPermissions(requireActivity(), *permissions)) {
-            // 如果有上述权限, 执行该操作
-            Toast.makeText(requireActivity(), "权限申请通过", Toast.LENGTH_LONG).show()
+    val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        arrayOf(
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
+            Manifest.permission.READ_MEDIA_AUDIO
+        )
+    } else
+        arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+        if (permissions.isEmpty() || EasyPermissions.hasPermissions(requireActivity(), *permissions)) {
+        // 如果有上述权限, 执行该操作
+        Toast.makeText(requireActivity(), "权限申请通过", Toast.LENGTH_LONG).show()
+        handlePermissionGranted()
+    } else {
+        val rationale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            "需要访问您的照片、视频和音频文件"
         } else {
-            // 方式一:如果没有上述权限 , 那么调用requestPermissions申请权限，用户拒绝权限申请后 , 再次申请会自动弹出该对话框 ;
-//            EasyPermissions.requestPermissions(
-//                PermissionRequest.Builder(this, PERMISSION_REQUEST_CODE, *permissions)
-//                    .setRationale("需要用到手机存储权限")
-//                    .setPositiveButtonText("去授权")
-//                    .setNegativeButtonText("取消")
-//                    .build()
-            // 方式二:
-            EasyPermissions.requestPermissions(
-                this, "需要用到手机存储权限",
-                PERMISSION_REQUEST_CODE, *permissions
-            )
+            "需要用到手机存储权限"
         }
+
+        // 方式一:如果没有上述权限 , 那么调用requestPermissions申请权限，用户拒绝权限申请后 , 再次申请会自动弹出该对话框 ;
+        EasyPermissions.requestPermissions(
+            PermissionRequest.Builder(this, PERMISSION_REQUEST_CODE, *permissions)
+                .setRationale(rationale)
+                .setPositiveButtonText("去授权")
+                .setNegativeButtonText("取消")
+                .build())
     }
+}
+
+private fun handlePermissionGranted() {
+    // 权限授予后执行的操作
+    Log.d(TAG, "权限已授予，可以执行需要权限的操作")
+}
 
     // 权限结果回调方法
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

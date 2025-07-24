@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace "com.saint.biometiriclib"
     compileSdk rootProject.android.compileSdk
 
     defaultConfig {
@@ -13,15 +14,18 @@ android {
         targetSdk rootProject.android.targetSdk
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     sourceSets {
         named("main") {
-            java.srcDirs("src/main/java", "src/main/kotlin", "src/main/aidl")
+            java.srcDirs("src/main/java", "src/main/kotlin")
             jniLibs.srcDirs("libs", "jniLibs")
+//            jniLibs.srcDirs("libs")
         }
     }
+
+
 }
 
 dependencies {

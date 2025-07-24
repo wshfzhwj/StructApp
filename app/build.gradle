@@ -12,6 +12,11 @@ plugins {
 Node node = getStringsXmlNode()
 String buildWay = readBuildWay(node)
 android {
+    buildFeatures {
+        buildConfig true
+        aidl true
+    }
+    namespace "com.saint.struct"
 
     signingConfigs {
         debug {
@@ -32,10 +37,10 @@ android {
         }
     }
 
-    compileSdk rootProject.android.compileSdk
     defaultConfig {
         applicationId rootProject.android.applicationId
         minSdk rootProject.android.minSdk
+        compileSdk rootProject.android.compileSdk
         targetSdk rootProject.android.targetSdk
         versionCode rootProject.android.versionCode
         versionName rootProject.android.versionName
@@ -47,7 +52,7 @@ android {
         ndk {
             // 设置支持的 SO 库构架，注意这里要根据你的实际情况来设置
             //noinspection ChromeOsAbiSupport
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi-v7a", 'arm64-v8a'
         }
     }
 
@@ -68,8 +73,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
 
@@ -82,7 +87,7 @@ android {
             // 开发版本
             dev {
                 dimension = "version"
-                versionName = "${versionName}.${buildDate}"
+                versionName = "${defaultConfig.versionName}" + "." + buildDate
                 // 是否使用线上环境
                 buildConfigField("boolean", "IS_ONLINE", "false")
             }
@@ -94,7 +99,7 @@ android {
                 dimension = "version"
                 // 版本名后缀
                 versionNameSuffix = "-${buildDate}"
-                versionName = "${versionName}" + "." + buildDate
+                versionName = "${defaultConfig.versionName}" + "." + buildDate
                 // 是否使用线上环境
                 buildConfigField("boolean", "IS_ONLINE", "false")
             }
@@ -106,7 +111,7 @@ android {
                 dimension = "version"
                 // 版本名后缀
                 versionNameSuffix = "-${buildDate}"
-                versionName = "${versionName}" + "." + buildDate
+                versionName = "${defaultConfig.versionName}" + "." + buildDate
                 // 是否使用线上环境
                 buildConfigField("boolean", "IS_ONLINE", "true")
             }
@@ -136,7 +141,7 @@ android {
 
     // kotlin Jvm 版本
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
         freeCompilerArgs = [
                 "-Xjvm-default=all",
                 "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
@@ -245,7 +250,7 @@ dependencies {
     implementation(project(':lib-biometric'))
 //    implementation(project(':lib-kotlin'))
 //    implementation(project(':lib-practise'))
-    implementation(project(':asm-annotation'))
+//    implementation(project(':asm-annotation'))
 }
 tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {

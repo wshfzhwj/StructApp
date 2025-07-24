@@ -1,4 +1,5 @@
 ext {
+    agpVersion = '8.3.0'
     //是否单独运行某个module
     isModule = true
 
@@ -11,11 +12,10 @@ ext {
     android = [
             applicationId    : "com.saint.struct",
             //使用exoPlayer编译版本需要到33，而33中有bug,xml写代码没有代码提示
-            compileSdk       : 34,
-            buildToolsVersion: '33.0.0',
+            compileSdk       : 35,
+            buildToolsVersion: '35.0.0',
             minSdk           : 24,
-            targetSdk        : 34,
-
+            targetSdk        : 35,
             versionCode      : 1,
             versionName      : "1.0.1",
     ]

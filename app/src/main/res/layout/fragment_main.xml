@@ -197,32 +197,58 @@
 
             </LinearLayout>
 
-
-
-            <TextView
-                android:id="@+id/tv_image"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout5"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="图片区域"
+                android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout4" />
+                app:layout_constraintTop_toBottomOf="@id/layout4">
+
+                <Button
+                    android:id="@+id/cordBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:onClick="@{(view) -> handle.goCord()}"
+                    android:text="cood" />
+
+                <Button
+                    android:id="@+id/scrollBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> handle.goScroll()}"
+                    android:text="scroll" />
+
+            </LinearLayout>
+
+            <com.saint.struct.widget.BMIGaugeView
+                android:id="@+id/bmi_View"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout5" />
 
 
             <ImageView
                 android:id="@+id/roundImage"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="20dp"
                 android:src="@color/app_colorPrimary"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_image" />
+                app:layout_constraintTop_toBottomOf="@id/bmi_View" />
 
             <ImageView
                 android:id="@+id/gifImage"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="20dp"
                 android:src="@color/colorAccent"
                 app:layout_constraintLeft_toLeftOf="parent"
