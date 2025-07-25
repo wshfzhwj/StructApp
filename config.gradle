@@ -1,5 +1,4 @@
 ext {
-    agpVersion = '8.3.0'
     //是否单独运行某个module
     isModule = true
 
