@@ -102,6 +102,10 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
             }
         }
 
+        viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+        }
+
 //        //单个数据流
 //        viewLifecycleOwner.lifecycleScope.launch {
 //            viewModel.mSharedFlow

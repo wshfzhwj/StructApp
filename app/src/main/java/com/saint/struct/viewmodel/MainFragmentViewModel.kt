@@ -2,6 +2,7 @@ package com.saint.struct.viewmodel
 
 import android.app.Activity
 import android.os.Build
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.saint.biometiriclib.BiometricPromptManager
 import com.saint.struct.bean.Student
 import com.saint.struct.repository.StudentRepository
+import com.saint.struct.tool.TAG
 import com.saint.struct.tool.log
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
@@ -41,6 +43,11 @@ class MainFragmentViewModel(val repository: StudentRepository) : ViewModel() {
     val stateFlow = _stateFlow
 
     private lateinit var mManager: BiometricPromptManager
+
+
+
+    private val _toastMessage = MutableLiveData<String>()
+    val toastMessage: LiveData<String> get() = _toastMessage
 
     companion object {
         val NAMES = listOf("JACK", "MIKE", "TOM", "JIM", "JERRY", "ROSE")
@@ -94,7 +101,13 @@ class MainFragmentViewModel(val repository: StudentRepository) : ViewModel() {
     }
 
     fun testFinger(activity: Activity) {
-        mManager = BiometricPromptManager.from(activity)
+        try {
+            mManager = BiometricPromptManager.from(activity)
+        } catch (e: RuntimeException) {
+            Log.e(TAG,"指纹模块出问题了")
+            _toastMessage.postValue("指纹模块出问题了")
+            return
+        }
         val stringBuilder = StringBuilder()
         stringBuilder.append("SDK version is " + Build.VERSION.SDK_INT)
         stringBuilder.append("\n")

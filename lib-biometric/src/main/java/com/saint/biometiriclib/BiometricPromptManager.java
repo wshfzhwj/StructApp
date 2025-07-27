@@ -33,11 +33,11 @@ public class BiometricPromptManager {
     }
 
     @NonNull
-    public static BiometricPromptManager from(@NonNull Activity activity) {
+    public static BiometricPromptManager from(@NonNull Activity activity) throws RuntimeException{
         return new BiometricPromptManager(activity);
     }
 
-    public BiometricPromptManager(@NonNull Activity activity) {
+    public BiometricPromptManager(@NonNull Activity activity) throws RuntimeException{
         mActivity = activity;
         if (isAboveApi28()) {
             mImpl = new BiometricPromptApi28(activity);
