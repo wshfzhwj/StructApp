@@ -13,7 +13,9 @@ import android.os.Looper
 import android.os.Build
 import android.os.Messenger
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -50,11 +52,10 @@ import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
 
 
-class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
+class MainFragment : BaseFragment<FragmentMainBinding>(), EasyPermissions.PermissionCallbacks {
     private var mService: Messenger? = null
 
     //    private val mRetrofit: Retrofit? = null
-    private lateinit var mFragmentMainBinding: FragmentMainBinding
     private lateinit var mStudentRepository: StudentRepository
     private lateinit var viewModel: MainFragmentViewModel
 
@@ -64,13 +65,17 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         const val TAG: String = "MainFragment"
     }
 
-    override fun setLayoutId() = R.layout.fragment_main
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        mFragmentMainBinding.handle = this
         observeViewModel()
+    }
+
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentMainBinding {
+        return FragmentMainBinding.inflate(inflater,container,false)
     }
 
 
@@ -133,12 +138,31 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 //        }
     }
 
+
+    private fun setOnClickListener() {
+        binding.aidlBtn.setOnClickListener { startAidl() }
+        binding.gifBtn.setOnClickListener { testGif() }
+        binding.glideBtn.setOnClickListener { testGlide() }
+        binding.fingerBtn.setOnClickListener { testFinger() }
+        binding.addDataBtn.setOnClickListener { addData() }
+        binding.clearDataBtn.setOnClickListener { clearData() }
+        binding.queryLiveDataBtn.setOnClickListener { queryByLiveData() }
+        binding.queryFlowBtn.setOnClickListener { queryByShareFlow() }
+        binding.stateFlowBtn.setOnClickListener { queryByStateFlow() }
+//        binding.qu.setOnClickListener { queryByFlow() }
+        binding.cordBtn.setOnClickListener { goCord() }
+        binding.scrollBtn.setOnClickListener { goScroll() }
+        binding.coroutinesBtn.setOnClickListener { testCoroutineScope3() }
+        binding.aidlBtn.setOnClickListener { startAidl() }
+
+    }
+
     fun testGif() {
-        viewModel.testGif(this, mFragmentMainBinding.gifImage)
+        viewModel.testGif(this, binding.gifImage)
     }
 
     fun testGlide() {
-        viewModel.testGlide(this, mFragmentMainBinding.gifImage)
+        viewModel.testGlide(this, binding.gifImage)
     }
 
     fun testFinger() {
@@ -312,13 +336,15 @@ class MainFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         }
 
     private fun initView() {
-        mFragmentMainBinding = fragmentBinding as FragmentMainBinding
         setToolbar()
-        mFragmentMainBinding.bmiView.bmiValue = 18.0f
+        binding.bmiView.bmiValue = 18.0f
+
+        setOnClickListener()
     }
 
+
     private fun setToolbar() {
-        (fragmentBinding as FragmentMainBinding).layoutAppBar.titleBar.text = "首页"
+        binding.layoutAppBar.titleBar.text = "首页"
     }
 
     private fun bindService() {

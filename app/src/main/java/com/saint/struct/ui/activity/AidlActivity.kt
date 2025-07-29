@@ -9,8 +9,6 @@ import android.os.DeadObjectException
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
-import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
@@ -18,17 +16,14 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkQuery
-import com.saint.struct.databinding.LayoutAidlBinding
+import com.saint.struct.databinding.ActivityAidlBinding
 import com.saint.struct.ipc.aidl.IPersonManager
 import com.saint.struct.ipc.aidl.Person
 import com.saint.struct.service.MyWorker
-import com.saint.struct.viewmodel.MainActivityViewModel
-import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,8 +31,7 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 
-class AidlActivity : BaseActivity() {
-    private lateinit var binding: LayoutAidlBinding
+class AidlActivity : BaseActivity<ActivityAidlBinding>() {
     private lateinit var constraints: Constraints
     private val mainScope = MainScope()
     private var isConnect = false;
@@ -64,8 +58,6 @@ class AidlActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e(TAG, "onCreate testManagerWorker Checking system3。。。。。。。。")
-        binding = LayoutAidlBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         binding.btnAddPerson.post(Runnable {
             Log.e(TAG, "binding.btnAddPerson")
         })
@@ -73,6 +65,10 @@ class AidlActivity : BaseActivity() {
 //        setContentView(R.layout.layout_aidl)
 //        binding = DataBindingUtil.setContentView(this, R.layout.layout_aidl)
         initListener()
+    }
+
+    override fun getViewBinding(): ActivityAidlBinding {
+        return ActivityAidlBinding.inflate(layoutInflater)
     }
 
     private fun initListener() {
@@ -118,7 +114,11 @@ class AidlActivity : BaseActivity() {
             val result = async {
                 WorkManager.getInstance(applicationContext)
                     .getWorkInfosLiveData(
-                        androidx.work.WorkQuery.Builder.fromTags(kotlin.collections.listOf<kotlin.String?>(tag)).build()
+                        androidx.work.WorkQuery.Builder.fromTags(
+                            kotlin.collections.listOf<kotlin.String?>(
+                                tag
+                            )
+                        ).build()
                     )
             }
             withContext(Dispatchers.Main) {

@@ -1,7 +1,9 @@
 package com.saint.struct.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,13 +17,12 @@ import com.saint.struct.viewmodel.PageArticleViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class PagingJavaFragment : BaseFragment() {
+class PagingJavaFragment : BaseFragment<FragmentPagingBinding>() {
     private lateinit var pageAdapter: PagingArticleAdapter
 
     //    private lateinit var mViewModel: PageOldViewModel
     private val viewModel: PageArticleViewModel by viewModels()
 
-    override fun setLayoutId() = R.layout.fragment_paging
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,18 +31,25 @@ class PagingJavaFragment : BaseFragment() {
         setModelAndData()
     }
 
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentPagingBinding {
+        return FragmentPagingBinding.inflate(inflater, container, false)
+    }
+
     override fun initData() {
     }
 
     fun initTitle() {
-        (fragmentBinding as FragmentPagingBinding).layoutAppBar.titleBar.text = "PagingJavaFragment"
+        binding.layoutAppBar.titleBar.text = "PagingJavaFragment"
     }
 
     private fun initRecyclerView() {
         pageAdapter = PagingArticleAdapter()
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        (fragmentBinding as FragmentPagingBinding).recyclerView.apply {
+        binding.recyclerView.apply {
             this.layoutManager = layoutManager
             this.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             this.adapter = pageAdapter

@@ -135,7 +135,6 @@ android {
     }
 
     buildFeatures {
-        dataBinding true
         viewBinding true
     }
 
@@ -207,7 +206,6 @@ dependencies {
     implementation rootProject.depsLibs.liveDataKtx
     implementation rootProject.depsLibs.viewModelKtx
 
-    implementation rootProject.depsLibs.databinding
     //retrofit2
     implementation rootProject.depsLibs.retrofit2
     implementation rootProject.depsLibs.retrofit2AdapterRxjava

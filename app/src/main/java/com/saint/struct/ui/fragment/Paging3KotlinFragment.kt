@@ -1,6 +1,8 @@
 package com.saint.struct.ui.fragment
 
 import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +17,8 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "Paging3KotlinFragment"
 
-class Paging3KotlinFragment : BasePagingFragment<Project, PagingProjectAdapter.ViewHolder>() {
+class Paging3KotlinFragment :
+    BasePagingFragment<FragmentPagingBinding, Project, PagingProjectAdapter.ViewHolder>() {
 
     private val viewModel: PageProjectViewModel by viewModels()
 //    val viewModel :ArticleViewModel by viewModels()
@@ -38,6 +41,13 @@ class Paging3KotlinFragment : BasePagingFragment<Project, PagingProjectAdapter.V
 
     @SuppressLint("SetTextI18n")
     override fun initTitle() {
-        (fragmentBinding as FragmentPagingBinding).layoutAppBar.titleBar.text = "Paging3KotlinFragment"
+        binding.layoutAppBar.titleBar.text = "Paging3KotlinFragment"
+    }
+
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentPagingBinding {
+        return FragmentPagingBinding.inflate(inflater)
     }
 }

@@ -5,24 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.viewbinding.ViewBinding
 
+abstract class BaseFragment<T : ViewBinding> : Fragment() {
+    private var _binding: T? = null
+    protected val binding get() = _binding!!
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BaseFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-abstract class BaseFragment : Fragment() {
-    lateinit var fragmentBinding: ViewBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        fragmentBinding = DataBindingUtil.inflate(inflater, setLayoutId(), container, false)
+        _binding = getViewBinding(inflater,container)
         initData()
-        return fragmentBinding.root
+        return binding.root
     }
 
-    abstract fun setLayoutId(): Int
+    protected abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): T
     abstract fun initData()
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

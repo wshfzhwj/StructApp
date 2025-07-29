@@ -2,7 +2,9 @@ package com.saint.struct.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -22,12 +24,11 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var refreshLayout: SmartRefreshLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var binding: FragmentHomeBinding
 
     private val viewModel: HomeViewModel by viewModels {
         HomeViewModelFactory(
@@ -38,7 +39,12 @@ class HomeFragment : BaseFragment() {
             })
     }
 
-    override fun setLayoutId() = R.layout.fragment_home
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentHomeBinding {
+        return FragmentHomeBinding.inflate(inflater,container,false)
+    }
 
     override fun initData() {}
 
@@ -49,7 +55,6 @@ class HomeFragment : BaseFragment() {
     }
 
     fun initView(){
-        binding = fragmentBinding as FragmentHomeBinding
         recyclerView = binding.recyclerView
         refreshLayout = binding.refreshLayout
         progressBar = binding.progressBar

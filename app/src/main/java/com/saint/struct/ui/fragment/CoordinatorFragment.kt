@@ -3,7 +3,9 @@ package com.saint.struct.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -26,19 +28,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CoordinatorFragment : BaseFragment() {
+class CoordinatorFragment : BaseFragment<FragmentCoordinatorBinding>() {
     private lateinit var cordAdapter: CoordinatorAdapter
-//    private lateinit var bannerAdapter: SaintBannerImageAdapter
-    private lateinit var binding: FragmentCoordinatorBinding
+
+    //    private lateinit var bannerAdapter: SaintBannerImageAdapter
     private lateinit var viewModel: CordViewModel
     private var page: Int = 1
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentCoordinatorBinding {
+        return FragmentCoordinatorBinding.inflate(inflater, container, false)
+    }
 //    private val bannerItems = listOf(
 //        "https://fastly.picsum.photos/id/662/375/200.jpg?hmac=NTKu5GoJnCBC_0-esaeG3CAaRRsyuGc8xMgjtDvGeC8",
 //        "https://fastly.picsum.photos/id/553/375/200.jpg?hmac=W_W2fS4O2RKH6gKjvmMFXutuMAVAxR2vFo2D1z4kzco",
 //        "https://fastly.picsum.photos/id/190/375/200.jpg?hmac=Cl6YxbEYeSH_C1ogIcp0TchXds58uMgDo27UwVlfOCE"
 //    )
 
-    override fun setLayoutId() = R.layout.fragment_coordinator
 
     override fun initData() {
         val repository = object : HomeRepository {
@@ -53,7 +60,6 @@ class CoordinatorFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = fragmentBinding as FragmentCoordinatorBinding
         initView()
         Log.e("CoordinatorFragment", "getHomeData onViewCreated")
         viewModel.getHomeData(1)
@@ -143,9 +149,9 @@ class CoordinatorFragment : BaseFragment() {
                     if (list.isEmpty()) {
                         page--
                     }
-                    if(cordAdapter.itemCount == 0){
+                    if (cordAdapter.itemCount == 0) {
                         cordAdapter.setData(list)
-                    }else{
+                    } else {
                         cordAdapter.addAll(list)
                     }
                 }

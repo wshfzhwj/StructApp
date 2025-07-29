@@ -19,20 +19,22 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.google.gson.JsonObject
 import com.saint.struct.R
-import com.saint.struct.ui.activity.WebActivity
+import com.saint.struct.databinding.ActivityWebBinding
 import java.io.IOException
 import java.io.InputStream
 
-class WebActivity : BaseActivity() {
+class WebActivity : BaseActivity<ActivityWebBinding>() {
     private var mWebView: WebView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e(TAG, "onCreate")
-        setContentView(R.layout.layout_web)
         initView()
         initData()
+    }
+
+    override fun getViewBinding(): ActivityWebBinding {
+        return ActivityWebBinding.inflate(layoutInflater)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

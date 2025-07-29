@@ -97,10 +97,10 @@ class ProductViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: HomeItem) {
         binding.apply {
-            product = item
             Glide.with(itemView.context).load(item.imageUrl).into(binding.ivProduct)
+            tvTitle.text = item.name
+            tvPrice.text = item.price.toString()
             root.setOnClickListener { onItemClick(item) } // 设置点击监听
-            executePendingBindings()
         }
     }
 }

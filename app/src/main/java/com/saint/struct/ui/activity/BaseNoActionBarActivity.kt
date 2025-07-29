@@ -1,10 +1,10 @@
 package com.saint.struct.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.viewbinding.ViewBinding
 import com.saint.struct.tool.StatusBarUtils
 
-open class BaseNoActionBarActivity : BaseActivity() {
+abstract class BaseNoActionBarActivity<T: ViewBinding> : BaseActivity<T>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hideActionBar()

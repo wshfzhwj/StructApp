@@ -1,16 +1,17 @@
 package com.saint.struct.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.saint.struct.BuildConfig
-import com.saint.struct.R
+import androidx.viewbinding.ViewBinding
 import com.saint.struct.databinding.FragmentPagingBinding
 
-abstract class BasePagingFragment<T : Any,VH : RecyclerView.ViewHolder> : BaseFragment() {
+abstract class BasePagingFragment<VB: ViewBinding,T : Any,VH : RecyclerView.ViewHolder> : BaseFragment<VB>() {
     lateinit var pageAdapter:PagingDataAdapter<T,VH>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -24,14 +25,11 @@ abstract class BasePagingFragment<T : Any,VH : RecyclerView.ViewHolder> : BaseFr
     override fun initData() {
     }
 
-
-    override fun setLayoutId() = R.layout.fragment_paging
-
     private fun initRecyclerView() {
         pageAdapter = getCustomPageAdapter()
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        (fragmentBinding as FragmentPagingBinding).recyclerView.apply {
+        (binding as FragmentPagingBinding).recyclerView.apply {
             this.layoutManager = layoutManager
             this.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             this.adapter = pageAdapter

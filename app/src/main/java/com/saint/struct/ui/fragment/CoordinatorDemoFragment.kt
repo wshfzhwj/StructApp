@@ -1,9 +1,16 @@
 package com.saint.struct.ui.fragment
 
-import com.saint.struct.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.saint.struct.databinding.FragmentCoordDemoBinding
 
-class CoordinatorDemoFragment: BaseFragment() {
-    override fun setLayoutId() = R.layout.fragment_coord_demo
+class CoordinatorDemoFragment: BaseFragment<FragmentCoordDemoBinding>() {
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentCoordDemoBinding {
+        return FragmentCoordDemoBinding.inflate(inflater,container,false)
+    }
 
     override fun initData() {
     }

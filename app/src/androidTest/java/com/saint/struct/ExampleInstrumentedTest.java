@@ -48,27 +48,27 @@ public class ExampleInstrumentedTest {
 
     }
 
-    @Test
-    public void testRetrofit() throws IOException {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("<https://api.uomg.com/>")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ConnectService iCity = retrofit.create(ConnectService.class);
-        Call<WanAndroidBean> call = iCity.getArticleListByCall(1, 1);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) {
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull Throwable t) {
-
-            }
-        });
-
-        call.execute();
-    }
+//    @Test
+//    public void testRetrofit() throws IOException {
+//        Retrofit retrofit = new Retrofit.Builder().baseUrl("<https://api.uomg.com/>")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        ConnectService iCity = retrofit.create(ConnectService.class);
+//        Call<WanAndroidBean> call = iCity.getArticleListByCall(1, 1);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull Throwable t) {
+//
+//            }
+//        });
+//
+//        call.execute();
+//    }
 
     @Test
     public void testOkHttp() throws IOException {

@@ -1,259 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
-
-        <variable
-            name="handle"
-            type="com.saint.struct.ui.fragment.MainFragment" />
-    </data>
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
+            android:id="@+id/layout_app_bar"
+            layout="@layout/layout_app_bar"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/layout0"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/layout_app_bar">
 
-            <include
-                android:id="@+id/layout_app_bar"
-                layout="@layout/layout_app_bar"
-                android:visibility="visible"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/layout0"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/layout_app_bar">
-
-                <Button
-                    android:id="@+id/glideBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.testGlide()}"
-                    android:text="Glide" />
-
-                <Button
-                    android:id="@+id/gifBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.testGif()}"
-                    android:text="Glide gif" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/layout1"
+            <Button
+                android:id="@+id/glideBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout0">
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:onClick="@{(view) -> handle.testGlide()}"
+                android:text="Glide" />
 
-                <Button
-                    android:id="@+id/aidlBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.startAidl()}"
-                    android:text="aidlBtn" />
-
-                <Button
-                    android:id="@+id/fingerBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.testFinger()}"
-                    android:text="finger" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout1">
-
-                <Button
-                    android:id="@+id/coroutinesBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.testCoroutineScope3()}"
-                    android:text="coroutines" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/daoAreaTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RoomArea"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout2" />
-
-            <LinearLayout
-                android:id="@+id/layout3"
+            <Button
+                android:id="@+id/gifBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/daoAreaTv">
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:onClick="@{(view) -> handle.testGif()}"
+                android:text="Glide gif" />
 
-                <Button
-                    android:id="@+id/addDataBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.addData()}"
-                    android:text="add" />
+        </LinearLayout>
 
 
-                <Button
-                    android:id="@+id/clearDataBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.clearData()}"
-                    android:text="clear" />
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout0">
 
-                <Button
-                    android:id="@+id/queryFlowBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.queryByFlow()}"
-                    android:text="query" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_flow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="flowArea"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout3" />
-
-            <LinearLayout
-                android:id="@+id/layout4"
+            <Button
+                android:id="@+id/aidlBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_flow">
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="aidlBtn" />
 
-                <Button
-                    android:id="@+id/queryLiveDataBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.queryByLiveData()}"
-                    android:text="liveData" />
-
-                <Button
-                    android:id="@+id/stateFlowBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.queryByStateFlow()}"
-                    android:text="state" />
-
-                <Button
-                    android:id="@+id/shareFlowBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.queryByShareFlow()}"
-                    android:text="share" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout5"
+            <Button
+                android:id="@+id/fingerBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout4">
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="finger" />
 
-                <Button
-                    android:id="@+id/cordBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:onClick="@{(view) -> handle.goCord()}"
-                    android:text="cood" />
+        </LinearLayout>
 
-                <Button
-                    android:id="@+id/scrollBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:onClick="@{(view) -> handle.goScroll()}"
-                    android:text="scroll" />
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout1">
 
-            </LinearLayout>
+            <Button
+                android:id="@+id/coroutinesBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="coroutines" />
 
-            <com.saint.struct.widget.BMIGaugeView
-                android:id="@+id/bmi_View"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout5" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/daoAreaTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RoomArea"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout2" />
+
+        <LinearLayout
+            android:id="@+id/layout3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/daoAreaTv">
+
+            <Button
+                android:id="@+id/addDataBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="add" />
 
 
-            <ImageView
-                android:id="@+id/roundImage"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:src="@color/app_colorPrimary"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/bmi_View" />
+            <Button
+                android:id="@+id/clearDataBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="clear" />
 
-            <ImageView
-                android:id="@+id/gifImage"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:src="@color/colorAccent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/roundImage" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-</layout>
+            <Button
+                android:id="@+id/queryFlowBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="query" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="flowArea"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout3" />
+
+        <LinearLayout
+            android:id="@+id/layout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_flow">
+
+            <Button
+                android:id="@+id/queryLiveDataBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="liveData" />
+
+            <Button
+                android:id="@+id/stateFlowBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="state" />
+
+            <Button
+                android:id="@+id/shareFlowBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="share" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout4">
+
+            <Button
+                android:id="@+id/cordBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="cood" />
+
+            <Button
+                android:id="@+id/scrollBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="scroll" />
+
+        </LinearLayout>
+
+        <com.saint.struct.widget.BMIGaugeView
+            android:id="@+id/bmi_View"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout5" />
+
+
+        <ImageView
+            android:id="@+id/roundImage"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:src="@color/app_colorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bmi_View" />
+
+        <ImageView
+            android:id="@+id/gifImage"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:src="@color/colorAccent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/roundImage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

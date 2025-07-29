@@ -2,6 +2,8 @@ package com.saint.struct.ui.fragment
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.saint.struct.viewmodel.Paging3RxViewModel
 import androidx.paging.PagingData
@@ -12,7 +14,8 @@ import com.saint.struct.databinding.FragmentPagingBinding
 
 private const val TAG = "PageRxActivity"
 
-class Paging3RxJavaFragment : BasePagingFragment<WanListBean, PagingRxJavaAdapter.ViewHolder>() {
+class Paging3RxJavaFragment :
+    BasePagingFragment<FragmentPagingBinding, WanListBean, PagingRxJavaAdapter.ViewHolder>() {
     @SuppressLint("CheckResult")
     override fun setModelAndData() {
         val factory = Paging3RxViewModel.Factory()
@@ -31,6 +34,13 @@ class Paging3RxJavaFragment : BasePagingFragment<WanListBean, PagingRxJavaAdapte
 
     @SuppressLint("SetTextI18n")
     override fun initTitle() {
-        (fragmentBinding as FragmentPagingBinding).layoutAppBar.titleBar.text = "PageRxFragment"
+        binding.layoutAppBar.titleBar.text = "PageRxFragment"
+    }
+
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentPagingBinding {
+        return FragmentPagingBinding.inflate(inflater,container,false)
     }
 }
