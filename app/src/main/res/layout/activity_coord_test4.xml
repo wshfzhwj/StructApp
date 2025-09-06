@@ -36,7 +36,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/xiami_title_height"
+            android:layout_height="@dimen/dp_60"
             android:layout_gravity="center_vertical"
             android:background="@mipmap/xiami_title" />
 

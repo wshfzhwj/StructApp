@@ -36,10 +36,10 @@ class MainTabBehavior(mContext: Context?, attrs: AttributeSet?) : CoordinatorLay
     }
 
     private val headerOffset: Int
-        get() = if(mContext == null) 0 else mContext!!.resources.getDimensionPixelOffset(R.dimen.header_offset)
+        get() = if(mContext == null) 0 else mContext!!.resources.getDimensionPixelOffset(R.dimen.dp_m_90)
 
     private val titleHeight: Int
-        get() = if(mContext == null) 0 else mContext!!.resources.getDimensionPixelOffset(R.dimen.title_height)
+        get() = if(mContext == null) 0 else mContext!!.resources.getDimensionPixelOffset(R.dimen.dp_45)
 
 
     private fun isDependOn(dependency: View?): Boolean {

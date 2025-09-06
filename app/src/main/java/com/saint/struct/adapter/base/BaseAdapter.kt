@@ -86,7 +86,7 @@ abstract class BaseAdapter<T>(
         if (mDatas.isEmpty()) {
             return null
         }
-        return mDatas.get(position)
+        return mDatas[position]
     }
 
     /**
@@ -115,8 +115,8 @@ abstract class BaseAdapter<T>(
 
             if (lp != null && lp is StaggeredGridLayoutManager.LayoutParams) {
                 val p: StaggeredGridLayoutManager.LayoutParams =
-                    lp as StaggeredGridLayoutManager.LayoutParams
-                p.setFullSpan(true)
+                    lp
+                p.isFullSpan = true
             }
         }
     }

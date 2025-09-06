@@ -75,12 +75,12 @@ class MainContentBehavior(val mContext: Context?, attrs: AttributeSet?) :
 
     private val headerOffset: Int
         get() = if (mContext == null) 0 else mContext.getResources()
-            .getDimensionPixelOffset(R.dimen.header_offset)
+            .getDimensionPixelOffset(R.dimen.dp_m_90)
 
     private val finalHeight: Int
         get() = if (mContext == null) 0 else (mContext.getResources()
-            .getDimensionPixelOffset(R.dimen.tab_height)
-                + mContext.getResources().getDimensionPixelOffset(R.dimen.title_height))
+            .getDimensionPixelOffset(R.dimen.dp_45)
+                + mContext.resources.getDimensionPixelOffset(R.dimen.dp_45))
 
 
     private fun isDependOn(dependency: View?): Boolean {

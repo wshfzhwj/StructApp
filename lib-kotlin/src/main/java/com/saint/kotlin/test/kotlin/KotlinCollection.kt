@@ -1,5 +1,7 @@
 package com.saint.kotlin.test.kotlin
 
+import java.io.File
+
 class KotlinCollection {
 
     fun testReduce() {
@@ -43,45 +45,44 @@ class KotlinCollection {
 }
 
 
-
 fun main() {
-    //只读list
-    val list = listOf("a", "b", "c")
+//    //只读list
+//    val list = listOf("a", "b", "c")
+//
+//    //只读 map
+//    val map = mapOf("a" to 1, "b" to 2, "c" to 3)
+//
+//    //可变map
+//    val mutableMap = mutableMapOf("a" to 1, "b" to 2, "c" to 3)
+//    mutableMap["key"] = 3
+//
+//    //遍历 map 或者 pair 型 list
+//    for ((k, v) in map) {
+//        println("$k -> $v")
+//    }
+//
+//    //区间迭代
+//    for (i in 1..10) {
+//        print(i)
+//    }  // 闭区间：包含 100
+//    println()
+//    for (i in 1 until 10) {
+//        print(i)
+//    } // 半开区间：不包含 100
+//    println()
+//    for (x in 2..10 step 2) {
+//        print(x)
+//    }
+//    println()
+//    for (x in 10 downTo 1) {
+//        print(x)
+//    }
+//    println()
+//    (1..10).forEach { print(it) }
+//    println("------------------------------")
 
-    //只读 map
-    val map = mapOf("a" to 1, "b" to 2, "c" to 3)
 
-    //可变map
-    val mutableMap = mutableMapOf("a" to 1, "b" to 2, "c" to 3)
-    mutableMap["key"] = 3
-
-    //遍历 map 或者 pair 型 list
-    for ((k, v) in map) {
-        println("$k -> $v")
-    }
-
-    //区间迭代
-    for (i in 1..10) {
-        print(i)
-    }  // 闭区间：包含 100
-    println()
-    for (i in 1 until 10) {
-        print(i)
-    } // 半开区间：不包含 100
-    println()
-    for (x in 2..10 step 2) {
-        print(x)
-    }
-    println()
-    for (x in 10 downTo 1) {
-        print(x)
-    }
-    println()
-    (1..10).forEach { print(it) }
-    println("------------------------------")
-
-
-    val list3 = listOf("张三", "李四", "王五")
+//    val list3 = listOf("张三", "李四", "王五")
 //    val list4: List<String> = listOf("张三", "李四", "王五")
 //    val newList: List<String> = list4.map {
 //        "内容是:$it"  //每次返回一个 String
@@ -94,9 +95,36 @@ fun main() {
 //    newList.forEach { println(it) }
 
 
-    val newList2: List<String> = list3.flatMap {
-        listOf("$it,在学习C++", "$it,在学习Java", "$it,在学习Kotlin")
+//    val newList2: List<String> = list3.flatMap { str->
+//        listOf("$str,在学习C++", "$str,在学习Java", "$str,在学习Kotlin")
+//    }
+//    println("newList2长度 ${newList2.size}")
+//    println(newList2)
+
+
+//    val arrays = listOf(listOf(1, 2), listOf(3, 4), listOf(5, 6))
+//    val flattened = arrays.flatMap { it }
+//    print(flattened)
+
+
+    val files = File("Test").listFiles()
+
+// 如需在代码块中计算更复杂的备用值，请使用 `run`
+    val filesSize = files?.size ?: run {
+        123
     }
-    println("newList2长度 ${newList2.size}")
-    println(newList2)
+    println(filesSize)
+
+//    val students = listOf(
+//        Student("Alice", listOf("Math", "Science", "Art")),
+//        Student("Bob", listOf("Math", "History")),
+//        Student("Charlie", listOf("Science", "Art"))
+//    )
+//
+////    val allCourses = students.flatMap { it.courses }.distinct()
+//    val allCourses = students.flatMap { it.courses }
+//
+//    println(allCourses)
 }
+
+//data class Student(val name: String, val courses: List<String>)

@@ -167,7 +167,7 @@ class MainHeaderBehavior(val mContext: Context?, attrs: AttributeSet?): ViewOffs
     }
 
     private val headerOffset: Int
-        get() = mContext!!.getResources().getDimensionPixelOffset(R.dimen.header_offset)
+        get() = mContext!!.getResources().getDimensionPixelOffset(R.dimen.dp_m_90)
 
     private fun handleActionUp(child: View) {
         if (mFlingRunnable != null) {

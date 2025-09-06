@@ -15,9 +15,9 @@ class XiamiCommentBehavior(mContext: Context, attrs: AttributeSet?) :
     HeaderScrollingViewBehavior(mContext, attrs) {
 
     private val headerOffset: Int =
-        mContext.resources.getDimensionPixelOffset(R.dimen.header_offset)
+        mContext.resources.getDimensionPixelOffset(R.dimen.dp_m_90)
     private val titleHeight: Int =
-        mContext.resources.getDimensionPixelOffset(R.dimen.xiami_title_height)
+        mContext.resources.getDimensionPixelOffset(R.dimen.dp_45)
 
     override fun layoutDependsOn(
         parent: CoordinatorLayout,

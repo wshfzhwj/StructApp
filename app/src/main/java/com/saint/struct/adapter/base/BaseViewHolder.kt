@@ -24,7 +24,7 @@ class BaseViewHolder private constructor(val convertView: View) : RecyclerView.V
     fun <T : View> getView(viewId: Int): T {
         var view = mViews.get(viewId)
         if (view == null) {
-            view = convertView.findViewById<View>(viewId)
+            view = convertView.findViewById(viewId)
             mViews.put(viewId, view)
         }
         return view as T

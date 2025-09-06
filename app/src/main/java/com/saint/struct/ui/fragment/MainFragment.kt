@@ -6,11 +6,11 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import android.os.Build
 import android.os.Messenger
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,7 +24,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.saint.struct.R
 import com.saint.struct.database.SaintRoomDB
 import com.saint.struct.databinding.FragmentMainBinding
 import com.saint.struct.repository.StudentRepository
@@ -149,7 +148,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), EasyPermissions.Permis
         binding.queryLiveDataBtn.setOnClickListener { queryByLiveData() }
         binding.queryFlowBtn.setOnClickListener { queryByShareFlow() }
         binding.stateFlowBtn.setOnClickListener { queryByStateFlow() }
-//        binding.qu.setOnClickListener { queryByFlow() }
         binding.cordBtn.setOnClickListener { goCord() }
         binding.scrollBtn.setOnClickListener { goScroll() }
         binding.coroutinesBtn.setOnClickListener { testCoroutineScope3() }

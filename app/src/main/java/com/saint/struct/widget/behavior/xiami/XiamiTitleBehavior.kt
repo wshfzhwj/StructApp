@@ -46,10 +46,10 @@ class XiamiTitleBehavior : CoordinatorLayout.Behavior<View>{
     }
 
     private val headerOffset: Int
-        get() = if(mContext == null) 0 else mContext!!.getResources().getDimensionPixelOffset(R.dimen.header_offset)
+        get() = if(mContext == null) 0 else mContext!!.getResources().getDimensionPixelOffset(R.dimen.dp_m_90)
 
     private val titleHeight: Int
-        get() = if(mContext == null) 0 else mContext!!.getResources().getDimensionPixelOffset(R.dimen.xiami_title_height)
+        get() = if(mContext == null) 0 else mContext!!.getResources().getDimensionPixelOffset(R.dimen.dp_60)
 
     private fun isDependOn(dependency: View?): Boolean {
         return dependency != null && dependency.getId() == R.id.header
