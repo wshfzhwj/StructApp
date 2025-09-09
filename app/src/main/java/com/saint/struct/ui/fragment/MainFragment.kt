@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.saint.struct.StructApp
 import com.saint.struct.database.SaintRoomDB
 import com.saint.struct.databinding.FragmentMainBinding
 import com.saint.struct.repository.StudentRepository
@@ -51,12 +52,11 @@ import java.lang.reflect.ParameterizedType
 import java.util.concurrent.Callable
 
 
-class MainFragment : BaseFragment<FragmentMainBinding>(), EasyPermissions.PermissionCallbacks {
+class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(), EasyPermissions.PermissionCallbacks {
     private var mService: Messenger? = null
 
     //    private val mRetrofit: Retrofit? = null
     private lateinit var mStudentRepository: StudentRepository
-    private lateinit var viewModel: MainFragmentViewModel
 
     companion object {
         const val EXTRA_KEY_SERVICE = "extra_key_service"
@@ -77,10 +77,12 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), EasyPermissions.Permis
         return FragmentMainBinding.inflate(inflater,container,false)
     }
 
+    override fun <T : ViewModel> createViewModel(cls: Class<T>?): T {
+        mStudentRepository = StudentRepository(SaintRoomDB.getInstance(requireActivity()).studentDao())
+        return ViewModelProvider(this, ViewModelFactory(mStudentRepository))[MainFragmentViewModel::class.java] as T
+    }
 
     override fun initData() {
-        mStudentRepository = StudentRepository(SaintRoomDB.getInstance(requireActivity()).studentDao())
-        viewModel = ViewModelProvider(this, ViewModelFactory(mStudentRepository))[MainFragmentViewModel::class.java]
         requestPermission()
     }
 
@@ -394,11 +396,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), EasyPermissions.Permis
     }
 
 
-    inner class ViewModelFactory(private val stu: StudentRepository) : ViewModelProvider.Factory {
+    inner class ViewModelFactory(private val repository: StudentRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             // 判断 MainViewModel 是不是 modelClass 的父类或接口
             if (modelClass.isAssignableFrom(MainFragmentViewModel::class.java)) {
-                return MainFragmentViewModel(stu) as T
+                return MainFragmentViewModel(repository, activity?.application ?: StructApp.application) as T
             }
             throw IllegalArgumentException("UnKnown class")
         }

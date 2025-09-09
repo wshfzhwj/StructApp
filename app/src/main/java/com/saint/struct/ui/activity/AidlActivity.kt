@@ -20,6 +20,8 @@ import com.saint.struct.databinding.ActivityAidlBinding
 import com.saint.struct.ipc.aidl.IPersonManager
 import com.saint.struct.ipc.aidl.Person
 import com.saint.struct.service.MyWorker
+import com.saint.struct.viewmodel.AidlViewModel
+import com.saint.struct.viewmodel.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
@@ -31,7 +33,7 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 
-class AidlActivity : BaseActivity<ActivityAidlBinding>() {
+class AidlActivity : BaseActivity<ActivityAidlBinding, AidlViewModel>() {
     private lateinit var constraints: Constraints
     private val mainScope = MainScope()
     private var isConnect = false;

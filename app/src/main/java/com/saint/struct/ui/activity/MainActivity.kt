@@ -8,9 +8,8 @@ import com.saint.struct.R
 import com.saint.struct.databinding.ActivityMainBinding
 import com.saint.struct.viewmodel.MainActivityViewModel
 
-class MainActivity: BaseActivity<ActivityMainBinding>() {
-    private val mainActivityViewModel: MainActivityViewModel by viewModels()
-
+class MainActivity: BaseActivity<ActivityMainBinding, MainActivityViewModel>() {
+//    private val mainActivityViewModel: MainActivityViewModel by viewModels()
     //    var viewModel: MainActivityViewModel by lazy { ViewModelProvider(this).get(MainActivityViewModel::class)}
 
 

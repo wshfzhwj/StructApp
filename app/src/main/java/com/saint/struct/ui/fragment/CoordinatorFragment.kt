@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.saint.struct.R
+import com.saint.struct.StructApp
 import com.saint.struct.adapter.CoordinatorAdapter
 import com.saint.struct.adapter.SaintBannerImageAdapter
 import com.saint.struct.databinding.FragmentCoordinatorBinding
@@ -28,11 +30,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CoordinatorFragment : BaseFragment<FragmentCoordinatorBinding>() {
+class CoordinatorFragment : BaseFragment<FragmentCoordinatorBinding, CordViewModel>() {
     private lateinit var cordAdapter: CoordinatorAdapter
 
     //    private lateinit var bannerAdapter: SaintBannerImageAdapter
-    private lateinit var viewModel: CordViewModel
     private var page: Int = 1
     override fun getViewBinding(
         inflater: LayoutInflater,
@@ -48,14 +49,20 @@ class CoordinatorFragment : BaseFragment<FragmentCoordinatorBinding>() {
 
 
     override fun initData() {
+
+    }
+
+    override fun <T : ViewModel> createViewModel(cls: Class<T>?): T {
         val repository = object : HomeRepository {
             override suspend fun getHomeData(page: Int): List<HomeItem> {
                 Log.e("CoordinatorFragment", "mockData page = $page")
                 return MockUtils().mockData(page)
             }
         }
-        viewModel =
-            ViewModelProvider(this, CordViewModelFactory(repository))[CordViewModel::class.java]
+       return ViewModelProvider(
+                this,
+                CordViewModelFactory(repository, activity?.application ?: StructApp.application)
+            )[CordViewModel::class.java] as T
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -15,11 +15,11 @@ import com.saint.struct.databinding.FragmentPagingBinding
 private const val TAG = "PageRxActivity"
 
 class Paging3RxJavaFragment :
-    BasePagingFragment<FragmentPagingBinding, WanListBean, PagingRxJavaAdapter.ViewHolder>() {
+    BasePagingFragment<FragmentPagingBinding,Paging3RxViewModel, WanListBean, PagingRxJavaAdapter.ViewHolder>() {
+
     @SuppressLint("CheckResult")
     override fun setModelAndData() {
-        val factory = Paging3RxViewModel.Factory()
-        val viewModel: Paging3RxViewModel by viewModels { factory }
+
         viewModel.flowable
             .subscribe { pagingData: PagingData<WanListBean>? ->
                 pageAdapter.submitData(lifecycle, pagingData!!)
@@ -42,5 +42,10 @@ class Paging3RxJavaFragment :
         container: ViewGroup?
     ): FragmentPagingBinding {
         return FragmentPagingBinding.inflate(inflater,container,false)
+    }
+
+    override fun initData() {
+//        val factory = Paging3RxViewModel.Factory()
+//        val viewModel: Paging3RxViewModel by viewModels { factory }
     }
 }

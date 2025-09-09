@@ -1,5 +1,6 @@
 package com.saint.struct.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.cachedIn
 import androidx.paging.rxjava2.flowable
+import com.saint.struct.StructApp.Companion.application
 import com.saint.struct.bean.WanListBean
 import com.saint.struct.network.HttpManager
 import com.saint.struct.repository.Paging3RxRepository
@@ -15,7 +17,7 @@ import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class Paging3RxViewModel : ViewModel() {
+class Paging3RxViewModel (application: Application) : BaseViewModel(application)  {
     private var mPager: Pager<Int, WanListBean>
     private var mPaging3RxRepository: Paging3RxRepository
 
@@ -43,7 +45,7 @@ class Paging3RxViewModel : ViewModel() {
      class Factory : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(Paging3RxViewModel::class.java)) {
-                return Paging3RxViewModel() as T
+                return Paging3RxViewModel(application) as T
             }
             throw IllegalArgumentException("UnKnown class")
         }

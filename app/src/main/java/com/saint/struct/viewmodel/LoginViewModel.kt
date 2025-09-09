@@ -1,5 +1,6 @@
 package com.saint.struct.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saint.struct.bean.Resource
@@ -9,8 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val loginRepository: LoginRepository
-) : ViewModel() {
+    private val loginRepository: LoginRepository, application: Application
+) : BaseViewModel(application) {
     fun loginByMainThread(username: String, token: String) {
         // Create a new coroutine on the UI thread
         viewModelScope.launch {

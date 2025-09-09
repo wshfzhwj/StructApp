@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.saint.struct.databinding.FragmentPagingBinding
+import com.saint.struct.viewmodel.BaseViewModel
 
-abstract class BasePagingFragment<VB: ViewBinding,T : Any,VH : RecyclerView.ViewHolder> : BaseFragment<VB>() {
+abstract class BasePagingFragment<VB: ViewBinding,VM: BaseViewModel,T : Any,VH : RecyclerView.ViewHolder> : BaseFragment<VB,VM>() {
     lateinit var pageAdapter:PagingDataAdapter<T,VH>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -20,9 +21,6 @@ abstract class BasePagingFragment<VB: ViewBinding,T : Any,VH : RecyclerView.View
         initRecyclerView()
         setModelAndData()
         setListener()
-    }
-
-    override fun initData() {
     }
 
     private fun initRecyclerView() {

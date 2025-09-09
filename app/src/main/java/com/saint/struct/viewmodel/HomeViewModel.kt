@@ -1,5 +1,6 @@
 package com.saint.struct.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -18,12 +19,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
+class HomeViewModel(private val repository: HomeRepository, application: Application) :
+    BaseViewModel(application) {
     // 添加刷新和加载更多方法
     private val _refreshTrigger = MutableStateFlow(0)
     private val _loadMoreTrigger = MutableStateFlow(0)
 
     private val _pagingSource = MutableStateFlow<HomePagingSource?>(null)
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val homeData: Flow<PagingData<HomeItem>> = _pagingSource.flatMapLatest {
         Pager(
@@ -52,6 +55,7 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
             _loadMoreState.value = false
         }
     }
+
     // 添加状态字段
     private val _refreshState = MutableStateFlow<Boolean>(false)
     val refreshState: StateFlow<Boolean> = _refreshState

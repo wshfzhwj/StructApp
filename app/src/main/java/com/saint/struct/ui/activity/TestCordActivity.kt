@@ -6,8 +6,10 @@ import com.saint.struct.adapter.CordTypeAdapter
 import com.saint.struct.adapter.base.BaseViewHolder
 import com.saint.struct.adapter.base.interfaces.OnItemClickListener
 import com.saint.struct.databinding.ActivityCoordTest4Binding
+import com.saint.struct.viewmodel.BaseViewModel
+import com.saint.struct.viewmodel.TestCordViewModel
 
-class TestCordActivity: BaseActivity<ActivityCoordTest4Binding>() {
+class TestCordActivity: BaseActivity<ActivityCoordTest4Binding, TestCordViewModel>() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

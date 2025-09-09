@@ -1,5 +1,6 @@
 package com.saint.struct.viewmodel
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +10,8 @@ import com.saint.struct.model.HomeItem
 import com.saint.struct.repository.HomeRepository
 import kotlinx.coroutines.launch
 
-class CordViewModel(val repository: HomeRepository) : ViewModel() {
+class CordViewModel(val repository: HomeRepository, application: Application) :
+    BaseViewModel(application) {
     private var _items: MutableLiveData<MutableList<HomeItem>> = MutableLiveData()
     val items: LiveData<MutableList<HomeItem>> get() = _items
 

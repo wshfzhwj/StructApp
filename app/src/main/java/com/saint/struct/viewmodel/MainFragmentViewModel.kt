@@ -1,6 +1,7 @@
 package com.saint.struct.viewmodel
 
 import android.app.Activity
+import android.app.Application
 import android.os.Build
 import android.util.Log
 import android.widget.ImageView
@@ -28,7 +29,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class MainFragmentViewModel(val repository: StudentRepository) : ViewModel() {
+class MainFragmentViewModel(val repository: StudentRepository, application: Application) : BaseViewModel(application) {
     private val _stuMutableLiveData = MutableLiveData<List<Student>>()
     val studentLiveData: LiveData<List<Student>> get() = _stuMutableLiveData
 

@@ -21,10 +21,12 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.saint.struct.R
 import com.saint.struct.databinding.ActivityWebBinding
+import com.saint.struct.viewmodel.BaseViewModel
+import com.saint.struct.viewmodel.WebViewModel
 import java.io.IOException
 import java.io.InputStream
 
-class WebActivity : BaseActivity<ActivityWebBinding>() {
+class WebActivity : BaseActivity<ActivityWebBinding, WebViewModel>() {
     private var mWebView: WebView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

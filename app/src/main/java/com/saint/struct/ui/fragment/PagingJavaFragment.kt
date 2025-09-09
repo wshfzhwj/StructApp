@@ -13,15 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.saint.struct.R
 import com.saint.struct.adapter.PagingArticleAdapter
 import com.saint.struct.databinding.FragmentPagingBinding
+import com.saint.struct.viewmodel.BaseViewModel
 import com.saint.struct.viewmodel.PageArticleViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class PagingJavaFragment : BaseFragment<FragmentPagingBinding>() {
+class PagingJavaFragment : BaseFragment<FragmentPagingBinding, PageArticleViewModel>() {
     private lateinit var pageAdapter: PagingArticleAdapter
 
     //    private lateinit var mViewModel: PageOldViewModel
-    private val viewModel: PageArticleViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

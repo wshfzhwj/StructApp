@@ -11,6 +11,7 @@ import androidx.paging.PagingDataAdapter
 import com.saint.struct.adapter.PagingProjectAdapter
 import com.saint.struct.bean.Project
 import com.saint.struct.databinding.FragmentPagingBinding
+import com.saint.struct.viewmodel.BaseViewModel
 import com.saint.struct.viewmodel.PageProjectViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -18,10 +19,7 @@ import kotlinx.coroutines.launch
 private const val TAG = "Paging3KotlinFragment"
 
 class Paging3KotlinFragment :
-    BasePagingFragment<FragmentPagingBinding, Project, PagingProjectAdapter.ViewHolder>() {
-
-    private val viewModel: PageProjectViewModel by viewModels()
-//    val viewModel :ArticleViewModel by viewModels()
+    BasePagingFragment<FragmentPagingBinding, PageProjectViewModel, Project, PagingProjectAdapter.ViewHolder>() {
 
     override fun setModelAndData() {
         lifecycleScope.launch {
@@ -50,4 +48,8 @@ class Paging3KotlinFragment :
     ): FragmentPagingBinding {
         return FragmentPagingBinding.inflate(inflater)
     }
+
+    override fun initData() {
+    }
+
 }
