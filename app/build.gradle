@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id 'com.android.application'
@@ -12,11 +12,11 @@ plugins {
 Node node = getStringsXmlNode()
 String buildWay = readBuildWay(node)
 android {
+    namespace "com.saint.struct"
     buildFeatures {
         buildConfig true
         aidl true
     }
-    namespace "com.saint.struct"
 
     signingConfigs {
         debug {
@@ -75,6 +75,30 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        // 新写法：替代 kotlinOptions.jvmTarget
+//        isCoreLibraryDesugaringEnabled = true
+    }
+
+    // kotlin Jvm 版本
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.add("-Xjvm-default=all")
+            freeCompilerArgs.add("-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi")
+            freeCompilerArgs.add("-Xopt-in=kotlinx.coroutines.FlowPreview")
+        }
+    }
+
+    lintOptions {
+        enable 'Interoperability'
+    }
+
+    kapt {
+        correctErrorTypes = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
     }
 
 
@@ -138,32 +162,23 @@ android {
         viewBinding true
     }
 
-    // kotlin Jvm 版本
-    kotlinOptions {
-        jvmTarget = "17"
-        freeCompilerArgs = [
-                "-Xjvm-default=all",
-                "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
-                "-Xopt-in=kotlinx.coroutines.FlowPreview"
-        ]
-    }
 
-    lintOptions {
-        enable 'Interoperability'
-    }
+//    android.applicationVariants.configureEach { variant ->
+//        variant.outputs.configureEach {
+//            if (outputFileName != null && outputFileName.endsWith('.apk')) {
+//                outputFileName = "${buildWay.toLowerCase()}-${variant.buildType.name}-${defaultConfig.versionName}.apk"
+//            }
+//        }
+//    }
 
-    kapt {
-        correctErrorTypes = true
-    }
-
-    packagingOptions {
-        exclude 'META-INF/atomicfu.kotlin_module'
-    }
-
-    android.applicationVariants.configureEach { variant ->
-        variant.outputs.configureEach {
-            if (outputFileName != null && outputFileName.endsWith('.apk')) {
-                outputFileName = "${buildWay.toLowerCase()}-${variant.buildType.name}-${defaultConfig.versionName}.apk"
+    //gradle 8.0
+    android {
+        // ...
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                if (outputFileName != null && outputFileName.endsWith('.apk')) {
+                    outputFileName = "${buildWay.toLowerCase()}-${variant.buildType.name}-${defaultConfig.versionName}.apk"
+                }
             }
         }
     }
@@ -192,6 +207,8 @@ String readBuildDate(Node node) {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 核心库脱糖支持（如果需要使用 Java 8+ API）
+//    coreLibraryDesugaring(rootProject.depsLibs.desugar)
 
     implementation rootProject.depsLibs.appcompat
     implementation rootProject.depsLibs.coreKtx
@@ -250,9 +267,14 @@ dependencies {
 //    implementation(project(':lib-practise'))
 //    implementation(project(':asm-annotation'))
 }
-tasks.withType(KotlinCompile).configureEach {
-    kotlinOptions {
-        languageVersion = "1.9"
-    }
-}
 
+
+//tasks.named('compileKotlin', KotlinCompilationTask) {
+//    compilerOptions {
+//        apiVersion = KotlinVersion.KOTLIN_2_2
+//        jvmTarget.set(JvmTarget.JVM_17)
+//        freeCompilerArgs.add("-Xjvm-default=all")
+//        freeCompilerArgs.add("kotlinx.serialization.ExperimentalSerializationApi")
+//        freeCompilerArgs.add("kotlinx.coroutines.FlowPreview")
+//    }
+//}

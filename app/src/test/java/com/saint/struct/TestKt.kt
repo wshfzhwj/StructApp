@@ -55,11 +55,12 @@ fun main() {
 //    test(10) { num1: Int, num2: Int -> num1 + num2 }
 //    val list: List<String> = listOf("a", "aa", "aaa", "aaaa")
 //    val result: String? = list.maxBy { it.length }
-    println(::testCoroutinesCancel)
-    print("Write anything here: ")
+//    println(::testCoroutinesCancel)
+//    print("Write anything here: ")
+//
+//    val enteredString = readLine()
+//    println("You have entered this: $enteredString")
 
-    val enteredString = readLine()
-    println("You have entered this: $enteredString")
 }
 
 fun testCoroutinesCancel(): String {

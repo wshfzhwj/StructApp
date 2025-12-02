@@ -20,8 +20,12 @@ private const val TAG = "Paging3KotlinFragment"
 
 class Paging3KotlinFragment :
     BasePagingFragment<FragmentPagingBinding, PageProjectViewModel, Project, PagingProjectAdapter.ViewHolder>() {
+    override val viewModel: PageProjectViewModel by viewModels()
+    override fun getViewBinding(): FragmentPagingBinding =
+        FragmentPagingBinding.inflate(layoutInflater)
 
-    override fun setModelAndData() {
+    override fun observeViewModel() {
+        super.observeViewModel()
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.projects.collectLatest {
@@ -33,20 +37,13 @@ class Paging3KotlinFragment :
 
     override fun setListener() {}
 
-    override fun getCustomPageAdapter(): PagingDataAdapter<Project, PagingProjectAdapter.ViewHolder> {
+    override fun initPageAdapter(): PagingDataAdapter<Project, PagingProjectAdapter.ViewHolder> {
         return PagingProjectAdapter(requireActivity())
     }
 
     @SuppressLint("SetTextI18n")
     override fun initTitle() {
         binding.layoutAppBar.titleBar.text = "Paging3KotlinFragment"
-    }
-
-    override fun getViewBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentPagingBinding {
-        return FragmentPagingBinding.inflate(inflater)
     }
 
     override fun initData() {

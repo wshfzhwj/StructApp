@@ -1,63 +1,62 @@
 package com.saint.struct.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.saint.struct.viewmodel.BaseViewModel
-import java.lang.reflect.ParameterizedType
 
-abstract class BaseFragment<T : ViewBinding, VM: BaseViewModel> : Fragment() {
-    private var _binding: T? = null
+/**
+ * Fragment的基类，利用泛型和属性委托简化ViewBinding和ViewModel的初始化。
+ *
+ * @param VB ViewBinding的具体类型
+ * @param VM ViewModel的具体类型
+ * @author wangsf
+ */
+abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
+    private var _binding: VB? = null
+    // 此属性只在 onCreateView 和 onDestroyView 之间有效。
     protected val binding get() = _binding!!
 
-    protected lateinit var viewModel: VM
+    // 使用属性委托 'by viewModels()' 来声明ViewModel，具体实例由子类提供。
+    protected abstract val viewModel: VM
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = getViewBinding(inflater,container)
-        initBase()
-        initData()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = getViewBinding()
         return binding.root
     }
 
-    private fun initBase(){
-        //获取ViewModel类型
-        val modelClass: Class<BaseViewModel>
-        //获取带有泛型的父类
-        val type = javaClass.genericSuperclass
-        //ParameterizedType参数化类型，即泛型
-        modelClass = if (type is ParameterizedType) {
-            //getActualTypeArguments获取参数化类型的数组，泛型可能有多个，这里我们默认第二个泛型是ViewModel
-            type.actualTypeArguments[1] as Class<BaseViewModel>
-        } else {
-            //如果没有指定泛型参数，则默认使用ViewModel
-            BaseViewModel::class.java
-        }
-        //初始化viewModel
-        viewModel = createViewModel(modelClass as Class<VM>)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initData()
+        observeViewModel()
     }
 
-    protected abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): T
+    protected abstract fun getViewBinding(): VB
+
+    /**
+     * 子类必须实现此方法来初始化数据和视图。
+     * 在 onViewCreated 中调用，此时视图已创建完毕。
+     */
     abstract fun initData()
 
     /**
-     * 创建ViewModel 如果 需要自己定义ViewModel 直接复写此方法
-     *
-     * @param cls
-     * @param <T>
-     * @return
-    </T> */
-    open fun <T : ViewModel> createViewModel(cls: Class<T>?): T {
-        return ViewModelProvider(this)[cls!!]
+     * 可选的覆写方法，用于集中观察ViewModel中的LiveData。
+     */
+    protected open fun observeViewModel() {
+        // 子类可以覆写此方法来统一处理对ViewModel的观察
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        // 释放绑定，防止内存泄漏
         _binding = null
     }
 }

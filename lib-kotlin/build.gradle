@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+
 }
 
 android {
@@ -36,13 +37,42 @@ android {
         ]
 
     }
+    sourceSets {
+        named("main") {
+            java.srcDirs("src/main/java", "src/main/kotlin")
+            jniLibs.srcDirs("libs", "jniLibs")
+//            jniLibs.srcDirs("libs")
+        }
+    }
 }
 
 dependencies {
+    // Android dependencies
     implementation rootProject.depsLibs.coreKtx
     implementation rootProject.depsLibs.coroutines
     implementation rootProject.depsLibs.coroutinesCore
+
+    // Kotlin/JVM dependencies
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+
     testImplementation rootProject.depsLibs.junit
     androidTestImplementation rootProject.depsLibs.extJunit
     androidTestCompileOnly rootProject.depsLibs.espressoCore
+}
+
+// Configure Kotlin compilation for all targets
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '17'
+        freeCompilerArgs = [
+            "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
+            "-Xopt-in=kotlinx.coroutines.FlowPreview",
+            "-Xopt-in=kotlin.RequiresOptIn"
+        ]
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }

@@ -1,25 +1,22 @@
 package com.saint.struct.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.saint.struct.R
 import com.saint.struct.adapter.PagingArticleAdapter
 import com.saint.struct.databinding.FragmentPagingBinding
-import com.saint.struct.viewmodel.BaseViewModel
 import com.saint.struct.viewmodel.PageArticleViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class PagingJavaFragment : BaseFragment<FragmentPagingBinding, PageArticleViewModel>() {
     private lateinit var pageAdapter: PagingArticleAdapter
+    override val viewModel: PageArticleViewModel by viewModels()
 
     //    private lateinit var mViewModel: PageOldViewModel
 
@@ -31,11 +28,8 @@ class PagingJavaFragment : BaseFragment<FragmentPagingBinding, PageArticleViewMo
         setModelAndData()
     }
 
-    override fun getViewBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentPagingBinding {
-        return FragmentPagingBinding.inflate(inflater, container, false)
+    override fun getViewBinding(): FragmentPagingBinding {
+        return FragmentPagingBinding.inflate(layoutInflater)
     }
 
     override fun initData() {

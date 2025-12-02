@@ -36,11 +36,10 @@ class FlowTest {
                 println(it)
             }
 
-        flow<Int>{
+        flow<Int> {
             emit(1)
         }
     }
-
 
 
     suspend fun testAsFlow() {
@@ -146,8 +145,13 @@ class FlowTest {
 
 }
 
-fun main() = runBlocking{
-    val flowTest = FlowTest()
+fun main() = runBlocking {
+    listOf(1, 2, 3, 4, 5).asFlow().collect {
+        println(System.currentTimeMillis())
+    }
+
+
+//    val flowTest = FlowTest()
 //    val scope = CoroutineScope(SupervisorJob())
 //    scope.launch{
 //        flowTest.testAsFlow()
@@ -156,7 +160,7 @@ fun main() = runBlocking{
 //    }
 
 //    flowTest.test()
-    flowTest.testFlowOf()
+//    flowTest.testFlowOf()
 }
 
 //sampleStart

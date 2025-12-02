@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -30,17 +31,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CoordinatorFragment : BaseFragment<FragmentCoordinatorBinding, CordViewModel>() {
+class CoordinatorFragment :
+    BaseFragment<FragmentCoordinatorBinding, CordViewModel>() {
     private lateinit var cordAdapter: CoordinatorAdapter
 
     //    private lateinit var bannerAdapter: SaintBannerImageAdapter
     private var page: Int = 1
-    override fun getViewBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentCoordinatorBinding {
-        return FragmentCoordinatorBinding.inflate(inflater, container, false)
-    }
 //    private val bannerItems = listOf(
 //        "https://fastly.picsum.photos/id/662/375/200.jpg?hmac=NTKu5GoJnCBC_0-esaeG3CAaRRsyuGc8xMgjtDvGeC8",
 //        "https://fastly.picsum.photos/id/553/375/200.jpg?hmac=W_W2fS4O2RKH6gKjvmMFXutuMAVAxR2vFo2D1z4kzco",
@@ -52,17 +48,27 @@ class CoordinatorFragment : BaseFragment<FragmentCoordinatorBinding, CordViewMod
 
     }
 
-    override fun <T : ViewModel> createViewModel(cls: Class<T>?): T {
+//    fun <T : ViewModel> createViewModel(cls: Class<T>?): T {
+//        val repository = object : HomeRepository {
+//            override suspend fun getHomeData(page: Int): List<HomeItem> {
+//                Log.e("CoordinatorFragment", "mockData page = $page")
+//                return MockUtils().mockData(page)
+//            }
+//        }
+//        return ViewModelProvider(
+//            this,
+//            CordViewModelFactory(repository, activity?.application ?: StructApp.application)
+//        )[CordViewModel::class.java] as T
+//    }
+
+    override val viewModel: CordViewModel by viewModels{
         val repository = object : HomeRepository {
             override suspend fun getHomeData(page: Int): List<HomeItem> {
                 Log.e("CoordinatorFragment", "mockData page = $page")
                 return MockUtils().mockData(page)
             }
         }
-       return ViewModelProvider(
-                this,
-                CordViewModelFactory(repository, activity?.application ?: StructApp.application)
-            )[CordViewModel::class.java] as T
+        return@viewModels CordViewModelFactory(repository, activity?.application ?: StructApp.application)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,6 +78,8 @@ class CoordinatorFragment : BaseFragment<FragmentCoordinatorBinding, CordViewMod
         viewModel.getHomeData(1)
         observeViewModel()
     }
+
+    override fun getViewBinding(): FragmentCoordinatorBinding = FragmentCoordinatorBinding.inflate(layoutInflater)
 
     private fun initRecyclerView() {
         cordAdapter = CoordinatorAdapter(onItemClick = { item ->
@@ -148,7 +156,7 @@ class CoordinatorFragment : BaseFragment<FragmentCoordinatorBinding, CordViewMod
 //    }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun observeViewModel() {
+    override fun observeViewModel() {
         viewModel.items.observe(viewLifecycleOwner) { list ->
             lifecycleScope.launch {
                 Log.e("CoordinatorFragment", "observeViewModel = ${list.size}")

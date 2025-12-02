@@ -603,7 +603,10 @@ class KotlinCoroutines {
                 Log.d("scope", "4--------- ${coroutineContext[CoroutineName]}")
                 coroutineScope.cancel()
                 scope3.join()
-                Log.d("scope", "5--------- ${coroutineContext[CoroutineName]}-----${coroutineScope.isActive}")
+                Log.d(
+                    "scope",
+                    "5--------- ${coroutineContext[CoroutineName]}-----${coroutineScope.isActive}"
+                )
             }
             Log.d("scope", "6--------- ${coroutineContext[CoroutineName]}")
         }
@@ -661,7 +664,7 @@ class KotlinCoroutines {
         println("runBlocking end")
     }
 
-    suspend fun testScope(){
+    suspend fun testScope() {
         val handler = CoroutineExceptionHandler { _, exception ->
             println("捕获到的异常： $exception")
         }
@@ -695,14 +698,15 @@ suspend fun doSomething(i: Int) {
     }
 }
 
-fun main() = runBlocking {
-    repeat(2) { i ->
-        launch(Dispatchers.Default) {
-            println("#$i thread name: ${Thread.currentThread().name}")
-            doSomething(i)
-        }
-    }
+
+fun main() {
+    val data = (1..100).map { "test_${it.toString().padStart(3, '0')}" }
+    println(data)
 }
+
+//
+
+
 //挂起函数创建的子协程是串行运行，协程构建器创建的子协程是并行运行。
 //suspend fun main() = runBlocking {
 ////suspend fun main() = runBlocking {

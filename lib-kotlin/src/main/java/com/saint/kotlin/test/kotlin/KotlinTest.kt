@@ -145,13 +145,13 @@ class B(var a: Int) {
 //    }
 //}
 
-//fun main() = runBlocking { // this: CoroutineScope
-//    launch { // 在 runBlocking 的作用范围内启动新的协程
-//        delay(1000L)
-//        println("World!")
-//    }
-//    println("Hello,")
-//}
+fun main() = runBlocking { // this: CoroutineScope
+    launch { // 在 runBlocking 的作用范围内启动新的协程
+        delay(1000L)
+        println("World!")
+    }
+    println("Hello,")
+}
 
 //public fun <T> runBlocking(context: kotlin.coroutines.CoroutineContext = COMPILED_CODE, block: suspend kotlinx.coroutines.CoroutineScope.() -> T): T { contract { /* compiled contract */ }; /* compiled code */ }
 //public suspend fun <R> coroutineScope(block: suspend kotlinx.coroutines.CoroutineScope.() -> R): R { contract { /* compiled contract */ }; /* compiled code */ }
@@ -189,7 +189,7 @@ fun simple(): Flow<Int> = flow { // 流构建器
 }
 
 
-fun main() = runBlocking{
-    flowOf(1, 2)
-        .collect()
-}
+//fun main() = runBlocking{
+//    flowOf(1, 2)
+//        .collect()
+//}

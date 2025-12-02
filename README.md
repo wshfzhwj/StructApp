@@ -1,3 +1,6 @@
+
+adb shell am start -n com.saint.struct/.ui.activity.MainActivity
+
 android jetpack
 DataStore Share优化
 ROOM

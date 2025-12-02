@@ -17,53 +17,56 @@ import androidx.recyclerview.widget.RecyclerView
 import com.saint.struct.R
 import com.saint.struct.StructApp
 import com.saint.struct.adapter.HomeAdapter
+import com.saint.struct.database.SaintRoomDB
 import com.saint.struct.databinding.FragmentHomeBinding
 import com.saint.struct.model.HomeItem
 import com.saint.struct.repository.HomeRepository
+import com.saint.struct.repository.StudentRepository
 import com.saint.struct.tool.MockUtils
 import com.saint.struct.viewmodel.CordViewModel
 import com.saint.struct.viewmodel.CordViewModelFactory
 import com.saint.struct.viewmodel.HomeViewModel
 import com.saint.struct.viewmodel.HomeViewModelFactory
+import com.saint.struct.viewmodel.MainFragmentViewModel
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
+class HomeFragment :
+    BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var refreshLayout: SmartRefreshLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
+    private lateinit var repository: HomeRepository
 
-    override fun getViewBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentHomeBinding {
-        return FragmentHomeBinding.inflate(inflater, container, false)
-    }
+    override val viewModel: HomeViewModel
+        get() = createViewModel()
 
     override fun initData() {
 
     }
 
-    override fun <T : ViewModel> createViewModel(cls: Class<T>?): T {
-        val repository: HomeRepository = object : HomeRepository {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initView()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun getViewBinding(): FragmentHomeBinding  = FragmentHomeBinding.inflate(layoutInflater)
+
+
+    fun createViewModel(): HomeViewModel {
+        repository = object : HomeRepository {
             override suspend fun getHomeData(page: Int): List<HomeItem> {
                 return MockUtils().mockData(page)
             }
         }
         return ViewModelProvider(
-                this, HomeViewModelFactory(
-                    repository,
-                    activity?.application ?: StructApp.application
-                )
-            )[HomeViewModel::class.java] as T
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-        observeViewModel()
+            this, HomeViewModelFactory(
+                repository,
+                activity?.application ?: StructApp.application
+            )
+        )[HomeViewModel::class.java]
     }
 
     fun initView() {
@@ -157,7 +160,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-    private fun observeViewModel() {
+    override fun observeViewModel() {
         Log.e("CoordinatorFragment", "Home = ")
         lifecycleScope.launch {
             Log.e("CoordinatorFragment", "Home lifecycleScope = ")

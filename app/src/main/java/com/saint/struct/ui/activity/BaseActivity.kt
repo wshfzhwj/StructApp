@@ -1,59 +1,47 @@
 package com.saint.struct.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModel
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.saint.struct.tool.StatusBarUtils
 import com.saint.struct.viewmodel.BaseViewModel
-import com.saint.struct.viewmodel.HomeViewModel
 import java.lang.reflect.ParameterizedType
 
-abstract class BaseActivity<T: ViewBinding,VM: BaseViewModel> : AppCompatActivity() {
+abstract class BaseActivity<T : ViewBinding, VM : BaseViewModel> : AppCompatActivity() {
 
-    private lateinit var _binding: T
-    protected val binding get() = _binding;
+    // _binding 保持不变，是私有的，防止外部修改
+    private var _binding: T? = null
+    // binding 是公开的只读属性，且在 onDestroyView 中会置空，避免内存泄漏
+    protected val binding get() = _binding!!
 
-
-    private lateinit var _viewModel: VM
-    protected val viewModel get() = _viewModel;
+    // lateinit 配合 by lazy 可以更安全
+    protected lateinit var viewModel: VM
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBase()
+
+        // 初始化 ViewModel
+        viewModel = createViewModelInstance()
+
+        // 初始化 ViewBinding
         _binding = getViewBinding()
-        setContentView(_binding.root)
+        setContentView(binding.root)
     }
 
-    private fun initBase(){
-        //获取ViewModel类型
-        val modelClass: Class<BaseViewModel>
-        //获取带有泛型的父类
-        val type = javaClass.genericSuperclass
-        //ParameterizedType参数化类型，即泛型
-        modelClass = if (type is ParameterizedType) {
-            //getActualTypeArguments获取参数化类型的数组，泛型可能有多个，这里我们默认第二个泛型是ViewModel
-            type.actualTypeArguments[1] as Class<BaseViewModel>
-        } else {
-            //如果没有指定泛型参数，则默认使用ViewModel
-            BaseViewModel::class.java
-        }
+    private fun createViewModelInstance(): VM {
+        val viewModelClass = (javaClass.genericSuperclass as? ParameterizedType)
+            ?.actualTypeArguments
+            ?.getOrNull(1) as? Class<VM>
+            ?: throw IllegalArgumentException("ViewModel class not found in generic type arguments of $this")
 
-        //初始化viewModel
-        _viewModel = createViewModel(this, modelClass as Class<VM>)
+        return ViewModelProvider(this)[viewModelClass]
     }
 
-    /**
-     * 创建ViewModel 如果 需要自己定义ViewModel 直接复写此方法
-     *
-     * @param cls
-     * @param <T>
-     * @return
-    </T> */
-    open fun <T : ViewModel> createViewModel(activity: FragmentActivity?, cls: Class<T>?): T {
-        return ViewModelProvider(activity!!)[cls!!]
+    override fun onDestroy() {
+        super.onDestroy()
+        // 关键一步：在 Activity 销毁时解除对 binding 的引用，防止内存泄漏
+        _binding = null
     }
 
     protected abstract fun getViewBinding(): T

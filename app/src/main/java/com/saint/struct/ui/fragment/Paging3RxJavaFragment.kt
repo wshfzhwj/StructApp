@@ -15,11 +15,15 @@ import com.saint.struct.databinding.FragmentPagingBinding
 private const val TAG = "PageRxActivity"
 
 class Paging3RxJavaFragment :
-    BasePagingFragment<FragmentPagingBinding,Paging3RxViewModel, WanListBean, PagingRxJavaAdapter.ViewHolder>() {
+    BasePagingFragment<FragmentPagingBinding, Paging3RxViewModel, WanListBean, PagingRxJavaAdapter.ViewHolder>() {
+    override val viewModel: Paging3RxViewModel by viewModels()
+    override fun getViewBinding(): FragmentPagingBinding {
+        return FragmentPagingBinding.inflate(layoutInflater)
+    }
 
     @SuppressLint("CheckResult")
-    override fun setModelAndData() {
-
+    override fun observeViewModel() {
+        super.observeViewModel()
         viewModel.flowable
             .subscribe { pagingData: PagingData<WanListBean>? ->
                 pageAdapter.submitData(lifecycle, pagingData!!)
@@ -28,7 +32,7 @@ class Paging3RxJavaFragment :
 
     override fun setListener() {}
 
-    override fun getCustomPageAdapter(): PagingDataAdapter<WanListBean, PagingRxJavaAdapter.ViewHolder> {
+    override fun initPageAdapter(): PagingDataAdapter<WanListBean, PagingRxJavaAdapter.ViewHolder> {
         return PagingRxJavaAdapter()
     }
 
@@ -37,12 +41,6 @@ class Paging3RxJavaFragment :
         binding.layoutAppBar.titleBar.text = "PageRxFragment"
     }
 
-    override fun getViewBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentPagingBinding {
-        return FragmentPagingBinding.inflate(inflater,container,false)
-    }
 
     override fun initData() {
 //        val factory = Paging3RxViewModel.Factory()

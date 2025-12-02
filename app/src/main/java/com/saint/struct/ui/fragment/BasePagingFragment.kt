@@ -12,19 +12,19 @@ import androidx.viewbinding.ViewBinding
 import com.saint.struct.databinding.FragmentPagingBinding
 import com.saint.struct.viewmodel.BaseViewModel
 
-abstract class BasePagingFragment<VB: ViewBinding,VM: BaseViewModel,T : Any,VH : RecyclerView.ViewHolder> : BaseFragment<VB,VM>() {
-    lateinit var pageAdapter:PagingDataAdapter<T,VH>
+abstract class BasePagingFragment<VB : ViewBinding, VM : BaseViewModel, T : Any, VH : RecyclerView.ViewHolder>: BaseFragment<VB, VM>() {
+    lateinit var pageAdapter: PagingDataAdapter<T, VH>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTitle()
         initRecyclerView()
-        setModelAndData()
         setListener()
     }
 
+
     private fun initRecyclerView() {
-        pageAdapter = getCustomPageAdapter()
+        pageAdapter = initPageAdapter()
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         (binding as FragmentPagingBinding).recyclerView.apply {
@@ -34,9 +34,8 @@ abstract class BasePagingFragment<VB: ViewBinding,VM: BaseViewModel,T : Any,VH :
         }
     }
 
-    abstract fun getCustomPageAdapter(): PagingDataAdapter<T, VH>
+    abstract fun initPageAdapter(): PagingDataAdapter<T, VH>
     abstract fun initTitle()
-    abstract fun setModelAndData()
     abstract fun setListener()
 
 }

@@ -2,6 +2,12 @@ package com.saint.struct;
 
 public class Resource {
 
+    public int testInt(int a){
+        a = 3;
+        return a;
+    }
+
+
     public synchronized void method1() {
         try {
             Thread.sleep(1000);

@@ -31,6 +31,7 @@ import com.saint.struct.repository.StudentRepository
 import com.saint.struct.service.MessengerService
 import com.saint.struct.tool.log
 import com.saint.struct.ui.activity.AidlActivity
+import com.saint.struct.ui.activity.MainActivity
 import com.saint.struct.ui.activity.TestCordActivity
 import com.saint.struct.ui.activity.TestScrollActivity
 import com.saint.struct.ui.activity.WebActivity
@@ -57,6 +58,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     //    private val mRetrofit: Retrofit? = null
     private lateinit var mStudentRepository: StudentRepository
+    override val viewModel: MainFragmentViewModel
+        get() = createViewModel(MainFragmentViewModel::class.java)
 
     companion object {
         const val EXTRA_KEY_SERVICE = "extra_key_service"
@@ -70,14 +73,9 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         observeViewModel()
     }
 
-    override fun getViewBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentMainBinding {
-        return FragmentMainBinding.inflate(inflater,container,false)
-    }
+    override fun getViewBinding(): FragmentMainBinding = FragmentMainBinding.inflate(layoutInflater)
 
-    override fun <T : ViewModel> createViewModel(cls: Class<T>?): T {
+    fun <T : ViewModel> createViewModel(cls: Class<T>?): T {
         mStudentRepository = StudentRepository(SaintRoomDB.getInstance(requireActivity()).studentDao())
         return ViewModelProvider(this, ViewModelFactory(mStudentRepository))[MainFragmentViewModel::class.java] as T
     }
@@ -87,7 +85,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
 
-    fun observeViewModel(){
+   override fun observeViewModel(){
         //LiveData
         viewModel.studentLiveData.observe(viewLifecycleOwner) { value ->
             Log.e(TAG,"MainFragment studentLiveData -${value}")

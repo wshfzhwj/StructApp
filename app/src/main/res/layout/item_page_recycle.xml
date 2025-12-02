@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="15dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -21,10 +21,14 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@id/author"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/desc"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@id/image"
         app:layout_constraintRight_toRightOf="parent"
@@ -32,16 +36,30 @@
         tools:text="ConstraintLayout is available as a support library" />
 
     <TextView
+        android:id="@+id/desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:maxLines="2"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toRightOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="ConstraintLayout is available as a support library" />
+
+    <TextView
         android:id="@+id/author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintBottom_toTopOf="@id/date"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@id/image"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintRight_toLeftOf="@id/date"
+        app:layout_constraintTop_toBottomOf="@id/desc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:singleLine="true"
         tools:text="ConstraintLayout is available as a support library" />
 
     <TextView
@@ -50,23 +68,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintBottom_toTopOf="@id/desc"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintLeft_toRightOf="@id/image"
+        app:layout_constraintLeft_toRightOf="@id/author"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/author"
+        app:layout_constraintTop_toBottomOf="@id/desc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:singleLine="true"
         tools:text="ConstraintLayout is available as a support library" />
 
-    <TextView
-        android:id="@+id/desc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:singleLine="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintLeft_toRightOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/date"
-        tools:text="ConstraintLayout is available as a support library" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
