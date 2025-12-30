@@ -1,4 +1,4 @@
-
+ 测试一下提交
 adb shell am start -n com.saint.struct/.ui.activity.MainActivity
 
 android jetpack
